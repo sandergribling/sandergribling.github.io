@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; The Dolev-Strong protocol – Decentralized Finance and Blockchains</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<link href="./LongestChain.html" rel="next">
+<link href="./distributed.html" rel="prev">
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-86daaaaad7353f9cc0c554efc1dd6d94.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-62e20c3a9a596b9ec96172d55444f71c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cs.html">Computer Science</a></li><li class="breadcrumb-item"><a href="./DolevStrong.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The Dolev-Strong protocol</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Decentralized Finance and Blockchains</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Decentralized-Finance-and-Blockchains.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./prelim.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Preliminaries</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./cs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Computer Science</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./distributed.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to distributed computing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./DolevStrong.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The Dolev-Strong protocol</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./LongestChain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longest chain protocols</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ProofofWork.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Proof of Work</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#bounded-number-of-faulty-nodes" id="toc-bounded-number-of-faulty-nodes" class="nav-link active" data-scroll-target="#bounded-number-of-faulty-nodes"><span class="header-section-number">4.1</span> Bounded number of faulty nodes</a></li>
+  <li><a href="#sec-BB" id="toc-sec-BB" class="nav-link" data-scroll-target="#sec-BB"><span class="header-section-number">4.2</span> The Byzantine Broadcast problem</a></li>
+  <li><a href="#sec-SMR_reduction" id="toc-sec-SMR_reduction" class="nav-link" data-scroll-target="#sec-SMR_reduction"><span class="header-section-number">4.3</span> SMR reduces to Byzantine Broadcast</a></li>
+  <li><a href="#the-cases-f1-and-f2" id="toc-the-cases-f1-and-f2" class="nav-link" data-scroll-target="#the-cases-f1-and-f2"><span class="header-section-number">4.4</span> The cases <span class="math inline">f=1</span> and <span class="math inline">f=2</span></a></li>
+  <li><a href="#sec-DolevStrong_protocol" id="toc-sec-DolevStrong_protocol" class="nav-link" data-scroll-target="#sec-DolevStrong_protocol"><span class="header-section-number">4.5</span> The Dolev-Strong protocol</a>
+  <ul class="collapse">
+  <li><a href="#convincing-messages" id="toc-convincing-messages" class="nav-link" data-scroll-target="#convincing-messages"><span class="header-section-number">4.5.1</span> Convincing messages</a></li>
+  <li><a href="#protocol-description" id="toc-protocol-description" class="nav-link" data-scroll-target="#protocol-description"><span class="header-section-number">4.5.2</span> Protocol description</a></li>
+  <li><a href="#proof-of-correctness" id="toc-proof-of-correctness" class="nav-link" data-scroll-target="#proof-of-correctness"><span class="header-section-number">4.5.3</span> Proof of correctness</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cs.html">Computer Science</a></li><li class="breadcrumb-item"><a href="./DolevStrong.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The Dolev-Strong protocol</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-DolevStrong" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The Dolev-Strong protocol</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""> <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&amp;family=Fira+Sans&amp;display=swap" rel="stylesheet"></p>
+<p>In the previous chapter we have seen a protocol for the SMR problem under the assumptions 1,2,3, and 4. Here we replace the last assumption by a more realistic one: we no longer assume all nodes are honest. Instead, we assume there are at most <span class="math inline">f</span> faulty nodes in the network, where <span class="math inline">f</span> is some number between <span class="math inline">0</span> and <span class="math inline">n</span>.</p>
+<p>Our goal in this chapter is to solve the SMR problem under the assumptions 1,2,3 and assuming a bound <span class="math inline">f</span> on the number of faulty nodes (for some values <span class="math inline">f&gt;0</span>). The protocol that we will study is due to Dolev and Strong (1983) <strong>TODO: add ref</strong>. At a high level, it works similarly to the rotating leaders protocol that we have seen in <a href="distributed.html#sec-rotating" class="quarto-xref"><span>Section 3.4</span></a>. If there is even a single faulty node, the rotating leaders protocol no longer satisfies consistency. Can you see why?<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Informally, the Dolev-Strong protocol gives us a way to detect faulty leaders that try to ‘trick’ the other nodes into inconsistency. To formalize this, we introduce the <em>Byzantine Broadcast problem</em> in <a href="#sec-BB" class="quarto-xref"><span>Section 4.2</span></a>. We show how the SMR problem <em>reduces</em> to the Byzantine broadcast problem, see <a href="#sec-SMR_reduction" class="quarto-xref"><span>Section 4.3</span></a>. We finally discuss the Dolev-Strong protocol and show that it solves the Byzantine Broadcast problem.</p>
+<section id="bounded-number-of-faulty-nodes" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="bounded-number-of-faulty-nodes"><span class="header-section-number">4.1</span> Bounded number of faulty nodes</h2>
+<p>We recall from the previous chapter that a node is called <em>honest</em> if it never deviates from the intended protocol. Any node that is not honest is called <em>faulty</em>. Assumption 4 from the previous chapter was that all nodes are honest, or, equivalently, that the number of faulty nodes is equal to <span class="math inline">0</span>. Here we replace this with a more realistic assumption:</p>
+<p><strong>Assumption 4’</strong>: the number of faulty nodes in the network is at most <span class="math inline">f</span>.</p>
+<p>We in fact assume the protocol knows the upper bound <span class="math inline">f</span> on the number of faulty nodes. This means the protocol may depend on <span class="math inline">f</span>. In the previous chapter we have seen a protocol that assumed <span class="math inline">f=0</span>. Interesting values of <span class="math inline">f</span> to keep in mind are <span class="math inline">f = n/3</span> or <span class="math inline">f=n/2</span>, meaning that at most a certain fraction of the nodes is faulty. To start building some intuition, we will consider <span class="math inline">f=1</span> and <span class="math inline">f=2</span> later on in this chapter.</p>
+</section>
+<section id="sec-BB" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="sec-BB"><span class="header-section-number">4.2</span> The Byzantine Broadcast problem</h2>
+<p>In the <em>Byzantine Broadcast</em> problem we consider the following setting:</p>
+<ol type="1">
+<li>There are <span class="math inline">n</span> nodes, one is designated <em>sender</em> and the other <span class="math inline">n-1</span> nodes are <em>non-sender</em>. The identity of the sender is known to all non-senders.</li>
+<li>The sender has a <em>private input</em> <span class="math inline">v^*</span> that belongs to some set <span class="math inline">V</span>. (Private means that only the sender knows <span class="math inline">v^*</span> at the start of the protocol.)</li>
+</ol>
+<p>The set <span class="math inline">V</span> here represents the set of possible private inputs. In a cryptocurrency application, this might be the set of all valid transactions. For intuition, it suffices to think of only two possible inputs: <span class="math inline">V = \{0,1\}</span>.</p>
+<p>Informally, the goal in the Byzantine broadcast problem is for the sender to send <span class="math inline">v^*</span> to all other nodes in such a way that all other nodes can be certain that everyone received the same message. Formally, we say that a protocol is a solution to the Byzantine broadcast problem if it guarantees the following three properties:</p>
+<ol type="1">
+<li><strong>Termination</strong>: Every honest node <span class="math inline">i</span> eventually halts with some output <span class="math inline">v_i \in V</span>.</li>
+<li><strong>Agreement</strong>: All honest nodes halt with the same output.</li>
+<li><strong>Validity</strong>: If the sender is an honest node, then the common output of the honest nodes is the private input <span class="math inline">v^*</span> of the sender.</li>
+</ol>
+<p>Some remarks are in order. First, the requirements are different for honest nodes and faulty nodes. This is by necessity: faulty nodes can deviate in <em>any</em> way from the protocol, so we cannot hope to guarantee anything about their output. Second, the condition <em>agreement</em> is required to hold both if the sender is honest and if it is faulty. Agreement is comparable to the <em>consistency</em> property that we have seen in the SMR problem. Third, note that the <em>validity</em> property, necessarily so, is conditioned on the sender being honest. Therefore <em>validity</em> is trivially satisfied when the sender is faulty.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Design a protocol, for any <span class="math inline">0 \leq f \leq n</span> specifying both the behavior of the sender and non-sender nodes, that guarantees <em>termination</em> and <em>agreement</em> whenever assumptions 1,2 and 3 hold.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Fix some <span class="math inline">v_0 \in V</span> (e.g.&nbsp;if <span class="math inline">V</span> is a set of numbers, pick the smallest). Consider the simple protocol in which every node (both sender and non-sender) terminates in round <span class="math inline">1</span> by outputting <span class="math inline">v_0</span>. This protocol clearly satisfies <em>termination</em> (every node halts in round <span class="math inline">1</span>) and <em>agreement</em> (every honest node halts with the same output <span class="math inline">v_0</span>).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-SMR_reduction" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="sec-SMR_reduction"><span class="header-section-number">4.3</span> SMR reduces to Byzantine Broadcast</h2>
+<p>Here we show that any protocol that solves the Byzantine Broadcast problem can be used as a black box to solve the State Machine Replication problem. In our original definition of the SMR problem, in particular for liveness and consistency, we assumed all nodes were honest. In the presence of faulty nodes we need modify the guarantees slightly:</p>
+<p><strong>Goal 1: Consistency.</strong> We say that a protocol satisfies consistency if all the <em>honest</em> nodes running it always agree on the history.</p>
+<p><strong>Goal 2: Liveness.</strong> Every “transaction” submitted by a client to at least one <em>honest</em> node is eventually added to every node’s local history.</p>
+<p>(The only difference is adding the word <em>honest</em> in the right places.)</p>
+<p>We now present a protocol that solves SMR, given a protocol for the Byzantine Broadcast problem. Concretely, let us assume we are in the synchronous and permissioned setting (assumptions 1,2,3) and that there are at most <span class="math inline">f</span> faulty nodes (assumption 4’). Moreover, assume we are given a protocol <span class="math inline">\pi</span> that solves the Byzantine Broadcast problem under those assumptions. Assume <span class="math inline">\pi</span> always terminates in at most <span class="math inline">T</span> rounds. As before, we allow the nodes to use some local workspace <span class="math inline">W</span> that they can use to store information, but which is not part of the local history state (this is used to implement step 2).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Alg_SMR_from_BB(pi,f): </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>At each round t=0, T, 2T,... that is a multiple of T do:</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>1.  Define the current leader to be node t/T modulo n. </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>2.  The leader constructs a list L of transactions it has </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    received in the past T rounds, which are not yet part of H. </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>3.  Use the protocol pi with </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    as leader node t/T modulo n and private input L. </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>4.  At round t+T-1, every node i appends </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    its output L_i in the Byzantine Broadcast problem to its local history. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="lem-proto_RR" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 4.1</strong></span> Under assumptions 1,2,3,4’, assuming <span class="math inline">\pi</span> solves the Byzantine broadcast problem in at most <span class="math inline">T</span> rounds, the protocol <code>Alg_SMR_from_BB</code> solves the SMR problem.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>We need to argue that consistency and liveness are satisfied. For consistency, we can argue in an inductive manner. At the start of the protocol, all honest nodes initialize their local history to <span class="math inline">H=[\ ]</span>. Assume all honest nodes agree on the local history at some time that is a multiple of <span class="math inline">T</span>. By the guarantees of <span class="math inline">\pi</span>, when <span class="math inline">\pi</span> terminates, which happens within <span class="math inline">T</span> rounds, every honest node agrees on a common output <span class="math inline">L</span>. Therefore all honest nodes append the same message <span class="math inline">L</span> to their local history state <span class="math inline">H</span> in round <span class="math inline">t+T-1</span>, which ensures that the local history states of all honest nodes agree between rounds <span class="math inline">t</span> and <span class="math inline">t+T</span>.</p>
+<p>For liveness, it suffices to observe that every honest node is elected as a leader once very <span class="math inline">nT</span> rounds.</p>
+</div>
+</section>
+<section id="the-cases-f1-and-f2" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="the-cases-f1-and-f2"><span class="header-section-number">4.4</span> The cases <span class="math inline">f=1</span> and <span class="math inline">f=2</span></h2>
+<p>In this section we introduce the idea of “cross-checking”. We show that this solves the Byzantine broadcast problem when there is at most <span class="math inline">1</span> faulty node, and that it fails when there are <span class="math inline">2</span> faulty nodes. This allows us to build op some intuition about the main idea underlying the Dolev-Strong protocol, without the technicalities that arise when there are multiple faulty nodes. Technically, the Dolev-Strong protocol that we present in the next section is independent from this section, which means that this section is “optional” and can be skipped (at your own risk).</p>
+<p>Intuitively, the protocol works by asking the honest nodes to do one simple step of cross-checking: each node verifies whether all other nodes received the same messages from the sender.</p>
+<p>Formally, we consider the following protocol.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Alg_Cross_Check: </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>The protocol consists of three rounds:</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>1.  The sender sends its private value v* to all non-senders (signed). </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>2.  Every non-sender i sends the message m_i it </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    received from the sender in round 1 to </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    all other non-senders with their signature added.</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>3.  All non-senders choose the most frequently </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    received value among the values it received in rounds 1 and 2. </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    (Breaking ties in some consistent way.)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    The sender outputs v*.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the following two exercises you are asked to show that <code>Alg_Cross_Check</code> solves the Byzantine broadcast problem when there is at most <span class="math inline">f=1</span> faulty node and there are at least <span class="math inline">4</span> nodes in total, but that it breaks when <span class="math inline">f=2</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Under assumptions 1,2,3, <span class="math inline">f=1</span>, and <span class="math inline">n \geq 4</span>, the protocol <code>Alg_Cross_Check</code> solves the Byzantine broadcast problem.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><em>Termination</em> is clearly satisfied. For <em>validity</em>, assume the sender is honest. In that case, after round <span class="math inline">2</span> every <em>honest</em> non-sender has received the private input <span class="math inline">v^*</span> of the sender at least <span class="math inline">n-2</span> times (from the other honest nodes) and has received a different output at most once (from the single faulty node). Since <span class="math inline">n-2&gt;1</span>, the honest non-sender outputs <span class="math inline">v^*</span> after round <span class="math inline">3</span>. The honest sender also outputs <span class="math inline">v^*</span> and therefore all honest nodes agree agree on the common output <span class="math inline">v^*</span>.</p>
+<p>The above also shows that we satisfy <em>agreement</em> when the sender is honest. It thus remains to argue that we satisfy <em>agreement</em> when the sender is faulty. Assume now the sender is <em>faulty</em>. Since <span class="math inline">f=1</span>, all non-senders are therefore honest. All non-senders will therefore broadcast the message that they have received from the sender in round <span class="math inline">1</span>. In round <span class="math inline">3</span> all honest nodes have therefore received exactly the same set of messages. The outcome of their majority votes will therefore all be equal, and so they will all output the same value.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise*
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Under assumptions 1,2,3, <span class="math inline">f=2</span>, and <span class="math inline">n \geq 4</span> even, the protocol <code>Alg_Cross_Check</code> does not solve the Byzantine broadcast problem.</p>
+</div>
+</div>
+<p>Showing that the protocol breaks when <span class="math inline">f=2</span> is a bit tricky (hence the * next to the exercise). You are recommended to <em>try</em> to solve the exercise on your own, but don’t worry if you don’t succeed. In that case, please do take a look at the solution before proceeding to the next section.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Assume there are <span class="math inline">2</span> Byzantine nodes (faulty nodes). We show that they can coordinate in such a way that the protocol fails to satisfy agreement.</p>
+<p>Assume the two Byzantine nodes are nodes <span class="math inline">A</span> and <span class="math inline">B</span> and assume node <span class="math inline">A</span> is the sender. Divide the remaining <span class="math inline">n-2</span> honest nodes into two groups, <span class="math inline">G_0</span> and <span class="math inline">G_1</span> of equal size (here we use that <span class="math inline">n</span> is even).</p>
+<p>In the first round, <span class="math inline">A</span> sends message <span class="math inline">0</span> to all nodes in <span class="math inline">G_0</span> and message <span class="math inline">1</span> to all nodes in <span class="math inline">G_1</span>. Also in the first round, <span class="math inline">A</span> sends both messages <span class="math inline">0</span> and <span class="math inline">1</span> to <span class="math inline">B</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>In the second round, node <span class="math inline">B</span> sends the signed message <span class="math inline">0</span> that it received from <span class="math inline">A</span> in round <span class="math inline">1</span> to all nodes in <span class="math inline">G_0</span>, and similarly sends the signed message <span class="math inline">1</span> to all nodes in <span class="math inline">G_1</span>.</p>
+<p>What do the honest nodes output in round <span class="math inline">3</span>? Consider a node <span class="math inline">i</span> in <span class="math inline">G_0</span>. It has received the message <span class="math inline">0</span> a total of <span class="math inline">n/2</span> times: once from <span class="math inline">A</span>, once from <span class="math inline">B</span>, and once from the other <span class="math inline">n/2-2</span> nodes in <span class="math inline">G_0</span>. It has received the message <span class="math inline">1</span> a total of <span class="math inline">n/2-1</span> times: once from each of the nodes in <span class="math inline">G_1</span>. Node <span class="math inline">i</span> will therefore output <span class="math inline">0</span> in round <span class="math inline">3</span>. Swapping the roles of <span class="math inline">0</span> and <span class="math inline">1</span> shows that a node <span class="math inline">j</span> in <span class="math inline">G_1</span> will output the message <span class="math inline">1</span> in round <span class="math inline">3</span>. We therefore violate agreement!</p>
+</div>
+</div>
+</div>
+<p>A key takeaway from the above two exercises is that one round of cross-checking allows us to deal with one Byzantine node, but not with <span class="math inline">2</span>. It thus seems that <em>more cross-checking</em> is necessary when there are multiple Byzantine nodes. In a nutshell this is precisely what the Dolev-Strong protocol does: every additional round of cross-checking allows for one more Byzantine node.</p>
+</section>
+<section id="sec-DolevStrong_protocol" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="sec-DolevStrong_protocol"><span class="header-section-number">4.5</span> The Dolev-Strong protocol</h2>
+<p>Here we describe a classic protocol due to Dolev and Strong (1983, <strong>TODO: add ref</strong>). It solves the Byzantine broadcast problem in the permissioned and synchronous setting, assuming an upper bound <span class="math inline">f</span> on the number of faulty nodes. Together with the reduction from <a href="#sec-SMR_reduction" class="quarto-xref"><span>Section 4.3</span></a>, this solves the SMR problem under the same assumptions. To describe the protocol, we need one more definition, that of <em>convincing messages</em>.</p>
+<section id="convincing-messages" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="convincing-messages"><span class="header-section-number">4.5.1</span> Convincing messages</h3>
+<p>A node <span class="math inline">i</span> is <em>convinced of value <span class="math inline">v</span> in round <span class="math inline">t</span></em> if it receives a message prior to round <span class="math inline">t</span> that satisfies the following three conditions:</p>
+<ol type="1">
+<li>It contains the value <span class="math inline">v</span>;</li>
+<li>It is first signed by the sender;</li>
+<li>It is also signed by at least <span class="math inline">t-1</span> other, distinct nodes, none of which are <span class="math inline">i</span>.</li>
+</ol>
+</section>
+<section id="protocol-description" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="protocol-description"><span class="header-section-number">4.5.2</span> Protocol description</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>The Dolev-Strong protocol(f): </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>1.  In round 0 the sender:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    Sends its private value v* to all the non-senders</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    Outputs v*</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>2.  In round t = 1,...,f+1 a non-sender i does:</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        If i is convinced of a value v by some message m received </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        prior to round t and has not been convinced of v before: </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            i adds its signature to m and sends it to all non-senders</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>3.  At the end of round f+1 a non-sender i does:</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        If i is convinced of exactly one value v: </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            Output v</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        Else:</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            Output "failure" (some message not in V)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the above protocol we are outputting “failure” to signal that we have detected a Byzantine sender. The precise message “failure” is of course arbitrary, what matters is that it cannot be confused with a valid private input of the sender. The message “failure” is assumed to be distinguishable from inputs from <span class="math inline">V</span>.</p>
+<p>Intuitively, in the Dolev-Strong protocol the <span class="math inline">f+1</span> rounds after the first correspond to <span class="math inline">f+1</span> rounds of cross-checking. Note that for <span class="math inline">f=1</span> the algorithm is not equal to <code>Alg_Cross_Check</code>. As we will see in the next section, the list of <em>distinct</em> signatures is used to detect Byzantine senders. For now, remark that a node that is newly convinced of a message at the end of round <span class="math inline">f+1</span> observes precisely <span class="math inline">f+1</span> distinct signatures, at least one more than the number of Byzantine nodes.</p>
+</section>
+<section id="proof-of-correctness" class="level3" data-number="4.5.3">
+<h3 data-number="4.5.3" class="anchored" data-anchor-id="proof-of-correctness"><span class="header-section-number">4.5.3</span> Proof of correctness</h3>
+<p>We need to show that under the assumptions 1,2,3 the Dolev-Strong protocol satisfies <em>termination</em>, <em>validity</em>, and <em>agreement</em>. The property <em>termination</em> is clear from the description of the protocol. We prove the remaining two properties separately.</p>
+<div id="lem-DS_val" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 4.2</strong></span> Under the assumptions 1,2,3, assuming at most <span class="math inline">f</span> faulty nodes, the Dolev-Strong protocol satisfies <em>validity</em>.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>Assume that the sender is honest (why are we allowed to do so?) and has private value <span class="math inline">v^*</span>. The sender thus follows the protocol and sends a signed copy of <span class="math inline">v^*</span> to all non-senders in the first round, it then outputs <span class="math inline">v^*</span> and terminates. In round <span class="math inline">1</span> all non-senders are therefore convinced of the value <span class="math inline">v^*</span>. Indeed, they have received a message that 1) contains the value <span class="math inline">v^*</span>, 2) is first signed by the sender, and 3) is signed by <span class="math inline">1-1=0</span> other, distinct nodes, none of which are <span class="math inline">i</span>.</p>
+<p>It remains to observe that since the sender is honest, no node is ever convinced of a value other than <span class="math inline">v^*</span>: a <em>convincing message</em> needs to contain the signature of the sender. (Here we are using our assumption that signatures cannot be forged.)</p>
+<p>At the end of the protocol, all non-senders therefore output <span class="math inline">v^*</span> as well, establishing <em>validity</em>.</p>
+</div>
+<p>The hard(er) part is to show that the protocol satisfies <em>agreement</em>, and this is where we need the multiple rounds.</p>
+<div id="lem-DS_val" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 4.3</strong></span> Under the assumptions 1,2,3, assuming at most <span class="math inline">f</span> faulty nodes, the Dolev-Strong protocol satisfies <em>agreement</em>.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>Assume that the sender is Byzantine (why are we allowed to do so?). We will show that at the end of the protocol, all honest nodes are convinced of exactly the same set of values. This suffices to establish agreement (can you see why?<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>).</p>
+<p>Suppose on an honest node <span class="math inline">i</span> gets newly convinced of a value <span class="math inline">v</span> by a message received before the end of time step <span class="math inline">t</span> for some <span class="math inline">t \in \{0,1,2,\ldots, f+1\}</span>. We show that all other honest nodes also get convinced of value <span class="math inline">v</span> before the end of the protocol. Now we need to distinguish two cases: i) <span class="math inline">t \leq f</span> or ii) <span class="math inline">t = f+1</span>.</p>
+<p>Case i): if <span class="math inline">t \leq f</span>, then node <span class="math inline">i</span> still has time to communicate to other honest nodes. In particular, in round <span class="math inline">t+1</span> it will add its signature to the message that convinced them of value <span class="math inline">v</span> and it will send that to all other non-senders. Since node <span class="math inline">i</span> was convinced of <span class="math inline">v</span> in round <span class="math inline">t</span>, this newly signed message is a <em>convincing message</em> for all other nodes that had not yet been convinced of <span class="math inline">v</span> (check this!).</p>
+<p>Case ii): if <span class="math inline">t=f+1</span>, then node <span class="math inline">i</span> no longer has time to communicate. We thus need to show that all other honest nodes had already been convinced of the value <span class="math inline">v</span> prior to the end of round <span class="math inline">t</span>. To do so, we will crucially use that node <span class="math inline">i</span> is convinced <em>for the first time</em> of value <span class="math inline">v</span> at the end of round <span class="math inline">f+1</span>. This means that at the end of round <span class="math inline">f+1</span> it receives a message that is signed first by the (Byzantine) sender, and also by <span class="math inline">f</span> distinct other nodes (<span class="math inline">f = t-1</span>). Crucially, since the sender is Byzantine, at least one of these <span class="math inline">f</span> nodes is an <em>honest</em> node. Let <span class="math inline">j</span> be such an honest node. Since <span class="math inline">i</span> received a message containing the value <span class="math inline">v</span> and <span class="math inline">j</span>’s signature, the honest node <span class="math inline">j</span> was newly convinced of the value <span class="math inline">v</span> in some round <span class="math inline">t' \leq f</span>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> We can thus apply case i) to the <em>honest</em> node <span class="math inline">j</span>, showing that all non-sender nodes have received a convincing message containing the value <span class="math inline">v</span>.</p>
+</div>
+
+
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Suppose there is one faulty node. In some round, it will be elected as the leader. It can then simply choose to violate consistency by sending different messages to different nodes.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Sending both <span class="math inline">0</span> and <span class="math inline">1</span> to <span class="math inline">B</span> is a bit artificial at this moment; we do so to cover the case where the signature scheme adds a signature that not only identifies the sender, but also the round in which the message was sent.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Either every honest node is convinced of exactly one value <span class="math inline">v</span>, in which case all honest nodes output <span class="math inline">v</span>. Alternatively, every honest node is convinced of at least two distinct values, in which case all honest nodes output “failure”.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>In fact, <span class="math inline">t'=f</span> is the only possibility (since node <span class="math inline">i</span> is only convinced in round <span class="math inline">f+1</span>).<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./distributed.html" class="pagination-link" aria-label="Introduction to distributed computing">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to distributed computing</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./LongestChain.html" class="pagination-link" aria-label="Longest chain protocols">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longest chain protocols</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
