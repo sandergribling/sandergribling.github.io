@@ -456,27 +456,18 @@ Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Prove <a href="DolevStrong.html#lem-proto_RR" class="quarto-xref">Lemma&nbsp;<span>4.1</span></a>.</p>
+<p>Prove <a href="#lem-proto_RR" class="quarto-xref">Lemma&nbsp;<span>3.3</span></a>.</p>
 </div>
 </div>
-<p>To encourage you to attempt the exercise yourself first, the solution is “hidden” (in the HTML version). Click on the orange bar to show a possible solution.</p>
-<div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>We need to verify two properties: consistency and liveness. We first prove that consistency is guaranteed, using induction. Note that all nodes initialize to the same local history state, <span class="math inline">H = [\ ]</span>. Let us call this initialization phase round <span class="math inline">0</span>. Then consistency holds at round <span class="math inline">0</span>. Now, as our induction hypothesis, assume consistency holds for the first <span class="math inline">t-1</span> rounds. That is, all nodes agree on the local history state <span class="math inline">H</span> during the first <span class="math inline">t-1</span> rounds. We show that consistency holds in round <span class="math inline">t</span> as well. Indeed, in the <span class="math inline">t</span>-th round the leader looks at their local workspace <span class="math inline">W</span>, it removes all transactions that have previously been added to <span class="math inline">H</span>, it then adds <span class="math inline">W</span> to <span class="math inline">H</span> and instructs all other nodes to do the same. (All other nodes indeed proceed to do the same.) This shows that all nodes agree on <span class="math inline">H</span> at the end of round <span class="math inline">t</span> as well.</p>
-<p>It remains to argue that the protocol guarantees liveness. Suppose a client <span class="math inline">i</span> sends a transaction <span class="math inline">m</span> to at least one node. Since every node is elected as leader in one of the <span class="math inline">n</span> nodes, the transaction <span class="math inline">m</span> is eventually added to <span class="math inline">H</span>.</p>
-</div>
-</div>
-</div>
+<!-- To encourage you to attempt the exercise yourself first, the solution is "hidden" (in the HTML version). Click on the orange bar to show a possible solution. 
+
+::: {.callout-caution collapse="true"}
+## Solution
+
+We need to verify two properties: consistency and liveness. We first prove that consistency is guaranteed, using induction. Note that all nodes initialize to the same local history state, $H = [\ ]$. Let us call this initialization phase round $0$. Then consistency holds at round $0$. Now, as our induction hypothesis, assume consistency holds for the first $t-1$ rounds. That is, all nodes agree on the local history state $H$ during the first $t-1$ rounds. We show that consistency holds in round $t$ as well. Indeed, in the $t$-th round the leader looks at their local workspace $W$, it removes all transactions that have previously been added to $H$, it then adds $W$ to $H$ and instructs all other nodes to do the same. (All other nodes indeed proceed to do the same.) This shows that all nodes agree on $H$ at the end of round $t$ as well. 
+
+It remains to argue that the protocol guarantees liveness. Suppose a client $i$ sends a transaction $m$ to at least one node. Since every node is elected as leader in one of the $n$ nodes, the transaction $m$ is eventually added to $H$. 
+::: -->
 
 
 </section>
