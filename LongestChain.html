@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -53,6 +87,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -144,8 +221,26 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-protocol-description" id="toc-sec-protocol-description" class="nav-link active" data-scroll-target="#sec-protocol-description"><span class="header-section-number">5.1</span> Protocol description</a>
+  <ul class="collapse">
+  <li><a href="#honest-vs.-dishonest-behavior" id="toc-honest-vs.-dishonest-behavior" class="nav-link" data-scroll-target="#honest-vs.-dishonest-behavior"><span class="header-section-number">5.1.1</span> Honest vs.&nbsp;dishonest behavior</a></li>
+  </ul></li>
+  <li><a href="#the-assumptions" id="toc-the-assumptions" class="nav-link" data-scroll-target="#the-assumptions"><span class="header-section-number">5.2</span> The assumptions</a>
+  <ul class="collapse">
+  <li><a href="#assumption-a1-the-genesis-block-is-unknown-prior-to-starting-the-protocol" id="toc-assumption-a1-the-genesis-block-is-unknown-prior-to-starting-the-protocol" class="nav-link" data-scroll-target="#assumption-a1-the-genesis-block-is-unknown-prior-to-starting-the-protocol"><span class="header-section-number">5.2.1</span> Assumption A1: the genesis block is unknown prior to starting the protocol</a></li>
+  <li><a href="#assumptions-about-leader-selection" id="toc-assumptions-about-leader-selection" class="nav-link" data-scroll-target="#assumptions-about-leader-selection"><span class="header-section-number">5.2.2</span> Assumptions about leader selection</a></li>
+  <li><a href="#assumptions-about-block-production" id="toc-assumptions-about-block-production" class="nav-link" data-scroll-target="#assumptions-about-block-production"><span class="header-section-number">5.2.3</span> Assumptions about block production</a></li>
+  <li><a href="#assumptions-about-communication" id="toc-assumptions-about-communication" class="nav-link" data-scroll-target="#assumptions-about-communication"><span class="header-section-number">5.2.4</span> Assumptions about communication</a></li>
+  </ul></li>
+  <li><a href="#the-goals-liveness-and-finality" id="toc-the-goals-liveness-and-finality" class="nav-link" data-scroll-target="#the-goals-liveness-and-finality"><span class="header-section-number">5.3</span> The goals: liveness and <em>finality</em></a></li>
+  <li><a href="#finalizing-a-block" id="toc-finalizing-a-block" class="nav-link" data-scroll-target="#finalizing-a-block"><span class="header-section-number">5.4</span> Finalizing a block</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -170,8 +265,281 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p><link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""> <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&amp;family=Fira+Sans&amp;display=swap" rel="stylesheet"></p>
+<p>In this chapter we study a second type of consensus protocols, those based on blockchains and in particular the concept of longest chains. This type of consensus protocol lies at the heart of several cryptocurrencies (e.g.&nbsp;Bitcoin). The Bitcoin protocol is one example of a longest chain protocol, but it is not the only one. In fact, most cryptocurrencies are based on blockchain protocols, see for example the long list on Wikipedia <a href="https://en.wikipedia.org/wiki/List_of_blockchains">here</a>. All of these protocols follow the same general recipe, but they use different ingredients in certain steps. In this chapter we focus on the general recipe, in the next we will see some of the ingredients that Bitcoin uses (namely proof of work).</p>
+<p>To simplify the exposition, we will work in the permissioned setting, assuming PKI, and especially the synchronous model of communication. If we restrict to that setting however, then we already know a good consensus protocol! Indeed, this is precisely what we achieved in the previous chapter. So what is the advantage of doing it again? There are several answers to this question. First, the consensus protocol based on Dolev-Strong is rather slow. It requires many rounds of cross-checking before new information gets added to the local history of each of the nodes. A second answer is that the Dolev-Strong protocol relies on the <em>permissioned</em> setting, whereas the protocol that we design in this chapter extends very naturally to the <em>permissionless</em> setting. We will go into this in more detail at the end of this chapter.</p>
+<p>We start this chapter with a high-level description of a blockchain protocol and the behavior of honest nodes. As usual, we then explicitly state the assumptions that we make in this chapter. We will see that the notion of consensus trivially holds (under the assumptions that we make). Instead, we introduce a new notion – <em>finality</em> – that is harder to achieve, but very useful in a cryptocurrency application! In a nutshell, a block is final when it is ‘deep enough in the chain’. We will formalize this later on in the chapter, for now the picture to have in mind is that a block that is final can no longer be changed (surprise); if we imagine the block to contain a transaction, we can thus trust that this transaction actually took place. We spend the second half of this chapter to prove that longest chain protocols achieve finality when, roughly speaking, the majority of the nodes is honest.</p>
+<section id="sec-protocol-description" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="sec-protocol-description"><span class="header-section-number">5.1</span> Protocol description</h2>
+<p>The starting point for a blockchain protocol is the concept of a blockchain. As the name suggests, a blockchain is a set of blocks that are connected to form a <em>chain</em>. What do we mean by a chain? We say that a set of blocks forms a chain if:</p>
+<ul>
+<li>There is one “genesis” block, forming the start of the chain, we typically denote it with <span class="math inline">B_0</span>,</li>
+<li>Every block that is not <span class="math inline">B_0</span> points to exactly one other block as its predecessor, in such a way that if we follow the chain of predecessors, we arrive at the genesis block <span class="math inline">B_0</span>.</li>
+</ul>
+<p>The above is a somewhat convoluted way of saying that a blockchain looks like <a href="#fig-blockchain" class="quarto-xref">Figure&nbsp;<span>5.1</span></a>. It is a directed graph where each node has out-degree <span class="math inline">1</span>,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> except for a single out-degree <span class="math inline">0</span> block <span class="math inline">B_0</span>. It moreover has the property that every block is connected to <span class="math inline">B_0</span> by a directed path. As a graph, a blockchain is thus a directed tree whose root is the block <span class="math inline">B_0</span>. If you are not familiar with directed graphs, but you are familiar with undirected graphs, then it suffices to think of a blockchain simply as a tree whose root is the block <span class="math inline">B_0</span>. The direction of the arcs is the one that follows the path towards <span class="math inline">B_0</span>.</p>
+<blockquote class="blockquote">
+<p>A <em>blockchain</em> is a directed graph <span class="math inline">G</span> that is an <em>in-tree</em> whose root corresponds to <span class="math inline">B_0</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+</blockquote>
+<div id="fig-blockchain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-blockchain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/blockchain.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-blockchain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: A chain of blocks
+</figcaption>
+</figure>
+</div>
+<p>The purpose of a blockchain is again to contain information. By this we mean that every block represents a chunk of information (say a <span class="math inline">1</span>MB file). By storing the information in a chain, we construct a notion of time: the information in a block is created after that of its predecessor. Needless to say, this is a useful property to have when you want to keep track of a list of transactions.</p>
+<p>So how does a blockchain fit in the distributed computing framework? We want to think of the blockchain as the information that all nodes have access to. This describes the ideal scenario. If we assume it, then consistency becomes trivial. Such an assumption however essentially amounts to instantaneous communication. We will formalize the assumptions that we work with in the next section.</p>
+<p>Now that we have cleared up the concept of a blockchain, we sketch the protocol that we have in mind.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>A blockchain protocol:</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>1.  Initialize with a hard-coded genesis block B0</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>2.  In each round r = 1,2,3,.... do:</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    a)  Choose one node i as the leader of round r. </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    b)  Node i proposes a set of blocks, </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        each specifying a single predecessor block.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This protocol is under-specified: we will fill in the details of step 2 later. In particular, one can imagine several different ways of choosing a leader in step 2a), for example:</p>
+<ol type="1">
+<li>In the permissioned setting that we used in the previous chapter, we simply select node <span class="math inline">i</span> as leader in rounds <span class="math inline">i, n+i, 2n+i,...</span>.</li>
+<li>In a Proof of Work protocol (which we will discuss in the next chapter), the leader in round <span class="math inline">r</span> is the first node to provide a proof of work after round <span class="math inline">r+1</span>.</li>
+<li>Proof of Stake is another way to select leaders.</li>
+</ol>
+<p>For the moment, either one of these three options is good to have in mind. In the second half of the chapter we prove correctness of the longest chain protocol under certain assumptions. At that point, you are recommended to revisit the above three options and see whether or not they match the assumptions. We do want to point out that the second option already hints at the fact that <em>rounds</em> don’t have to correspond to time slots, they rather refer to the periods in between certain events. We will come back to this later.</p>
+<section id="honest-vs.-dishonest-behavior" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="honest-vs.-dishonest-behavior"><span class="header-section-number">5.1.1</span> Honest vs.&nbsp;dishonest behavior</h3>
+<p>Let us now describe the intended behavior of <em>honest</em> nodes. In a longest chain protocol an honest node will do the following when it is elected as the leader of a round <span class="math inline">r</span>:</p>
+<ul>
+<li>it proposes exactly one new block,</li>
+<li>this new block points to exactly one predecessor,</li>
+<li>the predecessor was created in a previous round,</li>
+</ul>
+<p>Naturally, the new block may contain some information. For example, a list of newly made transactions or a copy of your favorite recipe for pasta. However, for this chapter we will ignore such information: that information is relevant for applications, but not for the guarantees that we want to achieve here. All that matters for us is that a block contains a pointer to precisely one predecessor that was created in a previous round.</p>
+<p>In a longest chain protocol, there is one additional requirement on the behavior of <em>honest</em> nodes:</p>
+<ul>
+<li>the new block extends a <em>longest chain</em>.</li>
+</ul>
+<p>We should of course define what we mean by a longest chain. A longest chain in a blockchain refers to a sequence of blocks that are on a longest path in the blockchain. Let us revisit the example from <a href="#fig-blockchain" class="quarto-xref">Figure&nbsp;<span>5.1</span></a>. We will label the blocks for ease of reference; the particular labels that we use are not important. In a blockchain we typically assume that a block is signed by its creator and this signature can be used as a label (it includes sufficient identifying information such as the name of creator, time of creation, predecessor,…).</p>
+<div id="fig-blockchain-label" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-blockchain-label-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/blockchain-labelled.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-blockchain-label-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: A labelled blockchain
+</figcaption>
+</figure>
+</div>
+<p>In this example, we see three distinct (maximal) paths.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> There is the path <span class="math inline">B_0 \leftarrow B_1 \leftarrow B_4</span> which contains three blocks. The path <span class="math inline">B_0 \leftarrow B_2 \leftarrow B_3 \leftarrow B_6 \leftarrow B_7</span> contains five blocks. Finally, there is also the path <span class="math inline">B_0 \leftarrow B_2 \leftarrow B_5</span> which contains three blocks. In this example, the path containing <span class="math inline">5</span> blocks is the longest. This path would thus be referred to as the longest chain. An honest node in this example would thus create a new block, say <span class="math inline">B_8</span>, that points to <span class="math inline">B_7</span> as its predecessor.</p>
+<p>In the above example, there was a unique longest path, which means the <em>honest</em> node does not have to make a choice: its new block has to point to <span class="math inline">B_7</span>. This does not have to be the case however. In the example below, there are two maximal paths, both containing exactly three blocks (namely <span class="math inline">B_0 \leftarrow B_1 \leftarrow B_4</span> and <span class="math inline">B_0 \leftarrow B_2 \leftarrow B_3</span>). Either of the two paths would be a longest chain in this example. This is the reason that we ask honest nodes to extend <em>a</em> longest chain and not <em>the</em> longest chain. When there are several longest chains, honest nodes may break ties in an arbitrary (but fixed) way.</p>
+<div id="fig-blockchain-label2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-blockchain-label2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/blockchain-labelled2.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-blockchain-label2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.3: A labelled blockchain with 2 longest chains
+</figcaption>
+</figure>
+</div>
+<p>We have now described the intended behavior of honest nodes. What about nodes that are <em>dishonest</em> or <em>faulty</em>? As usual, we make no assumptions whatsoever about their behavior. After all, a node is called <em>faulty</em> whenever it deviates from the intended protocol (no matter the reason or the manner in which deviates). There is however something we can say. Since the intended behavior is that a new block specifies <em>exactly</em> one predecessor, the honest nodes can always disregard any blocks that specify <span class="math inline">0</span> or at least <span class="math inline">2</span> predecessors. We can therefore assume that a block created by a <em>faulty</em> node also specifies exactly one predecessor which moreover comes from a previous round.</p>
+<p>Looking ahead, let’s think of a blockchain as storing a list of transactions. In that case, the honest nodes are working together to maintain a correct history of all the transactions that have taken place. They do so by recording transactions on the longest chain and they regard the longest chain as the one containing the <em>true</em> list of transactions.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Assume all nodes are honest. What does the blockchain look like after <span class="math inline">10</span> rounds?</p>
+</div>
+</div>
+<p>If we think of <em>faulty</em> nodes as malicious, then their goal could be for example to double-spend some of their money. They could do so by adding (many) blocks to a chain that is currently not the longest. Eventually this would create a new longest chain. If we recall that honest nodes view the longest chain as the one containing the true transactions, then this would allow a faulty node to spend their money twice. Indeed, if we assume they spent some money in the original longest chain in some block <span class="math inline">B_i</span>, then they could extend the path ending at the predecessor of <span class="math inline">B_i</span> and by doing so, they could spend their money a second time (buying something else).</p>
+<p><a href="#fig-blockchain-label2" class="quarto-xref">Figure&nbsp;<span>5.3</span></a> is (or could be) an example of such a situation. Here you can imagine that the honest nodes created blocks <span class="math inline">B_2</span> and <span class="math inline">B_3</span> in rounds <span class="math inline">1</span> and <span class="math inline">2</span> (recall that the labels are arbitrary). In rounds <span class="math inline">3</span> and <span class="math inline">4</span> the leaders happened to be <em>faulty</em> and they collaborated to start a new path with the blocks <span class="math inline">B_1</span> and <span class="math inline">B_4</span>. At this point, the <em>faulty</em> nodes have successfully confused the <em>honest</em> nodes: there is no way to tell which of the two chains was constructed by <em>honest</em> nodes. It might thus be the case that an <em>honest</em> node that is elected as leader in round <span class="math inline">5</span> decides to indicate <span class="math inline">B_4</span> as its predecessor. By doing so, the top chain would become the unique longest chain. At this point even honest nodes would start extending the top chain. This means the faulty nodes have successfully convinced the honest nodes to abandon their original chain, thus reverting some previously made transactions (blocks).</p>
+</section>
+</section>
+<section id="the-assumptions" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="the-assumptions"><span class="header-section-number">5.2</span> The assumptions</h2>
+<p>We now formalize the assumptions that we make about blockchains in a distributed network.</p>
+<section id="assumption-a1-the-genesis-block-is-unknown-prior-to-starting-the-protocol" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="assumption-a1-the-genesis-block-is-unknown-prior-to-starting-the-protocol"><span class="header-section-number">5.2.1</span> Assumption A1: the genesis block is unknown prior to starting the protocol</h3>
+<p>This first assumption is a trusted setup assumption.</p>
+<blockquote class="blockquote">
+<p><strong>A1)</strong> We assume that no node has knowledge of the genesis block prior to the deployment of the protocol.</p>
+</blockquote>
+<p>At this point, it should not be clear why we need this assumption. But if you are already familiar with proof-of-work based protocols, try to answer the following question. (If you are not yet familiar, please revisit this question after we have studied the next chapter.)</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What could go wrong in a proof of work setting if we don’t make this assumption?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The faulty nodes could cheat by creating valid blocks before the deployment of the protocol! If they manage to create <span class="math inline">K</span> blocks before the start of the protocol, this gives them the power to create a path of length <span class="math inline">K</span> “for free”. This means we cannot trust the first <span class="math inline">K</span> blocks on the blockchain. Another way to phrase assumption 1 is thus that we assume that <span class="math inline">K=0</span>.</p>
+</div>
+</div>
+</div>
+<p>So how do we verify this assumption? Technically we can’t, we just have to take it on faith. There are ways to make the assumption more plausible however. For example, the first block of Bitcoin was created on 3 January 2009. It contained the text “The Times 03/Jan/2009 Chancellor on brink of second bailout for banks”, which is a reference to a headline of that day’s issue of the newspaper The Times. Assuming Nakamoto had no way to influence this headline, it is thus reasonable to assume that nobody knew the genesis block (long) before the deployment of the Bitcoin protocol.</p>
+</section>
+<section id="assumptions-about-leader-selection" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="assumptions-about-leader-selection"><span class="header-section-number">5.2.2</span> Assumptions about leader selection</h3>
+<p>We need to make two assumptions about how leaders are selected. The first is related to the PKI assumption that we have seen in the BFT protocol.</p>
+<blockquote class="blockquote">
+<p><strong>A2)</strong> All nodes can efficiently verify whether a given node is the leader of a given round.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>A3)</strong> No node can influence the probability with which it is selected as the leader of a round in step 2a.</p>
+</blockquote>
+<p>In the protocols that we have studied in the previous chapter both were trivially satisfied. Indeed, we were working in the permissioned setting and the synchronous model and the leader-selection protocol simply asserted that in round <span class="math inline">t</span> node <span class="math inline">t</span> would be the leader (counting rounds modulo <span class="math inline">n</span>, i.e., node <span class="math inline">1</span> is the leader in round <span class="math inline">n+1</span> as well and so on). Since we assumed signatures exist and cannot be forged, only node <span class="math inline">t</span> could pretend to be the leader in round <span class="math inline">t</span>. This shows that A2 was satisfied. Since the leader-selection protocol is deterministic, A3 is satisfied trivially. In this chapter, and the next, we want to move away from the permissioned, synchronous setting. Assumptions A2 and A3 clarify the conditions that our leader-selection protocol should satisfy.</p>
+<p>In the next chapter we will argue that these assumptions also hold in the proof of work setting.</p>
+</section>
+<section id="assumptions-about-block-production" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="assumptions-about-block-production"><span class="header-section-number">5.2.3</span> Assumptions about block production</h3>
+<p>We assume the following about blocks produced in round <span class="math inline">r</span>:</p>
+<blockquote class="blockquote">
+<p><strong>A4)</strong> Every block produced by the leader in round <span class="math inline">r</span> must claim as its predecessor a block that belongs to a previous round.</p>
+</blockquote>
+<p>Remember that we assume signatures exist. We can thus assume that when a block is created, the creator includes the round number in the identifier of a block. This assumption implies that if you trace the sequence of predecessors of a single block, you always end up at a/the block that was created in round <span class="math inline">0</span>: the genesis block.</p>
+<p>Assumption A4) seems a bit redundant at first: after all how can you create a block that points to a predecessor that doesn’t exist yet? Honest nodes would of course not do this, but faulty nodes might have incentives to do this. This assumption puts some restrictions on their behavior, which we should thus verify for any blockchain protocol. For example, under the assumption A4), faulty nodes are still allowed to create multiple blocks in a single round, but each of these new blocks has to point to a predecessor from a previous round. The faulty node can thus not propose blocks that point to each other for example. It also prevents faulty nodes from “delaying”: if they are correctly selected as leader in round <span class="math inline">10</span>, they might want to wait to see what happens in rounds <span class="math inline">11</span> and <span class="math inline">12</span> before announcing their block for example in round <span class="math inline">13</span>. This assumption prevents them from using the blocks created in rounds <span class="math inline">11</span> and <span class="math inline">12</span> as predecessors for their block.</p>
+<p>Assumption A4) will be crucial in the analysis, but in implementations it is typically not so hard to enforce. For example, in the setting from the previous chapter we would just require the leader of round <span class="math inline">r</span> to include the round number in the description of the block.</p>
+<p>In the proof of work protocol that we will study in the next chapter, we can in fact enforce a stronger version of A4). This stronger version is not needed for the lemmas and theorems in this chapter, but it sometimes simplifies the proofs.</p>
+<blockquote class="blockquote">
+<p><strong>A4’)</strong> The leader of round <span class="math inline">r</span> produces exactly one block, and this block claims as its predecessor a block that belongs to a previous round.</p>
+</blockquote>
+<p>We will revisit this assumption in the next chapter. In a nutshell, the proof of work is valid proof only for a single block (the creator has to commit to a block before starting the work).</p>
+</section>
+<section id="assumptions-about-communication" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="assumptions-about-communication"><span class="header-section-number">5.2.4</span> Assumptions about communication</h3>
+<p>The last assumption that we make is one about our communication model.</p>
+<blockquote class="blockquote">
+<p><strong>A5)</strong> At all times, all honest nodes know about the exact same set of blocks.</p>
+</blockquote>
+<p>This is a (very) restrictive assumption; it essentially trivializes the consistency problem that we had to deal with in the previous chapter. We will see how to relax this assumption in the next chapter in the setting of proof of work. So why do we make this assumption? For one, it simplifies our lives (and certainly the exposition) a bit. The main reason however is that the key ideas behind longest chain protocols are already needed even when we add this restrictive assumption. When we relax the assumption in the next chapter we will see that it still “holds in spirit”; it is therefore a reasonable way to think about longest chain protocols.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+</section>
+</section>
+<section id="the-goals-liveness-and-finality" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="the-goals-liveness-and-finality"><span class="header-section-number">5.3</span> The goals: liveness and <em>finality</em></h2>
+<p>As in the previous chapter, we will have two goals that we want to achieve in a blockchain protocol. The first will be liveness, as in the previous chapter.</p>
+<p>As stated above, assumption A5) trivializes the <em>consistency</em> requirement. At least, the way we thought about consistency in the previous chapter. In the previous chapter we thought about consistency as keeping all nodes in sync: their local history states had to be identical at all points in time. This is indeed a key aspect of consistency, but it ignores another very important aspect: consistency over time. By that we mean that there is some notion of consistency between the local history of an honest node at time <span class="math inline">t</span> and the local history of that same node at some later time <span class="math inline">t+t'</span>. For example, the list of transactions recorded at time <span class="math inline">t</span> is a prefix<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> of the list of transactions recorded at time <span class="math inline">t+t'</span>. If you take another look at the protocols that we have seen so far, you will realize that they also satisfy this second property. The reason for this is that we only allowed information (transactions) to be added to the local history.</p>
+<p>In a blockchain, we think of the (shared) local history state as the information that is stored in the blocks on the longest chain. From our previous discussion, it should be clear that the first aspect of consistency (consistency across nodes at a given time) is trivial, but the second aspect is not! Indeed, consistency over time is the main goal that we will work towards in this chapter. Concretely, we aim for the following.</p>
+<blockquote class="blockquote">
+<p><strong>Goal: Finality</strong> (first version) If an honest node <span class="math inline">i</span> considers a block <span class="math inline">B</span> as <em>finalized</em> at time <span class="math inline">t</span>, then this block remains finalized at all times after <span class="math inline">t</span>.</p>
+</blockquote>
+<p>Some remarks are in order. First, we have not yet formalized the concept of <em>finalized</em>. We will do so in the next section. Second, even without knowing what <em>finalized</em> means, we can make sense of the goal <em>finality</em>: if we consider the set of finalized blocks as our local history state, then we have achieved consistency <em>over time</em>. Indeed, finality precisely ensures that whatever is part of the local history at time <span class="math inline">t</span> will remain part of the local history at all future times <span class="math inline">t+t'</span>. Third, the observant reader might have noticed the addition “(first version)”. This strongly suggests that there will be a second version in the future. There will be one indeed. In the later sections we will end up talking about protocols involving randomness. In such protocols, the above version of finality is too much to ask for. We will need to replace the first version of finality with a slightly weaker version that asks the same probability to hold with high probability. (What do we consider “high probability”? That depends again on the application…)</p>
+</section>
+<section id="finalizing-a-block" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="finalizing-a-block"><span class="header-section-number">5.4</span> Finalizing a block</h2>
+<p>So how do we finalize a block? Recall that we want to think of the longest chain in the blockchain as the one that stores the list of transactions. Intuitively, we would like to argue that if a block <span class="math inline">B</span> is far enough from the end of this longest chain, then it will (likely) always be a part of a/the longest chain. It would after all require the faulty nodes to extend the chain ending at the predecessor of <span class="math inline">B</span> to a new chain that is longer than the currently longest chain.</p>
+<p>To formalize this intuition, we introduce the parameter <span class="math inline">k</span>.</p>
+<blockquote class="blockquote">
+<p>The parameter <span class="math inline">k</span> corresponds to the number of blocks at the end of the longest chain that are still considered not finalized.</p>
+</blockquote>
+<p>Let <span class="math inline">G</span> be a directed in-tree rooted at a node <span class="math inline">B_0</span>. For an integer <span class="math inline">k</span> we define <span class="math display">
+\mathcal B_k(G) := \text{ the longest chain of $G$, with the last $k$ blocks removed.}
+</span></p>
+<p>For example, in <a href="#fig-blockchain-label" class="quarto-xref">Figure&nbsp;<span>5.2</span></a> we have <span class="math display">
+\mathcal B_0(G) = (B_0 \leftarrow B_2 \leftarrow B_3 \leftarrow B_6 \leftarrow B_7),
+</span> and <span class="math display">
+\mathcal B_1(G) = (B_0 \leftarrow B_2 \leftarrow B_3 \leftarrow B_6).
+</span></p>
+<p>Before reading the rest of this chapter, try to answer the following questions by yourself.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the above example, what is <span class="math inline">\mathcal B_2(G)</span>? Is it well-defined?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>It is not uniquely defined! In the next sections we will indeed need to argue that under certain assumptions, for <span class="math inline">k</span> large enough, <span class="math inline">\mathcal B_k(G)</span> is well-defined.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise*
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Assume a network with <span class="math inline">10</span> nodes, at most <span class="math inline">1</span> of which is <em>faulty</em>. Suppose we cyclically change the leader in each round. For which value of <span class="math inline">k</span> is <span class="math inline">\mathcal B_k(G)</span> well-defined?</p>
+</div>
+</div>
+<p>Coming back to our goal of <em>finality</em>, given a parameter <span class="math inline">k</span>, we would like to design a protocol that satisfies <em>finality</em> when the honest node <span class="math inline">i</span> considers the blocks in <span class="math inline">\mathcal B_k(G_t)</span> as finalized. Here we use <span class="math inline">G_t</span> to denote the graph corresponding to the blockchain in round <span class="math inline">t</span>.</p>
+<p>So what should <span class="math inline">k</span> be? If you back to the blockchain protocol description that we gave in <a href="#sec-protocol-description" class="quarto-xref"><span>Section 5.1</span></a>, you will see that there was no mention of a parameter <span class="math inline">k</span>. Indeed, the parameter <span class="math inline">k</span> is not a parameter of the protocol! Instead, it is a parameter that the user / node / client should decide for themselves, depending on their application!</p>
+<p>If we again take cryptocurrencies as motivating example, then it’s easy to see that there are competing interests when it comes to the parameter <span class="math inline">k</span>. A smaller value of <span class="math inline">k</span> means that blocks get finalized more quickly, and thus transactions can be handled more quickly. However, at the same time, a smaller value of <span class="math inline">k</span> also means that it becomes easier for faulty nodes to roll back the chain to a block that was more than <span class="math inline">k</span> blocks deep in the chain. Meaning that you might not be able to trust the fact that the transactions in <span class="math inline">\mathcal B_k(G)</span> actually took place.</p>
+<p>Continuing the example, a client selling a cup of coffee might be willing to trust all transactions in <span class="math inline">\mathcal B_1(G)</span>. Meaning that they will hand you your cup of coffee after waiting for only a single new block to be added to the longest chain. A client selling a house however, would probably want a bit more security before handing you the keys to the house, they might want to wait until the payment is contained in <span class="math inline">\mathcal B_{100}(G)</span>.</p>
+<p>In the remainder of this chapter we will study various scenarios and prove that</p>
+<ol type="1">
+<li><span class="math inline">\mathcal B_k(G)</span> is well-defined (provided <span class="math inline">k</span> is large enough),</li>
+<li>Blocks contained in <span class="math inline">\mathcal B_k(G)</span> can be considered final (with high probability).</li>
+</ol>
+<p>(To be continued…)</p>
+<!-- ## Balanced leader sequences  
 
 
+## The common prefix property
+
+
+## Finality of Longest-Chain consensus
+
+## Liveness of Longest-Chain consensus
+
+## Toward permissionless consensus -->
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Recall that the <em>out-degree</em> of a node in a directed graph is the number of arcs leaving the node. (In the picture, the number of arrows coming out of a block.)<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Here an in-tree is a directed graph that is defined as follows. If we treat all arcs as undirected edges, then the graph is a simple tree. If we treat <span class="math inline">B_0</span> as the root node of this tree, then all arcs are directed in such a way that they point towards <span class="math inline">B_0</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>A path is <em>maximal</em> if it cannot be extended to a longer path, i.e., it is not a subset of a larger path.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>This is certainly a handwavy statement. We will not make it more precise here.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>The first part of…<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
