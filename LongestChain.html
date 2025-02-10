@@ -228,7 +228,7 @@ window.Quarto = {
   <ul>
   <li><a href="#sec-protocol-description" id="toc-sec-protocol-description" class="nav-link active" data-scroll-target="#sec-protocol-description"><span class="header-section-number">5.1</span> Protocol description</a>
   <ul class="collapse">
-  <li><a href="#honest-vs.-dishonest-behavior" id="toc-honest-vs.-dishonest-behavior" class="nav-link" data-scroll-target="#honest-vs.-dishonest-behavior"><span class="header-section-number">5.1.1</span> Honest vs.&nbsp;dishonest behavior</a></li>
+  <li><a href="#sec-honestvsdishonest" id="toc-sec-honestvsdishonest" class="nav-link" data-scroll-target="#sec-honestvsdishonest"><span class="header-section-number">5.1.1</span> Honest vs.&nbsp;dishonest behavior</a></li>
   </ul></li>
   <li><a href="#the-assumptions" id="toc-the-assumptions" class="nav-link" data-scroll-target="#the-assumptions"><span class="header-section-number">5.2</span> The assumptions</a>
   <ul class="collapse">
@@ -239,6 +239,16 @@ window.Quarto = {
   </ul></li>
   <li><a href="#the-goals-liveness-and-finality" id="toc-the-goals-liveness-and-finality" class="nav-link" data-scroll-target="#the-goals-liveness-and-finality"><span class="header-section-number">5.3</span> The goals: liveness and <em>finality</em></a></li>
   <li><a href="#finalizing-a-block" id="toc-finalizing-a-block" class="nav-link" data-scroll-target="#finalizing-a-block"><span class="header-section-number">5.4</span> Finalizing a block</a></li>
+  <li><a href="#balanced-leader-sequences" id="toc-balanced-leader-sequences" class="nav-link" data-scroll-target="#balanced-leader-sequences"><span class="header-section-number">5.5</span> Balanced leader sequences</a>
+  <ul class="collapse">
+  <li><a href="#random-leaders-are-balanced-the-intuition" id="toc-random-leaders-are-balanced-the-intuition" class="nav-link" data-scroll-target="#random-leaders-are-balanced-the-intuition"><span class="header-section-number">5.5.1</span> Random leaders are balanced: the intuition</a></li>
+  <li><a href="#random-leaders-are-balanced-the-math" id="toc-random-leaders-are-balanced-the-math" class="nav-link" data-scroll-target="#random-leaders-are-balanced-the-math"><span class="header-section-number">5.5.2</span> Random leaders are balanced: the math</a></li>
+  <li><a href="#random-leaders-are-balanced-the-takeaway-message" id="toc-random-leaders-are-balanced-the-takeaway-message" class="nav-link" data-scroll-target="#random-leaders-are-balanced-the-takeaway-message"><span class="header-section-number">5.5.3</span> Random leaders are balanced: the takeaway message</a></li>
+  </ul></li>
+  <li><a href="#the-common-prefix-property" id="toc-the-common-prefix-property" class="nav-link" data-scroll-target="#the-common-prefix-property"><span class="header-section-number">5.6</span> The common prefix property</a></li>
+  <li><a href="#finality-of-longest-chain-consensus" id="toc-finality-of-longest-chain-consensus" class="nav-link" data-scroll-target="#finality-of-longest-chain-consensus"><span class="header-section-number">5.7</span> Finality of Longest-Chain consensus</a></li>
+  <li><a href="#liveness-of-longest-chain-consensus" id="toc-liveness-of-longest-chain-consensus" class="nav-link" data-scroll-target="#liveness-of-longest-chain-consensus"><span class="header-section-number">5.8</span> Liveness of Longest-Chain consensus</a></li>
+  <li><a href="#toward-permissionless-consensus" id="toc-toward-permissionless-consensus" class="nav-link" data-scroll-target="#toward-permissionless-consensus"><span class="header-section-number">5.9</span> Toward permissionless consensus</a></li>
   </ul>
 </nav>
     </div>
@@ -306,8 +316,8 @@ Figure&nbsp;5.1: A chain of blocks
 <li>Proof of Stake is another way to select leaders.</li>
 </ol>
 <p>For the moment, either one of these three options is good to have in mind. In the second half of the chapter we prove correctness of the longest chain protocol under certain assumptions. At that point, you are recommended to revisit the above three options and see whether or not they match the assumptions. We do want to point out that the second option already hints at the fact that <em>rounds</em> don’t have to correspond to time slots, they rather refer to the periods in between certain events. We will come back to this later.</p>
-<section id="honest-vs.-dishonest-behavior" class="level3" data-number="5.1.1">
-<h3 data-number="5.1.1" class="anchored" data-anchor-id="honest-vs.-dishonest-behavior"><span class="header-section-number">5.1.1</span> Honest vs.&nbsp;dishonest behavior</h3>
+<section id="sec-honestvsdishonest" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="sec-honestvsdishonest"><span class="header-section-number">5.1.1</span> Honest vs.&nbsp;dishonest behavior</h3>
 <p>Let us now describe the intended behavior of <em>honest</em> nodes. In a longest chain protocol an honest node will do the following when it is elected as the leader of a round <span class="math inline">r</span>:</p>
 <ul>
 <li>it proposes exactly one new block,</li>
@@ -331,7 +341,7 @@ Figure&nbsp;5.2: A labelled blockchain
 </figure>
 </div>
 <p>In this example, we see three distinct (maximal) paths.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> There is the path <span class="math inline">B_0 \leftarrow B_1 \leftarrow B_4</span> which contains three blocks. The path <span class="math inline">B_0 \leftarrow B_2 \leftarrow B_3 \leftarrow B_6 \leftarrow B_7</span> contains five blocks. Finally, there is also the path <span class="math inline">B_0 \leftarrow B_2 \leftarrow B_5</span> which contains three blocks. In this example, the path containing <span class="math inline">5</span> blocks is the longest. This path would thus be referred to as the longest chain. An honest node in this example would thus create a new block, say <span class="math inline">B_8</span>, that points to <span class="math inline">B_7</span> as its predecessor.</p>
-<p>In the above example, there was a unique longest path, which means the <em>honest</em> node does not have to make a choice: its new block has to point to <span class="math inline">B_7</span>. This does not have to be the case however. In the example below, there are two maximal paths, both containing exactly three blocks (namely <span class="math inline">B_0 \leftarrow B_1 \leftarrow B_4</span> and <span class="math inline">B_0 \leftarrow B_2 \leftarrow B_3</span>). Either of the two paths would be a longest chain in this example. This is the reason that we ask honest nodes to extend <em>a</em> longest chain and not <em>the</em> longest chain. When there are several longest chains, honest nodes may break ties in an arbitrary (but fixed) way.</p>
+<p>In the above example, there is a unique longest path, which means the <em>honest</em> node does not have to make a choice: its new block has to point to <span class="math inline">B_7</span>. This does not have to be the case however. In the example below, there are two maximal paths, both containing exactly three blocks (namely <span class="math inline">B_0 \leftarrow B_1 \leftarrow B_4</span> and <span class="math inline">B_0 \leftarrow B_2 \leftarrow B_3</span>). Either of the two paths would be a longest chain in this example. This is the reason that we ask honest nodes to extend <em>a</em> longest chain and not <em>the</em> longest chain. When there are several longest chains, honest nodes may break ties in an arbitrary (but fixed) way.</p>
 <div id="fig-blockchain-label2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-blockchain-label2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -474,7 +484,7 @@ Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In the above example, what is <span class="math inline">\mathcal B_2(G)</span>? Is it well-defined?</p>
+<p>In the above example <a href="#fig-blockchain-label" class="quarto-xref">Figure&nbsp;<span>5.2</span></a>, what is <span class="math inline">\mathcal B_2(G)</span>? What about <span class="math inline">\mathcal B_1(G)</span> and <span class="math inline">\mathcal B_2(G)</span> in the example <a href="#fig-blockchain-label2" class="quarto-xref">Figure&nbsp;<span>5.3</span></a>? Is there a unique answer?</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -489,7 +499,7 @@ Solution
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>It is not uniquely defined! In the next sections we will indeed need to argue that under certain assumptions, for <span class="math inline">k</span> large enough, <span class="math inline">\mathcal B_k(G)</span> is well-defined.</p>
+<p>For the first question, simply remove <span class="math inline">B_6</span> from <span class="math inline">\mathcal B_1(G)</span>. For the second question, it is not uniquely defined for <span class="math inline">\mathcal B_1(G)</span>! In the next sections we will indeed need to argue that under certain assumptions, for <span class="math inline">k</span> large enough, we can indeed speak of <em>the</em> chain <span class="math inline">\mathcal B_k(G)</span> (meaning it’s unique). In this example, <span class="math inline">\mathcal B_2(G)</span> is in fact uniquely defined, for both of the longest chains, if you remove the last two blocks, you end up with the chain <span class="math inline">(B_0)</span>.</p>
 </div>
 </div>
 </div>
@@ -513,20 +523,393 @@ Exercise*
 <p>In the remainder of this chapter we will study various scenarios and prove that</p>
 <ol type="1">
 <li><span class="math inline">\mathcal B_k(G)</span> is well-defined (provided <span class="math inline">k</span> is large enough),</li>
-<li>Blocks contained in <span class="math inline">\mathcal B_k(G)</span> can be considered final (with high probability).</li>
+<li>Blocks contained in <span class="math inline">\mathcal B_k(G)</span> can be considered final.</li>
 </ol>
-<p>(To be continued…)</p>
-<!-- ## Balanced leader sequences  
+<p>What do we mean by well-defined? As we have seen in the second-to-last exercise, it can happen that there are several longest chains. In such a case, we say that <span class="math inline">\mathcal B_0(G)</span> is not well-defined because it is not a unique object. The blockchain from <a href="#fig-blockchain-label2" class="quarto-xref">Figure&nbsp;<span>5.3</span></a> is an example. Here <span class="math inline">\mathcal B_0(G)</span> is not well-defined, because there are two longest chains. An important observation is that <span class="math inline">\mathcal B_2(G)</span> in that example is well-defined: the two longest chains agree on all blocks, except the last 2. In other words, if you take either of the two longest chains and remove the last two blocks, then you end up with the same chain. In this example, we have <span class="math inline">\mathcal B_2(G) = (B_0)</span>.</p>
+<p>If you think about it, <span class="math inline">\mathcal B_k(G)</span> is always well-defined “provided <span class="math inline">k</span> is large enough”: if we take <span class="math inline">k</span> to be one less than the number of blocks in the longest chain, then we always have <span class="math inline">\mathcal B_k(G) = (B_0)</span>. Of course, this is not a very satisfying situation for practical applications. We would like to show that <span class="math inline">\mathcal B_k(G)</span> is well-defined even if <span class="math inline">k</span> is a (small) constant.</p>
+<p>A final remark before we continue: in the rest of the chapter we will deal with protocols involving randomness, for example in the decision of who gets to create a block. We therefore cannot guarantee that properties (1) and (2) hold with certainty. The best we can hope for is a statement that (1) and (2) hold <em>with high probability</em>. We will make this more precise as we go along.</p>
+<p>If we go back to our discussion in <a href="#sec-honestvsdishonest" class="quarto-xref"><span>Section 5.1.1</span></a>, we see that honest nodes will always extend the longest chain, whereas faulty nodes might choose to try to extend a shorter chain in the hope of turning it into the longest chain. From the perspective of the honest nodes, the worst case scenario is that the honest nodes keep adding nodes to one chain, while the faulty nodes are collaborating to create an entirely different chain. If the faulty nodes ever manage to extend their chain further than the one of the honest nodes, it would become the longest chain, causing the honest nodes to abandon their original chain. In this worst-case example, no block on the original chain of the honest nodes is finalized. Can we prevent this?</p>
+<p>As a motivating example, let us consider the case where two thirds of the nodes are honest and a third of the nodes is faulty. If a new block is proposed by a node chosen uniformly at random<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>, then a new block is thus proposed by an honest node with probability <span class="math inline">2/3</span> and by a faulty node with probability <span class="math inline">1/3</span>. In the long run, we thus expect that the vast majority of the blocks is proposed by honest nodes. In the worst-case situation described above, the chain of the faulty nodes had to become longer than the chain of the honest nodes. In this example, we expect the chain of the honest nodes to be twice as long as the chain of the faulty nodes. It is a nice probability question to turn this “expectation” into a statement that holds with high probability: for a fixed number of blocks <span class="math inline">K</span>, what is the probability that at least <span class="math inline">K/2+1</span> blocks are created by faulty nodes?</p>
+<p>This example shows that it is very unlikely that the faulty nodes are able to change the longest chain <em>entirely</em>, meaning that the only block in common will be the genesis block <span class="math inline">B_0</span>. Can we say more? Intuitively, I hope you agree that the answer is yes. If two thirds of the nodes are honest, then if the chain becomes long enough, we can probably safely say that the first couple of blocks on the chain are <em>final with high probability</em>. Here, by <em>final with high probability</em> we mean that with high probability over the randomness in the protocol (i.e., the leader selection) the first couple of blocks will remain part of the longest chain indefinitely.</p>
+<p>In the next two sections we make this intuition more precise. We first introduce the concept of <em>balanced leader sequences</em>. This allows us to distill the key properties of the “two thirds vs.&nbsp;one third” example. We then show that balanced leader sequences ensure that “the first couple of blocks will remain part of the longest chain indefinitely”: we define the common prefix property.</p>
+</section>
+<section id="balanced-leader-sequences" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="balanced-leader-sequences"><span class="header-section-number">5.5</span> Balanced leader sequences</h2>
+<p>Eventually, we would like to show that our blockchain protocol satisfies for example <em>liveness</em>. For that property, it is important to distinguish between two honest nodes. From the perspective of the blockchain however, there is no need to make this distinction: all honest nodes would act the same. Similarly, we always assume that the faulty nodes are collaborating anyway, so we might as well treat all faulty nodes as identical.</p>
+<p>This means that if we think about the sequence of leaders<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> in our protocol, we only need to keep track of who was honest and who was faulty. We will thus represent the leader sequence as a sequence of <span class="math inline">H</span>’s and <span class="math inline">F</span>’s, where <span class="math inline">H</span> stands for <em>honest</em> and <span class="math inline">F</span> for <em>faulty</em>. For example, if the first two leaders are honest, the third is faulty, and the fourth is honest, then this would correspond to the sequence <span class="math inline">H, H, F, H</span>.</p>
+<p>We now state the key definition of this section. It depends on a parameter <span class="math inline">w</span>, a positive integer, that stands for window.</p>
+<div id="def-balanced" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5.1 (<span class="math inline">w</span>-balanced leader sequence)</strong></span> We say that a leader sequence <span class="math inline">\ell_1, \ell_2,\ell_3, ... \in \{H,F\}</span> is <em><span class="math inline">w</span>-balanced</em> if, in every window <span class="math inline">\ell_i,\ell_{i+1}, \ldots, \ell_{j-1}, \ell_j</span> of length at least <span class="math inline">w</span>, the number of <span class="math inline">H</span>’s is strictly larger than the number of <span class="math inline">F</span>’s.</p>
+</div>
+<p>Here are some observations to help you get familiar with the notion of <span class="math inline">w</span>-balanced leader sequences. (The explanation is contained in the footnotes, please take a minute to think about the statements before looking at the footnotes.)</p>
+<ul>
+<li>If a leader sequence contains at least one <span class="math inline">F</span>, then it is not <span class="math inline">1</span>- or <span class="math inline">2</span>-balanced.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></li>
+<li>If a leader sequence is <span class="math inline">w</span>-balanced, then it is also <span class="math inline">w'</span>-balanced for any integer <span class="math inline">w'</span> that satisfies <span class="math inline">w' &gt;w</span>.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></li>
+</ul>
+<p>The second observation motivates us to find the smallest value <span class="math inline">w</span> for which a leader sequence is <span class="math inline">w</span>-balanced.</p>
+<p>We will see in the next couple of sections that, as long as the leader sequence is <span class="math inline">w</span>-balanced, then the blocks in <span class="math inline">\mathcal B_k(G)</span> can be considered final, for a large enough <span class="math inline">k</span>. We now investigate several scenarios in which we can prove that a leader sequence is <span class="math inline">w</span>-balanced for some value of <span class="math inline">w</span>.</p>
+<p>The first scenario is about the permissioned setting and assumes we elect the leader in a cyclic fashion. Recall that in the permissioned setting, the number of nodes is fixed and denoted by <span class="math inline">n</span>. By electing the leader in a cyclic fashion, we mean that we fix an arbitrary order in which the <span class="math inline">n</span> nodes will be elected as leader. To obtain our leader sequence, we then repeat this fixed order indefinitely.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider a set of <span class="math inline">n</span> nodes, with <span class="math inline">f&lt;n/3</span> faulty nodes. Assume we select the leader in a cyclic fashion. Show that the resulting leader sequence is <span class="math inline">n</span>-balanced.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider a set of <span class="math inline">n</span> nodes, with <span class="math inline">0&lt;f&lt;n/2</span> faulty nodes. Assume we select the leader in a cyclic fashion. Show that there is a worst-case scenario such that the resulting leader sequence is not <span class="math inline">n</span>-balanced.</p>
+</div>
+</div>
+<!-- ::: {.callout-caution collapse="true"}
+## Solutions 
+To gain intuition, let us first consider a window of length exactly $n$. Since we are selecting the leader in a cyclic fashion, in any such window we elect every node exactly once as a leader. In both exercises, we assume there is a strict majority of honest nodes. Therefore, in any window of length *exactly* $n$, the number of $H$'s is strictly larger than the number of $F$'s. Is this enough to conclude that the leader sequence is $n$-balanced? No! We need to prove the property for any window of length *at least* $n$. 
 
+Let us now consider the setting of exercise 2. Assume $n$ is even and $f = n/2-1$. Assume the first $f$ nodes in the leader sequence are faulty. Since we are electing leaders cyclically, this means that the next $n-f$ leaders are honest. We then repeat this pattern. Now consider the window $\ell_1,\ldots, \ell_{n+f}$. This window has length $n+f >n$. It also contains $2f$ many $F$'s and $n-f$ many $H$'s. That means the $F$'s outnumber the $H$'s: we have $2f = 2(n/2-1) = n-2$ whereas $n-f = n/2+1$, so for $n$ large enough we have $2f>n-f$. 
 
-## The common prefix property
+Finally, in the setting of exercise 1, this issue does not arise when $f<n/3$. If we consider the same window, then we see that $2f < 2n/3$ and $n-f > 2n/3$, so that the number of $H$'s is indeed strictly larger than the number of $F$'s. To conclude the proof, it remains to argue that the window we considered is the "worst-case". To do so, consider a window of length $w$ with $w \geq n$. We distinguish two cases: i) $w \leq 2n$, or ii) $w>2n$. 
 
+In case i) we know that $n \leq w \leq 2n$. Since we are cyclically electing our leaders, we will elect some nodes once and some nodes twice. How do we maximize the ratio of $F$'s over $H$'s? We select each of the faulty nodes twice and each of the honest nodes exactly once. (This corresponds to the window that we considered above.) In this case the ratio is $2f/(n-f)<2f/(2f) = 1$, where we use that $n-f>2f$. 
 
-## Finality of Longest-Chain consensus
-
-## Liveness of Longest-Chain consensus
-
-## Toward permissionless consensus -->
+Case ii) is essentially a generalization of case i): suppose that the integer $K$ is such that $Kn \leq w \leq (K+1)n$. Since we are cyclically electing our leaders, we will elect some nodes $K$ times and some nodes $K+1$ times. How do we maximize the ratio of $F$'s over $H$'s? We select each of the faulty nodes $K+1$ times and each of the honest nodes exactly $K$ times. In this case the ratio is $(K+1)f/(K(n-f)) < (K+1)f /(K 2f) \leq 1$, where we use that $n-f>2f$.
+::: -->
+<p>The second scenario that we consider adds randomness to the process. We still consider the permissioned setting (for now), which means there are <span class="math inline">n</span> nodes. In each round, we elect the leader uniformly at random from the set of <span class="math inline">n</span> nodes. That is, each node is equally likely to be chosen as the leader. This is a second natural approach to take in the permissioned setting. More importantly, we will see that this approach extends very naturally to the <em>permissionless</em> setting.</p>
+<section id="random-leaders-are-balanced-the-intuition" class="level3" data-number="5.5.1">
+<h3 data-number="5.5.1" class="anchored" data-anchor-id="random-leaders-are-balanced-the-intuition"><span class="header-section-number">5.5.1</span> Random leaders are balanced: the intuition</h3>
+<p>To build some intuition, let’s see how many <em>faulty</em> nodes are in a typical leader sequence. Let <span class="math inline">\alpha</span> denote the fraction of <em>faulty</em> nodes in the network, i.e., let <span class="math inline">\alpha = f/n</span>. We assume from now on that <span class="math inline">\alpha&lt;1/2</span>. This is a pretty harmless assumption: if more than half the nodes are faulty, there is no hope for achieving a <span class="math inline">w</span>-balanced leader sequence for any value of <span class="math inline">w</span>.</p>
+<ul>
+<li>If we elect a leader uniformly at random from the set of <span class="math inline">n</span> nodes, then the probability that the leader is faulty is thus equal to <span class="math inline">\alpha</span>.</li>
+<li>If we elect <span class="math inline">K</span> leaders in this way, then we thus expect <span class="math inline">\alpha K</span> of the leaders to be faulty.</li>
+<li>Since <span class="math inline">\alpha&lt;1/2</span>, we thus expect strictly less than half the leaders to be faulty.</li>
+</ul>
+<p>Can we turn this “on expectation” statement into a “with high probability” statement? To gain some intuition, you are invited to experiment with different values of <span class="math inline">\alpha</span> and <span class="math inline">K</span>, using the Python code snippets below.</p>
+<p>To create one such leader sequence, use the following code:</p>
+<div id="76705a96" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sample_leaders(K, alpha):</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Samples K Bernoulli random variables, each with probability alpha.</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">        K (int): Number of Bernoulli random variables to sample.</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">        alpha (float): Probability of success (1) for each Bernoulli trial.</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">        </span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">        numpy.ndarray: Array of sampled Bernoulli random variables (0s and 1s).</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    samples <span class="op">=</span> np.random.binomial(n<span class="op">=</span><span class="dv">1</span>, p<span class="op">=</span>alpha, size<span class="op">=</span>K)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> samples</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="1663e401" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="dv">10</span>      <span class="co"># number of leaders</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.45</span> <span class="co"># probability of leader being faulty</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> sample_leaders(K, alpha)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Sampled leaders:"</span>, samples)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Fraction of faulty leaders:"</span>, np.<span class="bu">sum</span>(samples)<span class="op">/</span>K)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sampled leaders: [0 1 1 1 0 0 1 1 1 1]
+Fraction of faulty leaders: 0.7</code></pre>
+</div>
+</div>
+<p>If you run the above code several times, you will see that the outcome varies a bit. The following code allows you to run the process <span class="math inline">T</span> times and create a histogram of the fractions of faulty nodes.</p>
+<div id="8f69f1a3" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sample_T_sequences(T, K, alpha):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Generates T leader sequences of length K, </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">    where alpha is the fraction of faulty nodes.</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">        fractions: List of fractions representing the </span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">        fraction of faulty leaders in each leader sequence.</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    fractions <span class="op">=</span> []</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(T):</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        sample <span class="op">=</span> sample_leaders(K, alpha)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        fractions.append(np.<span class="bu">sum</span>(sample)<span class="op">/</span>K)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fractions</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_histogram(fractions, bins<span class="op">=</span><span class="dv">20</span>):</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">    Plots a histogram of the fractions.</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">        fractions (list): List of fraction values.</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">        bins (int): Number of bins for the histogram.</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    plt.hist(fractions, bins<span class="op">=</span>bins, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">"Histogram of the fraction of faulty nodes"</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Fraction of faulty nodes"</span>)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Frequency"</span>)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<style>
+.cell-output-display {
+  background-color: #ffffff;
+}
+</style>
+<div id="efcdd6e7" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage:</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">10000</span>     <span class="co"># Number of leader sequences</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="dv">50</span>       <span class="co"># Number of leaders per sequence</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.45</span>  <span class="co"># Probability of success in each Bernoulli trial</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>fractions <span class="op">=</span> sample_T_sequences(T,K,alpha)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The fraction of leader sequences that are balanced is:"</span>, </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> f <span class="kw">in</span> fractions <span class="cf">if</span> f <span class="op">&lt;</span> <span class="fl">0.5</span>)<span class="op">/</span>T)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the histogram of fractions</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plot_histogram(fractions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The fraction of leader sequences that are balanced is: 0.7139</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="LongestChain_files/figure-html/cell-5-output-2.png" class="quarto-figure quarto-figure-center figure-img" width="602" height="449"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Try changing the value <span class="math inline">K</span> in the above snippet to <span class="math inline">500</span>, what do you observe?</p>
+<p>If you are lucky<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>, you have been able to make the following two observations:</p>
+<ul>
+<li>The longer the leader sequence is, the larger the probability is that strictly less than half the leaders are faulty.</li>
+<li>If you choose <span class="math inline">\alpha</span> closer to <span class="math inline">1/2</span>, you need to take a longer leader sequence to ensure that a large fraction of the <span class="math inline">T</span> leader sequences has the property that strictly less than half the leaders are faulty.</li>
+</ul>
+</section>
+<section id="random-leaders-are-balanced-the-math" class="level3" data-number="5.5.2">
+<h3 data-number="5.5.2" class="anchored" data-anchor-id="random-leaders-are-balanced-the-math"><span class="header-section-number">5.5.2</span> Random leaders are balanced: the math</h3>
+<p>To prove that our intuition from above is correct, we will two useful results from probability theory.</p>
+<p>The first one is a so-called <em>concentration inequality</em>. Roughly speaking, a concentration inequality provides a quantitative statement about the probability that a random variable deviates more than a certain amount from its mean. They typically take on the form<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> <span class="math display">
+\Pr(|Z - \mathbb E[Z]| \geq t) \leq \text{ something small}.
+</span></p>
+<p><strong>Hoeffding’s inequality:</strong> The concentration inequality that we use is called Hoeffding’s inequality. This inequality is often used in the computer science literature. It applies to a more general setting than what we need here. We first state it in its general form and then we discuss the implications for our setting.</p>
+<p>Let <span class="math inline">X_1,\ldots,X_K</span> be <em>independent</em> random variables such that <span class="math inline">a_i \leq X_i \leq b_i</span>. Consider the sum of the random variables: <span class="math display">
+S_K := X_1 + X_2 + \ldots + X_K.
+</span></p>
+<p>As usual, let us use <span class="math inline">\Pr(\cdot)</span> and <span class="math inline">\mathbb E[\cdot]</span> to denote probability and expectation respectively. Then Hoeffding’s inequality states the following.</p>
+<div id="thm-hoeffding" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 5.1 (Hoeffding)</strong></span> Fix a <span class="math inline">t&gt;0</span>. Then we have <span class="math display">
+\Pr(|S_k - \mathbb E[S_k]| \geq t) \leq 2 \exp\left(-\frac{t^2}{\sum_{i=1}^k (b_i - a_i)^2}\right).
+</span></p>
+</div>
+<p>To get a feeling for this bound, let us discuss how we will apply it. In our setting, we want to count the number of faulty nodes in a leader sequence of length <span class="math inline">K \geq w</span>. The variable <span class="math inline">X_i</span> will take on the values <span class="math inline">0</span> and <span class="math inline">1</span> representing honest and faulty respectively. In this way, <span class="math inline">S_k</span> indeed counts the number of faulty nodes in the leader sequence of length <span class="math inline">K</span>. As bounds, on <span class="math inline">X_i</span> we can take <span class="math inline">a_i = 0</span> and <span class="math inline">b_i=1</span>. Hoeffding’s inequality then shows that <span class="math display">
+\Pr(|S_K - \mathbb E[S_K]| \geq t) \leq 2 \exp\left(-\frac{t^2}{K}\right).
+</span></p>
+<p>At this point, a natural reaction would be: wait a minute, we have not specified the distribution of the <span class="math inline">X_i</span>’s! Indeed, the distribution of the <span class="math inline">X_i</span>’s is irrelevant for Hoeffding’s inequality. All that matters is that the bounds <span class="math inline">a_i</span> and <span class="math inline">b_i</span> are known.</p>
+<p>So what is the distribution of “our” <span class="math inline">X_i</span>? In our application of counting the number of faulty nodes in a leader sequence, each <span class="math inline">X_i</span> will be a random variable that takes on the value <span class="math inline">0</span> with probability <span class="math inline">1-\alpha</span> and the value <span class="math inline">1</span> with probability <span class="math inline">\alpha</span>.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> Note that each of the <span class="math inline">X_i</span>’s is identically distributed. They are independent random variables by due to the design of our protocol. So what does Hoeffding’s inequality say for our setting? The only thing that remains is to compute <span class="math inline">\mathbb E[S_K]</span>. By linearity of the expectation, we have <span class="math display">\begin{align*}
+\mathbb E[S_K] &amp;= \mathbb E [X_1 + X_2 + \ldots + X_k] \\
+&amp;=\mathbb E[X_1] + \mathbb E[X_2] + \ldots + \mathbb E[X_K] \\
+&amp;= \alpha K.
+\end{align*}</span> Hoeffding’s inequality thus gives us the following bound: <span class="math display">
+\Pr(|S_K - \alpha K| \geq t) \leq 2 \exp\left(-\frac{t^2}{K}\right).
+</span> Our goal is to show that the sequence <span class="math inline">X_1,X_2,\ldots,X_K</span> is <em>balanced</em>: we want to prove that <span class="math inline">S_K &lt; K/2</span> <em>with high probability</em>. Hoeffding’s inequality allows us to quantify this probability. Indeed, we will apply the bound with <span class="math inline">t = \left(\frac{1}{2}-\alpha\right)k</span> (or a tiny bit smaller if we want the strict inequality). We then obtain <span id="eq-bound"><span class="math display">
+\Pr(S_K \geq K/2) \leq 2 \exp\left(-\left(\frac{1}{2}-\alpha\right)^2 K\right).
+\tag{5.1}</span></span></p>
+<p><strong>The key observation</strong> here is that the right hand side decays exponentially with <span class="math inline">K</span>! A second observation is that the bound deteriorates as <span class="math inline">\alpha</span> approaches <span class="math inline">1/2</span>, as it should (do you see why?). Both of these observations support the intuition from the previous section: if the fraction of faulty nodes <span class="math inline">\alpha</span> is strictly less than <span class="math inline">1/2</span>, then if we look at a long enough leader sequence (length <span class="math inline">K</span>), the honest nodes outnumber the faulty nodes with high probability.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Revisit the numerical examples from the previous section, does the bound from <a href="#eq-bound" class="quarto-xref">Equation&nbsp;<span>5.1</span></a> match your observations?</p>
+</div>
+</div>
+<!-- For which values of $t$ is this a meaningful bound? In other words, for which values of $t$ is the value on the right hand side much smaller than $1$? The expression on the right hand side depends on the ratio $t^2/k$, which suggests that the right scale of $t$ is the one that is proportional to $\sqrt{k}$. Let us restate the bound for $t = \gamma \sqrt{k}$:
+$$
+\Pr(|S_k - \mathbb E[S_k]| \geq \gamma \sqrt{k}) \leq 2 \exp\left(-\gamma^2\right).
+$$
+This is already a very useful bound! In practice, we often want the probability of the *bad event* (deviating a lot from the mean) to be at most some fixed number $\delta>0$. By equating the right hand side to $\delta$ and solving for $\gamma$, we find that we should take $\gamma = \sqrt{\log(1/(2\delta))}$. In other words, 
+$$
+\Pr(|S_k - \mathbb E[S_k]| \geq \sqrt{\log(1/(2\delta))} \sqrt{k}) \leq \delta.
+$$ 
+-->
+<p><strong>The union bound:</strong> The above allows us to argue that one particular window is balanced, with high probability. However, to argue that the entire leader sequence is <span class="math inline">w</span>-balanced, we have to consider <em>all</em> windows of length at least <span class="math inline">w</span>. To do so, we will need a second fundamental tool from probability theory: the union bound.</p>
+<p>We will need the bound in the following form. Let <span class="math inline">E_1,\ldots, E_N</span> be some events, then we have the inequality <span class="math display">\begin{align*}
+\Pr(&amp;\text{at least one of the events } E_1,\ldots,E_N \text{ occurs})\\
+&amp;\leq \sum_{i=1}^N \Pr(\text{event $E_i$ occurs}).
+\end{align*}</span></p>
+<p>For two events <span class="math inline">A</span> and <span class="math inline">B</span>, the union bound is a simple consequence of the identity <span class="math display">\Pr(A \cup B) = \Pr(A) + \Pr(B) - \Pr(A \cap B).
+</span> Indeed, it suffices to observe that <span class="math inline">\Pr(A \cap B) \geq 0</span>.</p>
+<div id="fig-union" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-union-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/union.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-union-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.4: Union bound
+</figcaption>
+</figure>
+</div>
+<p>The union bound for <span class="math inline">N</span> events can be derived from the one for two events using induction.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Prove the above union bound for <span class="math inline">N</span> events.</p>
+</div>
+</div>
+<p>How will we apply the union bound? We want to argue that for a given leader sequence, all windows of length at least <span class="math inline">w</span> have the property that there is a majority of honest leaders. To each window <span class="math inline">i</span> of length at least <span class="math inline">w</span> we associate the event <span class="math inline">E_i</span> that states that at least half the leaders in window <span class="math inline">i</span> are <em>faulty</em>. Notice that we define the event as the <em>bad event</em>. In this way, the union bound gives us an upper bound on the probability that at least one bad event occurs. Why do we care about such an upper bound? It precisely gives us a lower bound on the complementary event: the probability that all windows are balanced. In formulas, <span class="math display">\begin{align*}
+\Pr(&amp;\text{none of the events } E_1,\ldots,E_N \text{ occurs})\\
+&amp;\geq 1- \sum_{i=1}^N \Pr(\text{event $E_i$ occurs}).
+\end{align*}</span></p>
+<p><strong>Random leader sequences are balanced:</strong> We now combine the above two key ingredients. Our goal is to show that random leader sequences are <span class="math inline">w</span>-balanced, provided <span class="math inline">w</span> is large enough. Formally, we will show the following.</p>
+<div id="thm-balanced" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 5.2 (Random leader sequences are balanced)</strong></span> A random leader sequence of length <span class="math inline">T</span> in which the probability that a leader is faulty is <span class="math inline">\alpha \in [0,1/2)</span> is <span class="math inline">w</span>-balanced with probability <span class="math inline">1-\delta</span> if <span class="math display">
+w \geq \frac{ (1+2\log(T) + \log(1/\delta))}{\left(\frac 12 - \alpha\right)^2}.
+</span></p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>Let <span class="math inline">\alpha \in [0,1/2)</span> and consider a leader sequence <span class="math inline">\ell_1, \ell_2,\ldots, \ell_T</span> of length <span class="math inline">T</span> in which each leader is chosen independently. The probability that a leader is faulty is <span class="math inline">\alpha</span>. Fix some integer <span class="math inline">w</span>. We give a lower bound on the probability that the leader sequence is <span class="math inline">w</span>-balanced.</p>
+<p>To do so, we have to show that in each window of length at least <span class="math inline">w</span>, there is a strict majority of honest leaders. Let <span class="math inline">N</span> denote the number of windows of size at least <span class="math inline">w</span> in a sequence of length <span class="math inline">T</span>. For future reference, let us observe that <span class="math inline">N \leq T^2</span>: each window is uniquely defined by its start and end point, both of which are integers between <span class="math inline">1</span> and <span class="math inline">T</span>.</p>
+<p>For <span class="math inline">i \in [N]</span>, let <span class="math inline">E_i</span> denote the event that at least half the leaders in the <span class="math inline">i</span>-th window are faulty. Then our leader sequence is <span class="math inline">w</span>-balanced precisely if none of these events occur. The union bound gives us the following lower bound: <span class="math display">\begin{align*}
+\Pr(&amp;\text{none of the events } E_1,\ldots,E_N \text{ occurs})\\
+&amp;\geq 1- \sum_{i=1}^N \Pr(\text{event $E_i$ occurs}).
+\end{align*}</span> We are thus left with providing an upper bound on the quantity <span class="math display">
+\sum_{i=1}^N \Pr(\text{event $E_i$ occurs}).
+</span></p>
+<p>For that, let us first consider a fixed <span class="math inline">i \in [N]</span>. By assumption, the <span class="math inline">i</span>-th window has length <span class="math inline">K_i</span> that is at least <span class="math inline">w</span>. Hoeffding’s inequality, and in particular <a href="#eq-bound" class="quarto-xref">Equation&nbsp;<span>5.1</span></a>, then gives us the upper bound <span class="math display">\begin{align*}
+\Pr(\text{event $E_i$ occurs}) &amp;\leq 2 \exp\left(-\left(\frac{1}{2}-\alpha\right)^2 K_i\right) \\
+&amp;\leq 2 \exp\left(-\left(\frac{1}{2}-\alpha\right)^2 w\right),
+\end{align*}</span> where in the second inequality we have used that <span class="math inline">K_i \geq w</span>. Note that the latter upper bound does not depend on <span class="math inline">i</span>! We therefore have <span class="math display">\begin{align*}
+\sum_{i=1}^N \Pr(\text{event $E_i$ occurs}) &amp;\leq 2 N \exp\left(-\left(\frac{1}{2}-\alpha\right)^2 w\right) \\
+&amp;\leq 2 T^2 \exp\left(-\left(\frac{1}{2}-\alpha\right)^2 w\right).
+\end{align*}</span></p>
+<p>This almost concludes the proof: we have obtained an upper bound on the probability that our leader sequence is not <span class="math inline">w</span>-balanced. By inspection, the bound is decreasing in <span class="math inline">w</span>. For which value of <span class="math inline">w</span> is this probability at most <span class="math inline">\delta</span>? To determine that, we solve the equation <span class="math display">
+\delta = 2 T^2 \exp\left(-\left(\frac{1}{2}-\alpha\right)^2 w\right)
+</span> for <span class="math inline">w</span>. Taking the natural logarithm on both sides gives <span class="math display">
+\log(\delta) = \log(2) +2\log(T) -\left(\frac{1}{2}-\alpha\right)^2 w.
+</span> Rearranging gives the claimed lower bound on <span class="math inline">w</span> (using that <span class="math inline">\log(2) \leq 1</span>): <span class="math display">
+w \geq \frac{ (1+2\log(T) + \log(1/\delta))}{\left(\frac 12 - \alpha\right)^2}.
+</span></p>
+</div>
+</section>
+<section id="random-leaders-are-balanced-the-takeaway-message" class="level3" data-number="5.5.3">
+<h3 data-number="5.5.3" class="anchored" data-anchor-id="random-leaders-are-balanced-the-takeaway-message"><span class="header-section-number">5.5.3</span> Random leaders are balanced: the takeaway message</h3>
+<p>Since the proof was a bit lengthy, let us restate what we have just shown, so that we can discuss the main takeaway message.</p>
+<div id="thm-balanced2" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 5.3 (Random leader sequences are balanced)</strong></span> A random leader sequence of length <span class="math inline">T</span> in which the probability that a leader is faulty is <span class="math inline">\alpha \in [0,1/2)</span> is <span class="math inline">w</span>-balanced with probability <span class="math inline">1-\delta</span> if <span class="math display">
+w \geq \frac{ (1+2\log(T) + \log(1/\delta))}{\left(\frac 12 - \alpha\right)^2}.
+</span></p>
+</div>
+<p>What do we learn from this theorem? Let us work through an example. Suppose that the fraction of faulty nodes in the network is at most <span class="math inline">1/3</span>, that is, let <span class="math inline">\alpha=1/3</span>. Then <span class="math inline">\left(\frac 12 - \alpha\right)^2 = 1/36</span>, so the lower bound becomes <span class="math display">
+w \geq 36 (1+2\log(T) + \log(1/\delta)).
+</span> Which values of <span class="math inline">T</span> and <span class="math inline">\delta</span> are realistic? This of course again depends on your application. The important observation here is that the logarithm function grows <em>very slowly</em>; here is a table of the value of the natural logarithm for the first <span class="math inline">10</span> powers of <span class="math inline">10</span>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Power of 10</th>
+<th>Value (10^k)</th>
+<th>Natural Logarithm (log(10^k))</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>10^0</td>
+<td>1</td>
+<td>0.0000</td>
+</tr>
+<tr class="even">
+<td>10^1</td>
+<td>10</td>
+<td>2.3026</td>
+</tr>
+<tr class="odd">
+<td>10^2</td>
+<td>100</td>
+<td>4.6052</td>
+</tr>
+<tr class="even">
+<td>10^3</td>
+<td>1,000</td>
+<td>6.9078</td>
+</tr>
+<tr class="odd">
+<td>10^4</td>
+<td>10,000</td>
+<td>9.2103</td>
+</tr>
+<tr class="even">
+<td>10^5</td>
+<td>100,000</td>
+<td>11.5129</td>
+</tr>
+<tr class="odd">
+<td>10^6</td>
+<td>1,000,000</td>
+<td>13.8155</td>
+</tr>
+<tr class="even">
+<td>10^7</td>
+<td>10,000,000</td>
+<td>16.1181</td>
+</tr>
+<tr class="odd">
+<td>10^8</td>
+<td>100,000,000</td>
+<td>18.4207</td>
+</tr>
+<tr class="even">
+<td>10^9</td>
+<td>1,000,000,000</td>
+<td>20.7233</td>
+</tr>
+</tbody>
+</table>
+<p>For example, if we consider a leader sequence of length <span class="math inline">T = 1,000,000,000</span>, with <span class="math inline">\alpha=1/3</span> and <span class="math inline">\delta = 1/1,000,000,0000</span>, then the sequence is <span class="math inline">w</span>-balanced with probability at least <span class="math inline">1-\delta</span> whenever <span class="math inline">w \geq 26(1+3 \cdot 20.7233) \approx 1643</span>. A blockchain of length <span class="math inline">T=1,000,000,000</span> is probably more than we need in any real application, but the point is that <span class="math inline">w</span> is very small compared to <span class="math inline">T</span> and <span class="math inline">1/\delta</span>.</p>
+<p><strong>Is the bound tight?</strong></p>
+<p><strong>Permissioned vs permissionless:</strong> At the start of this section we restricted ourselves to the <em>permissioned</em> setting. That is the setting that we are familiar with. It also gives us a clear definition for the probability that a leader that is selected uniformly at random is faulty (namely <span class="math inline">\alpha = f/n</span>). In the remainder of the section, we then only worked with <span class="math inline">\alpha</span>. What about the permissionless setting? The simple definition of <span class="math inline">\alpha</span> from before no longer works since nodes are allowed to join and leave the network freely. However, if you read the arguments carefully, you will realize that all we needed was <em>an upper bound</em> on the probability that a leader is faulty. Later on, in the permissionless setting, we will turn this into an assumption.</p>
+</section>
+</section>
+<section id="the-common-prefix-property" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="the-common-prefix-property"><span class="header-section-number">5.6</span> The common prefix property</h2>
+</section>
+<section id="finality-of-longest-chain-consensus" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="finality-of-longest-chain-consensus"><span class="header-section-number">5.7</span> Finality of Longest-Chain consensus</h2>
+</section>
+<section id="liveness-of-longest-chain-consensus" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="liveness-of-longest-chain-consensus"><span class="header-section-number">5.8</span> Liveness of Longest-Chain consensus</h2>
+</section>
+<section id="toward-permissionless-consensus" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="toward-permissionless-consensus"><span class="header-section-number">5.9</span> Toward permissionless consensus</h2>
 
 
 </section>
@@ -538,6 +921,13 @@ Exercise*
 <li id="fn3"><p>A path is <em>maximal</em> if it cannot be extended to a longer path, i.e., it is not a subset of a larger path.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>This is certainly a handwavy statement. We will not make it more precise here.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>The first part of…<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>This might sound artificial, but it is actually a realistic assumption for many protocols. Proof of work protocols, such as Bitcoin, satisfy this property for example.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Remember, the leader is the one that proposes a new block.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Indeed, for <span class="math inline">w \in \{1,2\}</span>, take a window of length <span class="math inline">w</span> that contains an <span class="math inline">F</span>. In that window the number of <span class="math inline">H</span>’s is at most <span class="math inline">1</span> (could be zero) and the number of <span class="math inline">F</span>’s at least one.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>The key observation here is that the definition of <span class="math inline">w</span>-balanced leader sequences requires the property (strict majority of <span class="math inline">H</span>’s) to hold for every window of length <em>at least</em> <span class="math inline">w</span>. If the property holds for every window of length at least <span class="math inline">w</span>, then it in particular holds for every window of length at least <span class="math inline">w'</span> whenever <span class="math inline">w'</span> is strictly larger than <span class="math inline">w</span>. Another way to put this is that the definition becomes easier to satisfy the larger <span class="math inline">w</span> is, since there are less windows to verify.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>In the next section, you will learn that not much luck was needed…<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>If you want to know (much) more about concentration inequality, I highly recommend <a href="https://www.math.uci.edu/~rvershyn/papers/HDP-book/HDP-book.pdf">Vershynin’s book</a> on high-dimensional probability.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>As a side remark for those who recently took a course on probability, this means each <span class="math inline">X_i</span> is drawn according to the Bernoulli distribution with parameter <span class="math inline">\alpha</span>.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
