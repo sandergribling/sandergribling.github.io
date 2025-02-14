@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Longest chain protocols – Decentralized Finance and Blockchains</title>
+<title>5&nbsp; Longest-chain protocols – Decentralized Finance and Blockchains</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -143,7 +143,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cs.html">Computer Science</a></li><li class="breadcrumb-item"><a href="./LongestChain.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longest chain protocols</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cs.html">Computer Science</a></li><li class="breadcrumb-item"><a href="./LongestChain.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longest-chain protocols</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -205,7 +205,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./LongestChain.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longest chain protocols</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longest-chain protocols</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -238,16 +238,19 @@ window.Quarto = {
   <li><a href="#assumptions-about-communication" id="toc-assumptions-about-communication" class="nav-link" data-scroll-target="#assumptions-about-communication"><span class="header-section-number">5.2.4</span> Assumptions about communication</a></li>
   </ul></li>
   <li><a href="#the-goals-liveness-and-finality" id="toc-the-goals-liveness-and-finality" class="nav-link" data-scroll-target="#the-goals-liveness-and-finality"><span class="header-section-number">5.3</span> The goals: liveness and <em>finality</em></a></li>
-  <li><a href="#finalizing-a-block" id="toc-finalizing-a-block" class="nav-link" data-scroll-target="#finalizing-a-block"><span class="header-section-number">5.4</span> Finalizing a block</a></li>
-  <li><a href="#balanced-leader-sequences" id="toc-balanced-leader-sequences" class="nav-link" data-scroll-target="#balanced-leader-sequences"><span class="header-section-number">5.5</span> Balanced leader sequences</a>
+  <li><a href="#sec-finalizing" id="toc-sec-finalizing" class="nav-link" data-scroll-target="#sec-finalizing"><span class="header-section-number">5.4</span> Finalizing a block</a></li>
+  <li><a href="#sec-balanced" id="toc-sec-balanced" class="nav-link" data-scroll-target="#sec-balanced"><span class="header-section-number">5.5</span> Balanced leader sequences</a>
   <ul class="collapse">
-  <li><a href="#random-leaders-are-balanced-the-intuition" id="toc-random-leaders-are-balanced-the-intuition" class="nav-link" data-scroll-target="#random-leaders-are-balanced-the-intuition"><span class="header-section-number">5.5.1</span> Random leaders are balanced: the intuition</a></li>
+  <li><a href="#sec-balanced-intuition" id="toc-sec-balanced-intuition" class="nav-link" data-scroll-target="#sec-balanced-intuition"><span class="header-section-number">5.5.1</span> Random leaders are balanced: the intuition</a></li>
   <li><a href="#random-leaders-are-balanced-the-math" id="toc-random-leaders-are-balanced-the-math" class="nav-link" data-scroll-target="#random-leaders-are-balanced-the-math"><span class="header-section-number">5.5.2</span> Random leaders are balanced: the math</a></li>
   <li><a href="#random-leaders-are-balanced-the-takeaway-message" id="toc-random-leaders-are-balanced-the-takeaway-message" class="nav-link" data-scroll-target="#random-leaders-are-balanced-the-takeaway-message"><span class="header-section-number">5.5.3</span> Random leaders are balanced: the takeaway message</a></li>
   </ul></li>
-  <li><a href="#the-common-prefix-property" id="toc-the-common-prefix-property" class="nav-link" data-scroll-target="#the-common-prefix-property"><span class="header-section-number">5.6</span> The common prefix property</a></li>
-  <li><a href="#finality-of-longest-chain-consensus" id="toc-finality-of-longest-chain-consensus" class="nav-link" data-scroll-target="#finality-of-longest-chain-consensus"><span class="header-section-number">5.7</span> Finality of Longest-Chain consensus</a></li>
-  <li><a href="#liveness-of-longest-chain-consensus" id="toc-liveness-of-longest-chain-consensus" class="nav-link" data-scroll-target="#liveness-of-longest-chain-consensus"><span class="header-section-number">5.8</span> Liveness of Longest-Chain consensus</a></li>
+  <li><a href="#the-common-prefix-property" id="toc-the-common-prefix-property" class="nav-link" data-scroll-target="#the-common-prefix-property"><span class="header-section-number">5.6</span> The common prefix property</a>
+  <ul class="collapse">
+  <li><a href="#proof-of-thm-common" id="toc-proof-of-thm-common" class="nav-link" data-scroll-target="#proof-of-thm-common"><span class="header-section-number">5.6.1</span> Proof of Theorem&nbsp;<span>5.4</span></a></li>
+  </ul></li>
+  <li><a href="#finality-of-longest-chain-consensus" id="toc-finality-of-longest-chain-consensus" class="nav-link" data-scroll-target="#finality-of-longest-chain-consensus"><span class="header-section-number">5.7</span> Finality of longest-chain consensus</a></li>
+  <li><a href="#liveness-of-longest-chain-consensus" id="toc-liveness-of-longest-chain-consensus" class="nav-link" data-scroll-target="#liveness-of-longest-chain-consensus"><span class="header-section-number">5.8</span> Liveness of longest-chain consensus</a></li>
   <li><a href="#toward-permissionless-consensus" id="toc-toward-permissionless-consensus" class="nav-link" data-scroll-target="#toward-permissionless-consensus"><span class="header-section-number">5.9</span> Toward permissionless consensus</a></li>
   </ul>
 </nav>
@@ -255,9 +258,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cs.html">Computer Science</a></li><li class="breadcrumb-item"><a href="./LongestChain.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longest chain protocols</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cs.html">Computer Science</a></li><li class="breadcrumb-item"><a href="./LongestChain.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longest-chain protocols</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-Longest-chain" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longest chain protocols</span></span></h1>
+<h1 class="title"><span id="sec-Longest-chain" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longest-chain protocols</span></span></h1>
 </div>
 
 
@@ -275,9 +278,9 @@ window.Quarto = {
 
 
 <p><link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""> <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&amp;family=Fira+Sans&amp;display=swap" rel="stylesheet"></p>
-<p>In this chapter we study a second type of consensus protocols, those based on blockchains and in particular the concept of longest chains. This type of consensus protocol lies at the heart of several cryptocurrencies (e.g.&nbsp;Bitcoin). The Bitcoin protocol is one example of a longest chain protocol, but it is not the only one. In fact, most cryptocurrencies are based on blockchain protocols, see for example the long list on Wikipedia <a href="https://en.wikipedia.org/wiki/List_of_blockchains">here</a>. All of these protocols follow the same general recipe, but they use different ingredients in certain steps. In this chapter we focus on the general recipe, in the next we will see some of the ingredients that Bitcoin uses (namely proof of work).</p>
+<p>In this chapter we study a second type of consensus protocols, those based on blockchains and in particular the concept of longest chains. This type of consensus protocol lies at the heart of several cryptocurrencies (e.g.&nbsp;Bitcoin). The Bitcoin protocol is one example of a longest-chain protocol, but it is not the only one. In fact, most cryptocurrencies are based on blockchain protocols, see for example the long list on Wikipedia <a href="https://en.wikipedia.org/wiki/List_of_blockchains">here</a>. All of these protocols follow the same general recipe, but they use different ingredients in certain steps. In this chapter we focus on the general recipe, in the next we will see some of the ingredients that Bitcoin uses (namely proof of work).</p>
 <p>To simplify the exposition, we will work in the permissioned setting, assuming PKI, and especially the synchronous model of communication. If we restrict to that setting however, then we already know a good consensus protocol! Indeed, this is precisely what we achieved in the previous chapter. So what is the advantage of doing it again? There are several answers to this question. First, the consensus protocol based on Dolev-Strong is rather slow. It requires many rounds of cross-checking before new information gets added to the local history of each of the nodes. A second answer is that the Dolev-Strong protocol relies on the <em>permissioned</em> setting, whereas the protocol that we design in this chapter extends very naturally to the <em>permissionless</em> setting. We will go into this in more detail at the end of this chapter.</p>
-<p>We start this chapter with a high-level description of a blockchain protocol and the behavior of honest nodes. As usual, we then explicitly state the assumptions that we make in this chapter. We will see that the notion of consensus trivially holds (under the assumptions that we make). Instead, we introduce a new notion – <em>finality</em> – that is harder to achieve, but very useful in a cryptocurrency application! In a nutshell, a block is final when it is ‘deep enough in the chain’. We will formalize this later on in the chapter, for now the picture to have in mind is that a block that is final can no longer be changed (surprise); if we imagine the block to contain a transaction, we can thus trust that this transaction actually took place. We spend the second half of this chapter to prove that longest chain protocols achieve finality when, roughly speaking, the majority of the nodes is honest.</p>
+<p>We start this chapter with a high-level description of a blockchain protocol and the behavior of honest nodes. As usual, we then explicitly state the assumptions that we make in this chapter. We will see that the notion of consensus trivially holds (under the assumptions that we make). Instead, we introduce a new notion – <em>finality</em> – that is harder to achieve, but very useful in a cryptocurrency application! In a nutshell, a block is final when it is ‘deep enough in the chain’. We will formalize this later on in the chapter, for now the picture to have in mind is that a block that is final can no longer be changed (surprise); if we imagine the block to contain a transaction, we can thus trust that this transaction actually took place. We spend the second half of this chapter to prove that longest-chain protocols achieve finality when, roughly speaking, the majority of the nodes is honest.</p>
 <section id="sec-protocol-description" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="sec-protocol-description"><span class="header-section-number">5.1</span> Protocol description</h2>
 <p>The starting point for a blockchain protocol is the concept of a blockchain. As the name suggests, a blockchain is a set of blocks that are connected to form a <em>chain</em>. What do we mean by a chain? We say that a set of blocks forms a chain if:</p>
@@ -315,17 +318,17 @@ Figure&nbsp;5.1: A chain of blocks
 <li>In a Proof of Work protocol (which we will discuss in the next chapter), the leader in round <span class="math inline">r</span> is the first node to provide a proof of work after round <span class="math inline">r+1</span>.</li>
 <li>Proof of Stake is another way to select leaders.</li>
 </ol>
-<p>For the moment, either one of these three options is good to have in mind. In the second half of the chapter we prove correctness of the longest chain protocol under certain assumptions. At that point, you are recommended to revisit the above three options and see whether or not they match the assumptions. We do want to point out that the second option already hints at the fact that <em>rounds</em> don’t have to correspond to time slots, they rather refer to the periods in between certain events. We will come back to this later.</p>
+<p>For the moment, either one of these three options is good to have in mind. In the second half of the chapter we prove correctness of the longest-chain protocol under certain assumptions. At that point, you are recommended to revisit the above three options and see whether or not they match the assumptions. We do want to point out that the second option already hints at the fact that <em>rounds</em> don’t have to correspond to time slots, they rather refer to the periods in between certain events. We will come back to this later.</p>
 <section id="sec-honestvsdishonest" class="level3" data-number="5.1.1">
 <h3 data-number="5.1.1" class="anchored" data-anchor-id="sec-honestvsdishonest"><span class="header-section-number">5.1.1</span> Honest vs.&nbsp;dishonest behavior</h3>
-<p>Let us now describe the intended behavior of <em>honest</em> nodes. In a longest chain protocol an honest node will do the following when it is elected as the leader of a round <span class="math inline">r</span>:</p>
+<p>Let us now describe the intended behavior of <em>honest</em> nodes. In a longest-chain protocol an honest node will do the following when it is elected as the leader of a round <span class="math inline">r</span>:</p>
 <ul>
 <li>it proposes exactly one new block,</li>
 <li>this new block points to exactly one predecessor,</li>
 <li>the predecessor was created in a previous round,</li>
 </ul>
 <p>Naturally, the new block may contain some information. For example, a list of newly made transactions or a copy of your favorite recipe for pasta. However, for this chapter we will ignore such information: that information is relevant for applications, but not for the guarantees that we want to achieve here. All that matters for us is that a block contains a pointer to precisely one predecessor that was created in a previous round.</p>
-<p>In a longest chain protocol, there is one additional requirement on the behavior of <em>honest</em> nodes:</p>
+<p>In a longest-chain protocol, there is one additional requirement on the behavior of <em>honest</em> nodes:</p>
 <ul>
 <li>the new block extends a <em>longest chain</em>.</li>
 </ul>
@@ -445,7 +448,7 @@ Solution
 <blockquote class="blockquote">
 <p><strong>A5)</strong> At all times, all honest nodes know about the exact same set of blocks.</p>
 </blockquote>
-<p>This is a (very) restrictive assumption; it essentially trivializes the consistency problem that we had to deal with in the previous chapter. We will see how to relax this assumption in the next chapter in the setting of proof of work. So why do we make this assumption? For one, it simplifies our lives (and certainly the exposition) a bit. The main reason however is that the key ideas behind longest chain protocols are already needed even when we add this restrictive assumption. When we relax the assumption in the next chapter we will see that it still “holds in spirit”; it is therefore a reasonable way to think about longest chain protocols.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<p>This is a (very) restrictive assumption; it essentially trivializes the consistency problem that we had to deal with in the previous chapter. We will see how to relax this assumption in the next chapter in the setting of proof of work. So why do we make this assumption? For one, it simplifies our lives (and certainly the exposition) a bit. The main reason however is that the key ideas behind longest-chain protocols are already needed even when we add this restrictive assumption. When we relax the assumption in the next chapter we will see that it still “holds in spirit”; it is therefore a reasonable way to think about longest-chain protocols.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 </section>
 </section>
 <section id="the-goals-liveness-and-finality" class="level2" data-number="5.3">
@@ -458,8 +461,8 @@ Solution
 </blockquote>
 <p>Some remarks are in order. First, we have not yet formalized the concept of <em>finalized</em>. We will do so in the next section. Second, even without knowing what <em>finalized</em> means, we can make sense of the goal <em>finality</em>: if we consider the set of finalized blocks as our local history state, then we have achieved consistency <em>over time</em>. Indeed, finality precisely ensures that whatever is part of the local history at time <span class="math inline">t</span> will remain part of the local history at all future times <span class="math inline">t+t'</span>. Third, the observant reader might have noticed the addition “(first version)”. This strongly suggests that there will be a second version in the future. There will be one indeed. In the later sections we will end up talking about protocols involving randomness. In such protocols, the above version of finality is too much to ask for. We will need to replace the first version of finality with a slightly weaker version that asks the same probability to hold with high probability. (What do we consider “high probability”? That depends again on the application…)</p>
 </section>
-<section id="finalizing-a-block" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="finalizing-a-block"><span class="header-section-number">5.4</span> Finalizing a block</h2>
+<section id="sec-finalizing" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="sec-finalizing"><span class="header-section-number">5.4</span> Finalizing a block</h2>
 <p>So how do we finalize a block? Recall that we want to think of the longest chain in the blockchain as the one that stores the list of transactions. Intuitively, we would like to argue that if a block <span class="math inline">B</span> is far enough from the end of this longest chain, then it will (likely) always be a part of a/the longest chain. It would after all require the faulty nodes to extend the chain ending at the predecessor of <span class="math inline">B</span> to a new chain that is longer than the currently longest chain.</p>
 <p>To formalize this intuition, we introduce the parameter <span class="math inline">k</span>.</p>
 <blockquote class="blockquote">
@@ -533,8 +536,8 @@ Exercise*
 <p>This example shows that it is very unlikely that the faulty nodes are able to change the longest chain <em>entirely</em>, meaning that the only block in common will be the genesis block <span class="math inline">B_0</span>. Can we say more? Intuitively, I hope you agree that the answer is yes. If two thirds of the nodes are honest, then if the chain becomes long enough, we can probably safely say that the first couple of blocks on the chain are <em>final with high probability</em>. Here, by <em>final with high probability</em> we mean that with high probability over the randomness in the protocol (i.e., the leader selection) the first couple of blocks will remain part of the longest chain indefinitely.</p>
 <p>In the next two sections we make this intuition more precise. We first introduce the concept of <em>balanced leader sequences</em>. This allows us to distill the key properties of the “two thirds vs.&nbsp;one third” example. We then show that balanced leader sequences ensure that “the first couple of blocks will remain part of the longest chain indefinitely”: we define the common prefix property.</p>
 </section>
-<section id="balanced-leader-sequences" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="balanced-leader-sequences"><span class="header-section-number">5.5</span> Balanced leader sequences</h2>
+<section id="sec-balanced" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="sec-balanced"><span class="header-section-number">5.5</span> Balanced leader sequences</h2>
 <p>Eventually, we would like to show that our blockchain protocol satisfies for example <em>liveness</em>. For that property, it is important to distinguish between two honest nodes. From the perspective of the blockchain however, there is no need to make this distinction: all honest nodes would act the same. Similarly, we always assume that the faulty nodes are collaborating anyway, so we might as well treat all faulty nodes as identical.</p>
 <p>This means that if we think about the sequence of leaders<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> in our protocol, we only need to keep track of who was honest and who was faulty. We will thus represent the leader sequence as a sequence of <span class="math inline">H</span>’s and <span class="math inline">F</span>’s, where <span class="math inline">H</span> stands for <em>honest</em> and <span class="math inline">F</span> for <em>faulty</em>. For example, if the first two leaders are honest, the third is faulty, and the fourth is honest, then this would correspond to the sequence <span class="math inline">H, H, F, H</span>.</p>
 <p>We now state the key definition of this section. It depends on a parameter <span class="math inline">w</span>, a positive integer, that stands for window.</p>
@@ -588,8 +591,8 @@ In case i) we know that $n \leq w \leq 2n$. Since we are cyclically electing our
 Case ii) is essentially a generalization of case i): suppose that the integer $K$ is such that $Kn \leq w \leq (K+1)n$. Since we are cyclically electing our leaders, we will elect some nodes $K$ times and some nodes $K+1$ times. How do we maximize the ratio of $F$'s over $H$'s? We select each of the faulty nodes $K+1$ times and each of the honest nodes exactly $K$ times. In this case the ratio is $(K+1)f/(K(n-f)) < (K+1)f /(K 2f) \leq 1$, where we use that $n-f>2f$.
 ::: -->
 <p>The second scenario that we consider adds randomness to the process. We still consider the permissioned setting (for now), which means there are <span class="math inline">n</span> nodes. In each round, we elect the leader uniformly at random from the set of <span class="math inline">n</span> nodes. That is, each node is equally likely to be chosen as the leader. This is a second natural approach to take in the permissioned setting. More importantly, we will see that this approach extends very naturally to the <em>permissionless</em> setting.</p>
-<section id="random-leaders-are-balanced-the-intuition" class="level3" data-number="5.5.1">
-<h3 data-number="5.5.1" class="anchored" data-anchor-id="random-leaders-are-balanced-the-intuition"><span class="header-section-number">5.5.1</span> Random leaders are balanced: the intuition</h3>
+<section id="sec-balanced-intuition" class="level3" data-number="5.5.1">
+<h3 data-number="5.5.1" class="anchored" data-anchor-id="sec-balanced-intuition"><span class="header-section-number">5.5.1</span> Random leaders are balanced: the intuition</h3>
 <p>To build some intuition, let’s see how many <em>faulty</em> nodes are in a typical leader sequence. Let <span class="math inline">\alpha</span> denote the fraction of <em>faulty</em> nodes in the network, i.e., let <span class="math inline">\alpha = f/n</span>. We assume from now on that <span class="math inline">\alpha&lt;1/2</span>. This is a pretty harmless assumption: if more than half the nodes are faulty, there is no hope for achieving a <span class="math inline">w</span>-balanced leader sequence for any value of <span class="math inline">w</span>.</p>
 <ul>
 <li>If we elect a leader uniformly at random from the set of <span class="math inline">n</span> nodes, then the probability that the leader is faulty is thus equal to <span class="math inline">\alpha</span>.</li>
@@ -598,7 +601,7 @@ Case ii) is essentially a generalization of case i): suppose that the integer $K
 </ul>
 <p>Can we turn this “on expectation” statement into a “with high probability” statement? To gain some intuition, you are invited to experiment with different values of <span class="math inline">\alpha</span> and <span class="math inline">K</span>, using the Python code snippets below.</p>
 <p>To create one such leader sequence, use the following code:</p>
-<div id="76705a96" class="cell" data-execution_count="1">
+<div id="3f028f3a" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -620,7 +623,7 @@ Case ii) is essentially a generalization of case i): suppose that the integer $K
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> samples</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="1663e401" class="cell" data-execution_count="2">
+<div id="16ae4425" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="dv">10</span>      <span class="co"># number of leaders</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.45</span> <span class="co"># probability of leader being faulty</span></span>
@@ -629,12 +632,12 @@ Case ii) is essentially a generalization of case i): suppose that the integer $K
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Fraction of faulty leaders:"</span>, np.<span class="bu">sum</span>(samples)<span class="op">/</span>K)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Sampled leaders: [0 1 1 1 0 0 1 1 1 1]
-Fraction of faulty leaders: 0.7</code></pre>
+<pre><code>Sampled leaders: [1 0 1 1 1 1 0 0 1 0]
+Fraction of faulty leaders: 0.6</code></pre>
 </div>
 </div>
 <p>If you run the above code several times, you will see that the outcome varies a bit. The following code allows you to run the process <span class="math inline">T</span> times and create a histogram of the fractions of faulty nodes.</p>
-<div id="8f69f1a3" class="cell" data-execution_count="3">
+<div id="092cfd25" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sample_T_sequences(T, K, alpha):</span>
@@ -673,7 +676,7 @@ Fraction of faulty leaders: 0.7</code></pre>
   background-color: #ffffff;
 }
 </style>
-<div id="efcdd6e7" class="cell" data-execution_count="4">
+<div id="7bf2ffd8" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage:</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">10000</span>     <span class="co"># Number of leader sequences</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="dv">50</span>       <span class="co"># Number of leaders per sequence</span></span>
@@ -687,12 +690,12 @@ Fraction of faulty leaders: 0.7</code></pre>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the histogram of fractions</span></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plot_histogram(fractions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>The fraction of leader sequences that are balanced is: 0.7139</code></pre>
+<pre><code>The fraction of leader sequences that are balanced is: 0.7166</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="LongestChain_files/figure-html/cell-5-output-2.png" class="quarto-figure quarto-figure-center figure-img" width="602" height="449"></p>
+<p><img src="LongestChain_files/figure-html/cell-5-output-2.png" class="quarto-figure quarto-figure-center figure-img" width="607" height="449"></p>
 </figure>
 </div>
 </div>
@@ -896,20 +899,157 @@ w \geq 36 (1+2\log(T) + \log(1/\delta)).
 </table>
 <p>For example, if we consider a leader sequence of length <span class="math inline">T = 1,000,000,000</span>, with <span class="math inline">\alpha=1/3</span> and <span class="math inline">\delta = 1/1,000,000,0000</span>, then the sequence is <span class="math inline">w</span>-balanced with probability at least <span class="math inline">1-\delta</span> whenever <span class="math inline">w \geq 26(1+3 \cdot 20.7233) \approx 1643</span>. A blockchain of length <span class="math inline">T=1,000,000,000</span> is probably more than we need in any real application, but the point is that <span class="math inline">w</span> is very small compared to <span class="math inline">T</span> and <span class="math inline">1/\delta</span>.</p>
 <p><strong>Is the bound tight?</strong></p>
+<p>So far, we have proven <em>an</em> upper bound on the probability that a random leader sequence is not <span class="math inline">w</span>-balanced. It is natural to ask whether that bound is <em>tight</em>? In other words, can the upper bound be improved? The short answer is yes; the bound can be improved. If you revisit the arguments that we made you will notice that there were essentially three estimates that we made:</p>
+<ol type="1">
+<li>We used Hoeffding’s inquality to upper bound the probability that <span class="math inline">S_K</span> deviates a lot from its mean.</li>
+<li>We used the union bound to upper bound the probability of a union of events by the sum of the individual probabilities.</li>
+<li>We overestimated the number of events in our application of the union bound.</li>
+</ol>
+<p>Each of these estimates is likely not tight. Hoeffding’s inequality for example only requires the assumption that the random variables are independent and satisfy <span class="math inline">a_i \leq X_i \leq b_i</span>. In our application, we know much more. Indeed, we know the distribution of each of the <span class="math inline">X_i</span>’s: they are Bernoulli random variables. As such, their sum follows the binomial distribution. We could thus replace Hoeffding’s inequality with properties of the binomial distribution.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> The second estimate, the union bound, is perhaps the most loose upper bound. The union bound is an equality only if the all the events are pairwise disjoint. Can you see why? (Hint, consider the case of two events <span class="math inline">A</span> and <span class="math inline">B</span>, when do you have equality?) In our application, the events correspond to windows not being balanced. Since windows can overlap, it is reasonable to imagine that the events also overlap to some extent. The third estimate, counting the number of possible windows in a leader sequence of length <span class="math inline">T</span> is in fact pretty close to tight: we used as upper bound <span class="math inline">T^2</span> and one (you?) can show that the number of windows of length at least <span class="math inline">w</span> is at least <span class="math inline">c T^2</span> for some small constant <span class="math inline">c</span>.</p>
+<p>From a qualitative perspective though, our analysis “got the job done”: the theory supports the intuition that we gathered through numerical examples. To complete the circle, you can try to use numerical methods to investigate how tight the above bound is. The following exercise assumes some familiarity with Python (and hence is marked by a *).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise*
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider a leader sequence of length <span class="math inline">T=100</span>, with <span class="math inline">\alpha=1/3</span>, set <span class="math inline">\delta = 0.01</span>. What is the lower bound on <span class="math inline">w</span> that follows from <a href="#thm-balanced2" class="quarto-xref">Theorem&nbsp;<span>5.3</span></a>? Use Python to <span class="math inline">1000</span> such leader sequences. For each of the leader sequences, determine the smallest value of <span class="math inline">w</span> for which it is <span class="math inline">w</span>-balanced. Make a histogram of the <span class="math inline">w</span> values. What do you observe?</p>
+</div>
+</div>
 <p><strong>Permissioned vs permissionless:</strong> At the start of this section we restricted ourselves to the <em>permissioned</em> setting. That is the setting that we are familiar with. It also gives us a clear definition for the probability that a leader that is selected uniformly at random is faulty (namely <span class="math inline">\alpha = f/n</span>). In the remainder of the section, we then only worked with <span class="math inline">\alpha</span>. What about the permissionless setting? The simple definition of <span class="math inline">\alpha</span> from before no longer works since nodes are allowed to join and leave the network freely. However, if you read the arguments carefully, you will realize that all we needed was <em>an upper bound</em> on the probability that a leader is faulty. Later on, in the permissionless setting, we will turn this into an assumption.</p>
 </section>
 </section>
 <section id="the-common-prefix-property" class="level2" data-number="5.6">
 <h2 data-number="5.6" class="anchored" data-anchor-id="the-common-prefix-property"><span class="header-section-number">5.6</span> The common prefix property</h2>
+<p>In <a href="#sec-finalizing" class="quarto-xref"><span>Section 5.4</span></a> we discussed the problem of <em>finalizing</em> blocks on a blockchain. Intuitively, we argued that the blocks on the longest chain are final, except for the last few.</p>
+<p>More concretely, for a blockchain represented by a directed in-tree <span class="math inline">G</span> and an integer <span class="math inline">k</span>, we defined the object <span class="math inline">\mathcal B_k(G)</span> as <span class="math display">
+\mathcal B_k(G) := \text{ the longest chain of $G$, with the last $k$ blocks removed.}
+</span></p>
+<p>We have seen examples in which <span class="math inline">\mathcal B_k(G)</span> was not well-defined (in a nutshell: consider a blockchain with two equally long chains and a very small value of <span class="math inline">k</span>). Intuitively, equally long longest chains occur when the number of honest leaders is roughly equal to the number of faulty leaders. In this section we show that this is the only obstruction. For this, we will crucially use the concept of <span class="math inline">w</span>-balanced leader sequences that we introduced and studied in <a href="#sec-balanced" class="quarto-xref"><span>Section 5.5</span></a>. We show that if the leader sequence is <span class="math inline">(2k+2)</span>-balanced, then <span class="math inline">\mathcal B_k(G)</span> is well-defined. Formally, we prove the following theorem.</p>
+<div id="thm-common" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 5.4 (Common prefix property of longest-chain consensus)</strong></span> If the leader sequence <span class="math inline">\ell_1,\ell_2,\ell_3,\ldots</span> is <span class="math inline">(2k+2)</span>-balanced, and assumptions A1, A4’, A5 hold, then for every possible resulting in-tree <span class="math inline">G</span> of blocks known to the honest nodes, <span class="math inline">\mathcal B_k(G)</span> is well-defined.</p>
+</div>
+<p>Before proving the theorem, let us reflect on the statement for a moment. As usual, we want to assume as little as possible about the behavior of faulty nodes. In this case, that means that we do not place any restrictions on where faulty nodes can add blocks to the blockchain. As a consequence, the leader sequence does not completely specify the resulting in-tree! The statement of the theorem accounts for this: we show that regardless of the behavior of the faulty nodes – “for every possible resulting in-tree <span class="math inline">G</span>” – the object <span class="math inline">\mathcal B_k(G)</span> is well-defined.</p>
+<p>We prove the theorem under the assumption A4’, which is a slightly stronger version of assumption A4. We do so for two reasons: it simplifies the proof, and it is an assumption that in fact holds when we consider proof of work protocols such as Bitcoin.</p>
+<section id="proof-of-thm-common" class="level3" data-number="5.6.1">
+<h3 data-number="5.6.1" class="anchored" data-anchor-id="proof-of-thm-common"><span class="header-section-number">5.6.1</span> Proof of <a href="#thm-common" class="quarto-xref">Theorem&nbsp;<span>5.4</span></a></h3>
+<p>The plan is to prove the contrapositive statement: if there is an in-tree <span class="math inline">G</span> of blocks known to the honest nodes for which <span class="math inline">\mathcal B_k(G)</span> is not well-defined, then the leader sequence is not <span class="math inline">(2k+2)</span>-balanced.</p>
+<p>To that end, assume <span class="math inline">G</span> is an in-tree of blocks known to the honest nodes for which <span class="math inline">\mathcal B_k(G)</span> is not well-defined. Since <span class="math inline">\mathcal B_k(G)</span> is not well-defined, this means that there exist two longest chains in <span class="math inline">G</span> that do not agree if we remove the last <span class="math inline">k</span> blocks from each of these two chains. For the remainder of our argument, we will focus on these two chains. It will be useful to visualize these two chains. The following is the picture you should have in mind:</p>
+<div id="fig-2chain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/2chain.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.5: Two longest chains
+</figcaption>
+</figure>
+</div>
+<p>Formally, we assume that there are two longest chains. The first ends at a block labeled <span class="math inline">B_1</span> (the top chain) and the second ends at a block <span class="math inline">B_2</span> (the bottom chain). We assume that the block where the two chains meet for the first time is labeled by <span class="math inline">B^*</span>. Since we are assuming that <span class="math inline">\mathcal B_k(G)</span> is not well-defined, the length of the path between <span class="math inline">B_1</span> and <span class="math inline">B^*</span> is at least <span class="math inline">k+1</span>, and the same holds for the path between <span class="math inline">B_2</span> and <span class="math inline">B^*</span>.</p>
+<p>To make it concrete, in <a href="#fig-2chain" class="quarto-xref">Figure&nbsp;<span>5.5</span></a>, we have drawn <span class="math inline">4</span> blocks after <span class="math inline">B^*</span> on either of the chains, so this would be an example in which <span class="math inline">\mathcal B_1(G)</span>, <span class="math inline">\mathcal B_2(G)</span>, and <span class="math inline">\mathcal B_3(G)</span> are not well-defined. It should be clear how to generalize the figure for larger values of <span class="math inline">k</span>.</p>
+<p>We will now use the fact that the length of the paths connecting either <span class="math inline">B_1</span> or <span class="math inline">B_2</span> to <span class="math inline">B^*</span> is at least <span class="math inline">k+1</span> to argue that the leader sequence is not <span class="math inline">(2k+2)</span>-balanced. In other words, we will identify a window in the leader sequence of length at least <span class="math inline">2k+2</span> in which there are at least as many faulty leaders as honest leaders.</p>
+<p>To do so, it will be useful to introduce the notion of <em>height</em> of a block.</p>
+<div id="def-height" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5.2 (Height)</strong></span> Given an in-tree <span class="math inline">G</span> with root <span class="math inline">B_0</span>, we define the height of a block <span class="math inline">B</span> as the length of the path connecting <span class="math inline">B</span> to <span class="math inline">B_0</span>.</p>
+</div>
+<p>Here are some simple observations:</p>
+<ul>
+<li>The height of <span class="math inline">B_1</span> is equal to the height of <span class="math inline">B_2</span>. We let <span class="math inline">h</span> denote the height of <span class="math inline">B_1</span>.<br>
+</li>
+<li>The height of <span class="math inline">B^*</span> is at most the height of <span class="math inline">B_1</span> (or <span class="math inline">B_2</span>) minus <span class="math inline">k+1</span>, that is, its height is at most <span class="math inline">h-(k+1)</span>.</li>
+</ul>
+<p>We make one more observation that is slightly less simple and therefore deserves a short proof.</p>
+<div id="lem-honest-height" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 5.1 (One honest block per height)</strong></span> Under assumption A5, the heights of honestly produced blocks are strictly increasing over time. In particular, there is at most one honestly produced block per height.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>Suppose that <span class="math inline">A</span> and <span class="math inline">B</span> are two blocks produced by honest nodes. Since there is only one leader per round, one of the blocks was created first. Suppose that <span class="math inline">A</span> was created before <span class="math inline">B</span> (otherwise, swap the roles of <span class="math inline">A</span> and <span class="math inline">B</span> in the following argument). Now let <span class="math inline">h_A</span> denote the height of block <span class="math inline">A</span>. Since <span class="math inline">A</span> was created by an honest node and we are working under the assumption A5, <span class="math inline">A</span> was immediately announced to all honest nodes at the time of its creation. This that at the time that <span class="math inline">B</span> was created, its honest creator was aware of at least one block at height <span class="math inline">h_A</span>. Since an honest node only extends the longest chain that it is aware of, the height of <span class="math inline">B</span> is at least <span class="math inline">h_A +1</span>. This proves that the height of honestly created blocks is strictly increasing over time.</p>
+<p>The final statement of the lemma is an immediate corollary of the first part.</p>
+</div>
+<p>We are now ready to finish up the proof of <a href="#thm-common" class="quarto-xref">Theorem&nbsp;<span>5.4</span></a>. Recall that <span class="math inline">B^*</span> is the first block that is common on the two longest chains. Let <span class="math inline">B'</span> denote the first block that is common to both longest chains <em>and produced by an honest leader</em>. If <span class="math inline">B^*</span> is produced by an honest leader, then <span class="math inline">B' = B^*</span>. Otherwise, it will be some block on the path between <span class="math inline">B^*</span> and <span class="math inline">B_0</span>. (Existence of such a block is ensured by assumption A1: the block <span class="math inline">B_0</span> is produced by an honest leader.) Let <span class="math inline">r'</span> be the round in which <span class="math inline">B'</span> was created.</p>
+<p>Since <span class="math inline">B'</span> is created by an honest node, all blocks that have <span class="math inline">B'</span> as an ancestor (on the path to <span class="math inline">B_0</span>) are created <em>after</em> round <span class="math inline">r'</span>. Let <span class="math inline">r_{end}</span> denote the round in which the last of <span class="math inline">B_1</span> and <span class="math inline">B_2</span> was created. We argue that the leader sequence starting at <span class="math inline">r'</span> and ending at <span class="math inline">r_{end}</span> is not <span class="math inline">(2k+2)</span>-balanced.</p>
+<p>Indeed, let <span class="math inline">h^*</span> denote the height of block <span class="math inline">B^*</span> and similarly <span class="math inline">h'</span> the height of <span class="math inline">B'</span>. By our assumption, the <span class="math inline">h^*-h'</span> blocks between <span class="math inline">B'</span> and <span class="math inline">B^*</span> are created by faulty nodes. Since <span class="math inline">\mathcal B_k(G)</span> is not well-defined, we know that the <span class="math inline">h</span>, height of <span class="math inline">B_1</span> (or equivalently <span class="math inline">B_2</span>), is at least <span class="math inline">h* + k+1</span>. By <a href="#lem-honest-height" class="quarto-xref">Lemma&nbsp;<span>5.1</span></a>, we know that for each of the heights <span class="math inline">h^*+1, h^* +2,\ldots, h</span>, there is at most one honestly produced block. The same argument shows that for each of those heights, there was also at least one block produced by a faulty node. This means there are at most <span class="math inline">h-h^*</span> honest leaders after <span class="math inline">r'</span> and at least <span class="math inline">h-h^*</span> faulty leaders. In other words, there was no strict majority of honest leaders in the window from <span class="math inline">r'</span> to <span class="math inline">r_{end}</span>. It remains to observe that this window has length at least <span class="math inline">2k+2</span>. Indeed, the two chains ending at <span class="math inline">B_1</span> and <span class="math inline">B_2</span> contain at least <span class="math inline">k+1</span> blocks that were produced after <span class="math inline">B^*</span>, and therefore after <span class="math inline">B'</span>. Since in each round we create exactly one block (assumption A4’), this means that <span class="math inline">r_{end}-r' \geq 2k+2</span>. This concludes the proof.</p>
+<p>Now that we have established a sufficient condition under which <span class="math inline">\mathcal B_k(G)</span> is well-defined, we can proceed to show that longest-chain protocols achieve the goals of finality and liveness.</p>
+</section>
 </section>
 <section id="finality-of-longest-chain-consensus" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="finality-of-longest-chain-consensus"><span class="header-section-number">5.7</span> Finality of Longest-Chain consensus</h2>
+<h2 data-number="5.7" class="anchored" data-anchor-id="finality-of-longest-chain-consensus"><span class="header-section-number">5.7</span> Finality of longest-chain consensus</h2>
+<p>Let us recall the (informal) definition of <em>finality</em> that we gave earlier this chapter:</p>
+<blockquote class="blockquote">
+<p><strong>Goal: Finality</strong> (first version) If an honest node <span class="math inline">i</span> considers a block <span class="math inline">B</span> as <em>finalized</em> at time <span class="math inline">t</span>, then this block remains finalized at all times after <span class="math inline">t</span>.</p>
+</blockquote>
+<p>The above goal is a bit vague since it does not specify <em>when</em> an honest node should consider a block finalized. Given the results from the previous sections, it should come as no surprise that we will declare the blocks in <span class="math inline">\mathcal B_k(G)</span> to be final. Indeed, we will prove the following theorem.</p>
+<div id="thm-finality" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 5.5 (Finality of longest-chain consensus)</strong></span> Let <span class="math inline">G_1 \subseteq G_2 \subseteq \cdots \subseteq G_T</span> be a sequence of in-trees with each in-tree <span class="math inline">G_t</span> having exactly one more block than <span class="math inline">G_{t-1}</span>. If the common prefix property holds for a given value of <span class="math inline">k</span> in each of the in-trees <span class="math inline">G_1,\ldots,G_T</span>, then we have <span class="math display">
+\mathcal B_k(G_1) \subseteq \mathcal B_k(G_2) \subseteq \cdots \subseteq \mathcal B_k(G_T).
+</span></p>
+</div>
+<p>The sequence of in-trees naturally corresponds to the evolution of a blockchain over time, with <span class="math inline">G_t</span> denoting the in-tree in round <span class="math inline">t</span>. In words, the theorem tells us that once a block is part of <span class="math inline">\mathcal B_k(G_t)</span>, it will be part of <span class="math inline">\mathcal B_k(G_{t'})</span> for all subsequent rounds <span class="math inline">t' \geq t</span>. The honest nodes can thus trust the blocks in <span class="math inline">\mathcal B_k(G)</span> to be final.</p>
+<p>At this point in the course, you are trained to always question the assumptions. For this particular theorem, try to answer the following question:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Why do we not (need to) refer to any of the assumptions A1-A5 in <a href="#thm-finality" class="quarto-xref">Theorem&nbsp;<span>5.5</span></a>?</p>
+</div>
+</div>
+<p>We now proceed with the proof of <a href="#thm-finality" class="quarto-xref">Theorem&nbsp;<span>5.5</span></a>.</p>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>We assume the common prefix property, with value <span class="math inline">k</span>, holds for each of the in-trees <span class="math inline">G_1,\ldots,G_T</span>. In other words, we assume that <span class="math inline">\mathcal B_k(G_t)</span> is well defined for each <span class="math inline">t \in [T]</span>. Let us also assume that there exists a pair of rounds <span class="math inline">t,t'\in [T]</span> with <span class="math inline">t &lt; t'</span> and a block <span class="math inline">B</span> with the property that <span class="math inline">B \in \mathcal B_k(G_t)</span>, but also <span class="math inline">B \not \in \mathcal B_k(G_{t'})</span>. We show that this leads to a contradiction. In particular, we will show that there exists some round <span class="math inline">s</span> in between rounds <span class="math inline">t</span> and <span class="math inline">t'</span> for which <span class="math inline">\mathcal B_k(G_s)</span> is not well defined.</p>
+<p>By assumption, <span class="math inline">B \in \mathcal B_k(G_t)</span>, the block <span class="math inline">B</span> belongs to the common prefix of all longest chains in round <span class="math inline">t</span>. Similarly, it does <em>not</em> belong to the common prefix of all longest chains in round <span class="math inline">t'</span>. Let <span class="math inline">s \in \{t+1,\ldots,t'\}</span> denote the smallest round number for which <span class="math inline">B</span> is excluded from at least one longest chain in <span class="math inline">G_s</span>. Let <span class="math inline">B_s</span> be the block that was added to <span class="math inline">G_{s-1}</span> to form <span class="math inline">G_s</span>. By minimality of <span class="math inline">s</span>, the block <span class="math inline">B</span> is contained in the common prefix of all longest chains in <span class="math inline">G_{s-1}</span>. This means that <span class="math inline">B_s</span> cannot extend a longest chain in <span class="math inline">G_{s-1}</span>, since otherwise <span class="math inline">B</span> would also be contained in the common prefix of all (in fact <em>the</em>) longest chain in <span class="math inline">G_s</span>. The block <span class="math inline">B_s</span> must thus be added to a chain that was previously not the longest chain, creating a new longest chain. Let <span class="math inline">C_1</span> denote a longest chain in <span class="math inline">G_{s-1}</span>. Note that <span class="math inline">B</span> is part of the chain <span class="math inline">C_1</span>. Let <span class="math inline">C_2</span> denote the newly created longest chain in <span class="math inline">G_s</span>. Let <span class="math inline">B^*</span> denote the first block that the chains <span class="math inline">C_1</span> and <span class="math inline">C_2</span> have in common. <a href="#fig-2chain2" class="quarto-xref">Figure&nbsp;<span>5.6</span></a> below illustrates the situation.</p>
+<p>We now argue that <span class="math inline">\mathcal B_k(G_s)</span> is not well defined. To do so, observe that <span class="math inline">B \in \mathcal B_k(G_t)</span> implies that <span class="math inline">B</span> is at least <span class="math inline">k</span> blocks removed from the end of chain <span class="math inline">C_1</span>. That means that <span class="math inline">B^*</span> is at least <span class="math inline">k+1</span> blocks removed from the end of chain <span class="math inline">C_1</span>. Since <span class="math inline">C_1</span> and <span class="math inline">C_2</span> have the same length, <span class="math inline">B^*</span> is also at least <span class="math inline">k+1</span> blocks removed from the end of <span class="math inline">C_2</span>. Both <span class="math inline">C_1</span> and <span class="math inline">C_2</span> are longest chains in <span class="math inline">G_s</span>, and we have just shown that we need to remove at least <span class="math inline">k+1</span> blocks from the ends of <span class="math inline">C_1</span> and <span class="math inline">C_2</span> to reach the first block that they have in common. This proves that <span class="math inline">\mathcal B_k(G_s)</span> is not well defined.</p>
+</div>
+<div id="fig-2chain2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2chain2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/2chains2.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2chain2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.6: Proof of <a href="#thm-finality" class="quarto-xref">Theorem&nbsp;<span>5.5</span></a>.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="liveness-of-longest-chain-consensus" class="level2" data-number="5.8">
-<h2 data-number="5.8" class="anchored" data-anchor-id="liveness-of-longest-chain-consensus"><span class="header-section-number">5.8</span> Liveness of Longest-Chain consensus</h2>
+<h2 data-number="5.8" class="anchored" data-anchor-id="liveness-of-longest-chain-consensus"><span class="header-section-number">5.8</span> Liveness of longest-chain consensus</h2>
+<p>We finally establish liveness of the longest-chain consensus protocol. Recall from the previous chapter:</p>
+<blockquote class="blockquote">
+<p><strong>Goal 2: Liveness.</strong> Every “transaction” submitted by a client to at least one <em>honest</em> node is eventually added to every node’s local history.</p>
+</blockquote>
+<p>We will in fact only be able to show a weaker version of liveness:</p>
+<blockquote class="blockquote">
+<p><strong>Goal 2: Liveness.</strong> (weak version) Every “transaction” submitted by a client to all <em>honest</em> nodes is eventually added to every node’s local history.</p>
+</blockquote>
+<p>The difference between the two lies in whether a transaction is known to at least one honest node or all of them. In a nutshell, we will be able to guarantee that the longest chain will include infinitely many blocks produced by honest nodes, but we cannot guarantee the same for blocks produced by one specific honest node. Formally, we prove the following.</p>
+<div id="thm-liveness" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 5.6 (Liveness of longest-chain consensus)</strong></span> Assume the leader sequence <span class="math inline">\ell_1,\ell_2,\ldots</span> is <span class="math inline">(2k+2)</span>-balanced and assume that the assumptions A1, A4’ and A5 hold. Let <span class="math inline">G_1,G_2,\ldots</span> denote the corresponding sequence of in-trees. For every transaction that is at some point known to all honest nodes, there exists a <span class="math inline">t_0</span> such that the transaction will be included in <span class="math inline">\mathcal B_k(G_t)</span> for all <span class="math inline">t \geq t_0</span>.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>First note that the assumptions A1, A4’, A5 and the fact that the leader sequence is <span class="math inline">(2k+2)</span>-balanced allow us to conclude, via <a href="#thm-common" class="quarto-xref">Theorem&nbsp;<span>5.4</span></a>, that <span class="math inline">\mathcal B_k(G_t)</span> is well-defined for all <span class="math inline">t</span>. Moreover, we have shown in <a href="#thm-finality" class="quarto-xref">Theorem&nbsp;<span>5.5</span></a> that finality holds: <span class="math display">
+\mathcal B_k(G_1) \subseteq \mathcal B_k(G_2) \subseteq \cdots.
+</span> It thus remains to show that if a transaction is known to all honest nodes at some point, then there is a <span class="math inline">t_0</span> such that <span class="math inline">\mathcal B_k(G_{t_0})</span> includes that transaction. Since the transaction is known to <em>all</em> honest nodes, and honest nodes include all transactions that they are aware of in a new block, it suffices to show that infinitely many finalized blocks are created by honest leaders.</p>
+<p>To do so, we will use the property that the leader sequence is <span class="math inline">(2k+2)</span>-balanced. Let us divide the leader sequence into groups of <span class="math inline">2k+2</span> consecutive leaders. That is, the first group consists of the leaders <span class="math inline">\ell_1,\ell_2,\ldots, \ell_{2k+2}</span>, the second group consists of the leaders <span class="math inline">\ell_{(2k+2)+1},\ldots,\ell_{2(2k+2)}</span>, and so on. Since the leader sequence is <span class="math inline">(2k+2)</span>-balanced, every group contains at least <span class="math inline">k+2</span> honest leaders and at most <span class="math inline">k</span> faulty leaders.</p>
+<p>We now argue that the longest chain grows significantly over time: indeed, <a href="#lem-honest-height" class="quarto-xref">Lemma&nbsp;<span>5.1</span></a> shows that the height of honestly produced blocks increases strictly over time. Now consider a longest chain at the end of the <span class="math inline">T</span>-th group of leaders. There are at least <span class="math inline">(k+2)T</span> honest leaders in those groups and at most one honestly produced block per height, therefore the longest chain in <span class="math inline">G_{(2k+2)T}</span> has length at least <span class="math inline">(k+2)T</span>.</p>
+<p>How many honestly produced blocks are there on such a longest chain? We know that there are at most <span class="math inline">kT</span> faulty leaders in the first <span class="math inline">T</span> groups. Together, they produced at most <span class="math inline">kT</span> blocks. Therefore, there are at least <span class="math inline">(k+2)T-kT = 2T</span> honestly produced blocks on such a chain. How many honestly produced blocks are finalized? We consider blocks finalized when they are part of <span class="math inline">\mathcal B_k(G)</span>. For <span class="math inline">\mathcal B_k(G_{(2k+2)T})</span> this means it contains at least <span class="math inline">2T-k</span> honestly produced blocks, since we are removing the last <span class="math inline">k</span> blocks and they could happen to be honestly produced. This proves that as <span class="math inline">T</span> grows, the number of honestly produced blocks that are finalized grows as well. In other words, honestly produced blocks get finalized infinitely often and therefore transactions known to all honest nodes <em>eventually</em> get finalized.</p>
+</div>
 </section>
 <section id="toward-permissionless-consensus" class="level2" data-number="5.9">
 <h2 data-number="5.9" class="anchored" data-anchor-id="toward-permissionless-consensus"><span class="header-section-number">5.9</span> Toward permissionless consensus</h2>
+<p>In the spirit of “always question the assumptions”, for which theorems in this chapter did we rely on the assumption that we are working in the <em>permissioned</em> setting?</p>
+<p>If you revisit all theorems, you will notice that we used it only to argue that choosing each leader uniformly at random leads to a balanced leader sequence, as long as the fraction of faulty nodes <span class="math inline">\alpha = f/n</span> is strictly less than <span class="math inline">1/2</span>. Afterwards, all theorems relied on the assumption that the leader sequence is <span class="math inline">w</span>-balanced for a sufficiently large value of <span class="math inline">w</span>.</p>
+<p>In other words, if we – somehow – establish that a leader election mechanism in the permissionless setting leads to a <span class="math inline">w</span>-balanced leader sequence, then <a href="#thm-finality" class="quarto-xref">Theorem&nbsp;<span>5.5</span></a> and <a href="#thm-liveness" class="quarto-xref">Theorem&nbsp;<span>5.6</span></a> immediately show that the longest-chain consensus protocol achieves finality and liveness in that setting as well.</p>
+<p>A crucial difference between the permissioned and the permissionless setting is that nodes can join and leave the network freely. In particular, this means that the fraction of faulty nodes in the network might change over time. Let us assume for the moment that we still select a leader uniformly at random from the set of nodes in the network in that round. Can we still use the arguments from <a href="#sec-balanced" class="quarto-xref"><span>Section 5.5</span></a> to argue that the resulting leader sequence is sufficiently balanced with high probability? The answer is yes, under mild assumptions. Indeed, if we assume that the fraction of faulty nodes at any point in time is <em>at most</em> <span class="math inline">\alpha &lt; 1/2</span>, then we can still apply Hoeffding’s inequality in the same way as we did in the proof of <a href="#thm-balanced" class="quarto-xref">Theorem&nbsp;<span>5.2</span></a>.</p>
+<p>The assumption that we can elect a leader uniformly at random in the permissionless setting is not one that we can make freely. Selecting a uniformly random element from a set of nodes that the protocol does not know is a hard problem. In the permissionless setting we will need to work to design a leader election protocol that has this property. We will do so in the next chapter.</p>
 
 
 </section>
@@ -928,6 +1068,7 @@ w \geq 36 (1+2\log(T) + \log(1/\delta)).
 <li id="fn10"><p>In the next section, you will learn that not much luck was needed…<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11"><p>If you want to know (much) more about concentration inequality, I highly recommend <a href="https://www.math.uci.edu/~rvershyn/papers/HDP-book/HDP-book.pdf">Vershynin’s book</a> on high-dimensional probability.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn12"><p>As a side remark for those who recently took a course on probability, this means each <span class="math inline">X_i</span> is drawn according to the Bernoulli distribution with parameter <span class="math inline">\alpha</span>.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>Here it is important that each of the <span class="math inline">X_i</span>’s is independent and <em>identically</em> distributed according to the Bernoulli distribution. In the permissionless setting, the random variables might not satisfy the same distribution anymore.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
