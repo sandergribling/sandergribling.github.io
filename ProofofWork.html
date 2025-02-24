@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -52,6 +86,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -143,8 +220,26 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-is-proof-of-work" id="toc-what-is-proof-of-work" class="nav-link active" data-scroll-target="#what-is-proof-of-work"><span class="header-section-number">6.1</span> What is proof of work?</a></li>
+  <li><a href="#cryptographic-hash-functions" id="toc-cryptographic-hash-functions" class="nav-link" data-scroll-target="#cryptographic-hash-functions"><span class="header-section-number">6.2</span> Cryptographic hash functions</a>
+  <ul class="collapse">
+  <li><a href="#the-random-oracle-assumption" id="toc-the-random-oracle-assumption" class="nav-link" data-scroll-target="#the-random-oracle-assumption"><span class="header-section-number">6.2.1</span> The random oracle assumption</a></li>
+  </ul></li>
+  <li><a href="#sha-256" id="toc-sha-256" class="nav-link" data-scroll-target="#sha-256"><span class="header-section-number">6.3</span> SHA-256</a></li>
+  <li><a href="#how-do-we-define-a-puzzle-based-on-sha-256" id="toc-how-do-we-define-a-puzzle-based-on-sha-256" class="nav-link" data-scroll-target="#how-do-we-define-a-puzzle-based-on-sha-256"><span class="header-section-number">6.4</span> How do we define a puzzle based on SHA-256?</a></li>
+  <li><a href="#what-should-puzzle-solutions-encode" id="toc-what-should-puzzle-solutions-encode" class="nav-link" data-scroll-target="#what-should-puzzle-solutions-encode"><span class="header-section-number">6.5</span> What should puzzle solutions encode?</a></li>
+  <li><a href="#sec-sybil" id="toc-sec-sybil" class="nav-link" data-scroll-target="#sec-sybil"><span class="header-section-number">6.6</span> Sybil-resistance</a></li>
+  <li><a href="#nakamoto-consensus" id="toc-nakamoto-consensus" class="nav-link" data-scroll-target="#nakamoto-consensus"><span class="header-section-number">6.7</span> Nakamoto consensus</a>
+  <ul class="collapse">
+  <li><a href="#how-to-set-and-adjust-the-difficulty-parameter" id="toc-how-to-set-and-adjust-the-difficulty-parameter" class="nav-link" data-scroll-target="#how-to-set-and-adjust-the-difficulty-parameter"><span class="header-section-number">6.7.1</span> How to set and adjust the difficulty parameter</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -169,8 +264,287 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p><link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""> <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&amp;family=Fira+Sans&amp;display=swap" rel="stylesheet"></p>
+<p>In this final chapter on the computer science aspects of blockchains we make the step to permissionless consensus protocols. More accurately, we discuss the concept of proof of work as a means to select a new block proposer.</p>
+<p>We will see that proof of work gives us many desirable properties:</p>
+<ul>
+<li>As long as the strict majority of the work is done by honest nodes, we will get a balanced leader sequence.</li>
+<li>In applications such as Bitcoin it also guarantees assumption A4’: each leader can only produce one block.</li>
+</ul>
+<p>Proof of work also comes with its own set of problems / challenges. We will see some of them in this lecture and others in the next part of the course.</p>
+<section id="what-is-proof-of-work" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="what-is-proof-of-work"><span class="header-section-number">6.1</span> What is proof of work?</h2>
+<p>Throughout your studies you have been exposed to many different proofs. But what constitutes a proof of work? In a nutshell, it is a proof that you have done a certain amount of work.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Let us make this a bit more concrete by connecting it to our application. In the previous chapter we have discussed longest-chain protocols at length. We did that in the relatively safe environment of the <em>permissioned</em> setting. Because we were in the permissioned setting, we had a well-defined way of selecting a leader uniformly at random. Indeed, if there are <span class="math inline">n</span> nodes in the network, then we simply draw a uniformly random number between <span class="math inline">1</span> and <span class="math inline">n</span> to decide the leader of the next round (who gets to propose a new block).</p>
+<p>In the <em>permissionless</em> setting this approach no longer works. That’s where proof of work comes in: we will use it as a mechanism to choose the leader of the next round. The basic idea is that we decide on some (hard) puzzle and then we declare as the leader of the next round the first node that comes up with a solution to that puzzle. If the puzzle is chosen appropriately, and we will see how to do so soon, then the likelihood of being the first node to solve the puzzle is directly proportional to the computational effort put into solving this puzzle.</p>
+<p>Notice that the mechanism described above does not allow us to sample a node uniformly at random, instead, we sample nodes proportional to their computational efforts. How does this affect the balanced-leader sequence analysis from the previous chapter? Perhaps surprisingly, it almost doesn’t! In the permissioned setting we required the fraction <span class="math inline">\alpha = f/n</span> of faulty nodes to be strictly less than a half. Now, we require the total fraction of computational effort controlled by faulty nodes to be strictly less than a half.</p>
+<p>As a side remark, the notion of proof of work actually predates Bitcoin by about 17 years. Dwork and Naor introduced the idea in <a href="https://www.wisdom.weizmann.ac.il/~naor/PAPERS/pvp.pdf">1992</a> in the context of spam-fighting “Combatting Junk Mail”, actually before spam was really a problem. See also the related <a href="http://www.hashcash.org/papers/hashcash.pdf">2002</a> paper by Back on HashCash.</p>
+<p>To illustrate some desirable properties of the “proof”, consider the following example. The puzzle is this week’s NY Times crossword puzzle. The key property that we want to illustrate here is that the proof is <em>concise</em> and <em>efficiently verifiable</em>: the proof that you need to provide is simply the filled-in crossword puzzle. To verify it, every node can simply check that all the words are correctly spelled and fit together nicely. Would the NY Times crossword be a good puzzle to use in a blockchain protocol? Probably not… It is reasonable to say that the more effort you put into solving the crossword, the more likely you are to solve it first. Although the likelihood is probably not directly proportional to the effort you put in (at least for me).</p>
+</section>
+<section id="cryptographic-hash-functions" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="cryptographic-hash-functions"><span class="header-section-number">6.2</span> Cryptographic hash functions</h2>
+<p>To define the puzzles that we want to solve, we need to introduce <em>cryptographic hash functions</em>. You might have heard about <em>hash functions</em> at some point in your academic career (but don’t worry if you didn’t); they have many applications in the context of compressing or expanding data, or “spreading out” data (hash tables).</p>
+<p>For our purposes, a hash function is just a function from some domain to some range. A unifying feature of hash functions is that they are very easy to compute. A <em>cryptographic hash function</em> is designed with the following goal in mind: it should be completely unpredictable. Ideally, if you put a new input into the function, you get an output that looks completely random.</p>
+<p>We will formalize this goal as an assumption.</p>
+<section id="the-random-oracle-assumption" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="the-random-oracle-assumption"><span class="header-section-number">6.2.1</span> The random oracle assumption</h3>
+<p>The <em>random oracle assumption</em> states that the hash function that we are using may as well be a random function, in the sense that there is no (efficient) way of telling the difference. Here by a <em>random function</em> we really mean a random function: chosen uniformly at random from the set of all functions with the given domain and range.</p>
+<p>Another way to think of a random function is that it is defined through <em>lazy evaluation</em>: the first time the function is applied to a certain input, it picks a uniformly random element from the range as the output. Why do we do this only the first time? If we would also do it a second time, then a single input gets mapped to two different outputs, which would violate the fact that we are talking about a function.</p>
+<p>As with any assumption, you should question how realistic this assumption is. It turns out that this assumption is both clearly false and very true at the same time. In the next section we will see an example of a completely deterministic function (you can look up the source code on the internet), that is still very much unpredictable. This deterministic function looks completely random to anyone with bounded computational power.</p>
+<p>A very important consequence of the random oracle assumption is that the function is <em>hard</em> to invert. By this we mean that for a given output (or set of outputs) it is hard to find an input that maps to that output.</p>
+</section>
+</section>
+<section id="sha-256" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="sha-256"><span class="header-section-number">6.3</span> SHA-256</h2>
+<p>Here we give a brief illustration of how hashing works. We will use as example the SHA-256 hash function. SHA stands for Secure Hash Algorithm. The number 256 refers to the number of bits of the output.</p>
+<p>We will use the python <code>hashlib</code> module, which we first need to import.</p>
+<div id="87278a8e" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hashlib</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Here is an example of how to use SHA256 to hash a short message. The input message will be ``Decentralized finance is cool!’’ and the output is a bitstring of length 256.</p>
+<div id="9a7cf54f" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The message to hash</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>message <span class="op">=</span> <span class="st">"Decentralized finance is cool!"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Encode the message to bytes, then hash it using sha256</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>hashed_message <span class="op">=</span> hashlib.sha256(message.encode()).digest()</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the hash to a bitstring</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>bitstring1 <span class="op">=</span> <span class="st">''</span>.join(<span class="ss">f'</span><span class="sc">{</span>byte<span class="sc">:08b}</span><span class="ss">'</span> <span class="cf">for</span> byte <span class="kw">in</span> hashed_message)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The SHA-256 hash as a bitstring is:</span><span class="ch">\n</span><span class="sc">{</span>bitstring1<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Length of the bitstring: </span><span class="sc">{</span><span class="bu">len</span>(bitstring1)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The SHA-256 hash as a bitstring is:
+1000000101101100111100011000101011001010011111101011001001110001110001011101000101011011101010000000110100110111100110011011000011111111011001000010110011110000001100011111111100010111000111000011100011000001100111000011100011101010000100101110110110100110
+Length of the bitstring: 256</code></pre>
+</div>
+</div>
+<p>Let us now investigate the key property of hash functions: they look like a random function. In particular, this implies that it is hard to predict the output of the function. To illustrate this, let us hash a second message that is very similar to the first: ``Decentralized finance is cool!!!’’</p>
+<div id="b058f2a2" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">### Second message </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The message to hash</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>message <span class="op">=</span> <span class="st">"Decentralized finance is cool!!!"</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Encode the message to bytes, then hash it using sha256</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>hashed_message <span class="op">=</span> hashlib.sha256(message.encode()).digest()</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the hash to a bitstring</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>bitstring2 <span class="op">=</span> <span class="st">''</span>.join(<span class="ss">f'</span><span class="sc">{</span>byte<span class="sc">:08b}</span><span class="ss">'</span> <span class="cf">for</span> byte <span class="kw">in</span> hashed_message)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The SHA-256 hash as a bitstring is:</span><span class="ch">\n</span><span class="sc">{</span>bitstring2<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Length of the bitstring: </span><span class="sc">{</span><span class="bu">len</span>(bitstring2)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>The SHA-256 hash as a bitstring is:
+0010101111101010000100000011110010000100111010011011010010011101110101101000011100101110100101001101110101011100011111010111011100111100100111011111101011011000000001110111000111100011110000011101111111011010001110001011100010100011101110001001100000110011
+Length of the bitstring: 256</code></pre>
+</div>
+</div>
+<p>If you compare the two strings, you will notice some differences right away. How different are the two strings? If the hash function assigns a random output to every input, then you would expect the two bitstrings to differ in roughly half their entries. Let us use python to count the number of different entries in the two strings.</p>
+<div id="6acfba82" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_differences(bitstring1, bitstring2):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Ensure the bitstrings are the same length</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(bitstring1) <span class="op">!=</span> <span class="bu">len</span>(bitstring2):</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Bitstrings must be of the same length"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Count the differences</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    differences <span class="op">=</span> <span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> b1, b2 <span class="kw">in</span> <span class="bu">zip</span>(bitstring1, bitstring2) <span class="cf">if</span> b1 <span class="op">!=</span> b2)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> differences</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of differences</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>difference_count <span class="op">=</span> count_differences(bitstring1, bitstring2)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of different characters: </span><span class="sc">{</span>difference_count<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of different characters: 131</code></pre>
+</div>
+</div>
+<p>Indeed, for this particular example, the number of different characters is very close to 256/2 = 128.</p>
+<div class="line-block">The takeaway: SHA-256 is widely considered to satisfy the random oracle assumption.</div>
+</section>
+<section id="how-do-we-define-a-puzzle-based-on-sha-256" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="how-do-we-define-a-puzzle-based-on-sha-256"><span class="header-section-number">6.4</span> How do we define a puzzle based on SHA-256?</h2>
+<p>Now that we have seen a concrete example of a cryptographic hash function, it is time to define our puzzle(s). Remember that SHA-256 takes any input and maps it to a bitstring of length 256. In other words, the range is <span class="math inline">\{0,1\}^{256}</span>.</p>
+<p>There is a natural way to think of bitstrings as numbers between <span class="math inline">0</span> and <span class="math inline">2^{256}-1</span>: if <span class="math inline">x = (x_{256},x_{255},\ldots,x_1) \in \{0,1\}^{256}</span>, then we associate to it the number <span class="math display">
+\sum_{i=1}^{256} x_i 2^{i-1}.
+</span></p>
+<p>To make this a bit less abstract, consider the case of only three bits. In this case,</p>
+<ul>
+<li>the string <span class="math inline">000</span> corresponds to the value <span class="math inline">0</span>,</li>
+<li>the string <span class="math inline">001</span> to <span class="math inline">1 \cdot 2^{1-1} = 1</span>,</li>
+<li>the string <span class="math inline">111</span> to <span class="math inline">1 \cdot 2^{2} + 2 \cdot 2^1 + 1 \cdot 2^0 = 7</span>.</li>
+</ul>
+<p>Why did we discuss this interpretation of bitstrings? This is precisely how we will define our cryptographic puzzles! If we let <span class="math inline">h</span> denote our hash function (think SHA-256), then the puzzle is as follows.</p>
+<div id="def-puzzle" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6.1 (Canonical Proof-of-Work puzzle)</strong></span> For a given threshold <span class="math inline">\tau</span>, find an input <span class="math inline">z</span> such that <span class="math inline">h(z) \leq \tau</span>.</p>
+</div>
+<p>The threshold <span class="math inline">\tau</span> determines the difficulty of the puzzle. The two extreme cases being</p>
+<ul>
+<li><span class="math inline">\tau = 2^{256}-1</span>: in this case any input is a valid solution. This is thus an extremely easy puzzle!</li>
+<li><span class="math inline">\tau = 0</span>: in this case we are asked to find an input that maps to the all-zero string. This is an extremely hard task under the random oracle assumption!</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Under the random oracle assumption, what is the probability of any given input being mapped to the all-zero string?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Under the random oracle assumption, what is the probability of any given input <span class="math inline">z</span> being mapped to an output with <span class="math inline">h(z) \leq \tau</span>?</p>
+</div>
+</div>
+<p>To build some intuition, it is helpful to think of <span class="math inline">\tau</span> as a number of the form <span class="math inline">2^{256-k} -1</span> for some <span class="math inline">k</span> between <span class="math inline">0</span> and <span class="math inline">256</span>. In this case, <span class="math inline">k</span> specifies the number of zeros that the output should start with. If we go back to the previous section, then the message “Decentralized finance is cool!!!” would thus be a valid solution for the threshold <span class="math inline">2^{256-2} -1</span>: its hash starts with two zeros.</p>
+<p>What is the probability that a single input gets mapped to a string of length 256 starting with <span class="math inline">k</span> zeros? Well, under the random oracle assumption the output is chosen uniformly at random from the set <span class="math inline">\{0,1\}^{256}</span>. A good way of thinking about a uniformly random element from that set is that, for each of the <span class="math inline">256</span> bits independently, we flip an unbiased coin: if it’s heads, we get <span class="math inline">1</span>, and if it’s tails, we get <span class="math inline">0</span>. What is then the probability that we start the sequence with <span class="math inline">k</span> zeroes? Note that this depends only on the outcomes of the first <span class="math inline">k</span> coin flips: they all need to be tails. The probability of that is <span class="math inline">2^{-k}</span>.</p>
+<p>How many inputs would you expect to need to try to find one that maps to a bitstring starting with <span class="math inline">k</span> zeroes? This is the expectation of a geometric random variable with probability <span class="math inline">p = 2^{-k}</span>. It’s expectation is <span class="math inline">1/p</span> and thus we expect to need to try <span class="math inline">2^k</span> different inputs.</p>
+<p>The fact that our canonical Proof-of-Work puzzle has such a nicely tunable complexity is crucial for the stability of protocols relying on Proof-of-Work and longest-chain consensus. By tuning the complexity of the puzzle, we can control how frequently new blocks get created. We will get back to how to choose the complexity when we discuss Bitcoin in a bit more depth.</p>
+<p>Now that we have decided on a puzzle, it is a good moment to ask ourselves the following question:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What would go wrong in a longest-chain protocol if we simply elect as the next leader, the next node that provides us any input <span class="math inline">z</span> that satisfies <span class="math inline">h(z)\leq \tau</span> for the current value of <span class="math inline">\tau</span>?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Would an NP-hard problem such as Traveling Salesperson be a good alternative for a hard puzzle? Explain why (not).</p>
+</div>
+</div>
+</section>
+<section id="what-should-puzzle-solutions-encode" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="what-should-puzzle-solutions-encode"><span class="header-section-number">6.5</span> What should puzzle solutions encode?</h2>
+<p>To make use of Proof-of-Work in a longest-chain protocol, we thus need to avoid that nodes can save up valid solutions for use in later rounds. If you go back to the previous chapter, there was another assumption that we promised Proof-of-Work would take care of:</p>
+<blockquote class="blockquote">
+<p><strong>A4’)</strong> The leader of round <span class="math inline">r</span> produces exactly one block, and this block claims as its predecessor a block that belongs to a previous round.</p>
+</blockquote>
+<p>Here we discuss how to solve both these problems in one go. We essentially do so by merging the leader election and block-proposal steps. Our protocol will not just accept any solution <span class="math inline">z</span> that satisfies <span class="math inline">h(z) \leq \tau</span>. Instead, we will require the solution <span class="math inline">z</span> to have some structure. We ask for the following structure on <span class="math inline">z</span>:</p>
+<ul>
+<li>It starts by writing down a block <span class="math inline">B</span> that it proposes,</li>
+<li>It is followed by the identifier <span class="math inline">pred</span> of the predecessor of the block <span class="math inline">B</span>,</li>
+<li>The third part is <span class="math inline">pk</span>, the public key (think identifier), of the node proposing the block.</li>
+<li>The fourth and final part is a <span class="math inline">nonce</span>, which stands for <em>number used once</em>.</li>
+</ul>
+<div id="def-valid-sol" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6.2 (Format for puzzle solutions)</strong></span> A valid puzzle solution is of the form <span class="math inline">z = B||pred||pk||nonce</span>, where <span class="math inline">||</span> denotes concatenation.</p>
+</div>
+<p>We can think of the four parts of the solution as four fields in which we can write information. The first two neatly ensure that the node that submits this solution gets to propose exactly one block, and that block has to point to a predecessor that was known at the time of creating the solution. In fact, the block proposer already has to commit to a block <em>before</em> they find a valid solution. The third field, containing the identifier of the block proposer can be used to determine who gets the reward for creating that block (we will get to rewards briefly when we discuss Bitcoin). The <span class="math inline">nonce</span> is perhaps the most mysterious part of the solution. It is there simply as a way to make it easy to generate many inputs corresponding to the same triple <span class="math inline">B||pred||pk</span>: one simply has to change the <span class="math inline">nonce</span> at the end.</p>
+<p>Recall from the previous chapter, our generic blockchain protocol was as follows:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>A blockchain protocol:</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>1.  Initialize with a hard-coded genesis block B0</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>2.  In each round r = 1,2,3,.... do:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    a)  Choose one node i as the leader of round r. </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    b)  Node i proposes a set of blocks, </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        each specifying a single predecessor block.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In a Proof-of-Work protocol, we merge the last two steps:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>A Proof-of-Work blockchain protocol:</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>1.  Initialize with a hard-coded genesis block B0</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>2.  In each round r = 1,2,3,.... do:</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    Choose as leader in round $r$ the first node </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    that provides a valid puzzle solution </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    z = B||pred||pk||nonce with h(z) &lt;= tau. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="sec-sybil" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="sec-sybil"><span class="header-section-number">6.6</span> Sybil-resistance</h2>
+<p>Now that we understand Proof of Work, let us introduce one of the key problems that Proof of Work solves: <em>resistance to Sybil attacks</em>.</p>
+<p>A Sybil attack<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> on a computer system is a type of attack in which an attacker tries to gain an advantage by creating a large number of identities. We call a protocol <em>Sybil-resistant</em> if no such Sybil attack is possible.</p>
+<p>As an example, consider the leader selection mechanism from <a href="LongestChain.html" class="quarto-xref"><span>Chapter 5</span></a>: we chose a leader uniformly at random from the set of nodes participating in the protocol. It is easy to see that for such a leader selection protocol, a Sybil attack would be very dangerous (if possible!). Indeed, if a faulty node can pose as many nodes, then it greatly increases the chances of being selected as a leader in the next round. For a faulty node, it is a huge advantage if it is selected as a leader much more often, so if possible, this would constitute a Sybil attack. Note that we wrote “if possible”: in <a href="LongestChain.html" class="quarto-xref"><span>Chapter 5</span></a> we were working in the permissioned setting: nodes need permission to join the network before the start of the protocol and presumably this permission is only granted after some sort of verification of identity.</p>
+<p>If we use Proof-of-Work to select the next leader, then we get Sybil-resistance automatically:</p>
+<div id="thm-sybil-resistance-PoW" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 6.1 (Sybil-resistance of Proof-of-Work)</strong></span> Suppose <span class="math inline">n</span> nodes make <span class="math inline">\mu_1,\mu_2,\ldots,\mu_n</span> distinct nonce guesses per second. Then, for every node <span class="math inline">i</span> and round <span class="math inline">r</span>, we have <span class="math display">
+\Pr(\text{node $i$ is the round-$r$ leader}) = \frac{\mu_i}{\sum_{j=1}^n \mu_j}.
+</span></p>
+</div>
+<p>At least two remarks are in order here. First, although the theorem references a set of <span class="math inline">n</span> nodes, this is simply for notational purposes. The Proof-of-Work protocol works in the permisionless setting. Second, the numbers <span class="math inline">\mu_i</span> are often referred to as <em>hashrates</em>.</p>
+<p>The most important observation about <a href="#thm-sybil-resistance-PoW" class="quarto-xref">Theorem&nbsp;<span>6.1</span></a> is that the quantity on the right hand side is simply node <span class="math inline">i</span>’s fraction of the overall hashrate; it does not depend on how many identities it controls.</p>
+<p>Looking at <a href="#thm-sybil-resistance-PoW" class="quarto-xref">Theorem&nbsp;<span>6.1</span></a>, there is a clear way in which a node can influence the probability with which they are selected as the leader of the next round: they need to increase their hashrate. Assuming the other nodes don’t do the same, this would increase the fraction of node <span class="math inline">i</span>’s hashrate in the total hashrate. Creating new hashrate is however not cheap! It essentially amounts to buying new computers to try new nonces. If we for instance assume that currently the amount of hashrate controlled by faulty nodes is less than <span class="math inline">1/4</span> of the total hashrate, then to mount a successful Sybil-attack, the faulty nodes would have to at least double their hashrate (and then some). This is practically impossible for large implementations such as Bitcoin…</p>
+<p>Looking ahead, in the next part of the course you will revisit Sybil-resistance, but then from a different perspective: that of sharing rewards.</p>
+</section>
+<section id="nakamoto-consensus" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="nakamoto-consensus"><span class="header-section-number">6.7</span> Nakamoto consensus</h2>
+<p>Combining Proof-of-Work and Longest-chain consensus protocols is sometimes referred to as <em>Nakamoto consensus</em>. Bitcoin being of course the most famous example. In this final part of the chapter we will go a bit deeper into the specifics of Bitcoin. In particular, we will discuss how Bitcoin sets and adjusts the difficulty parameter of the puzzles. We then briefly discuss rewards in the Bitcoin protocol (with a more in-depth discussion being deferred to subsequent chapters).</p>
+<section id="how-to-set-and-adjust-the-difficulty-parameter" class="level3" data-number="6.7.1">
+<h3 data-number="6.7.1" class="anchored" data-anchor-id="how-to-set-and-adjust-the-difficulty-parameter"><span class="header-section-number">6.7.1</span> How to set and adjust the difficulty parameter</h3>
+<p>First, let us recall the definition of our canonical Proof-of-Work puzzle:</p>
+<div id="def-puzzle" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6.3 (Canonical Proof-of-Work puzzle)</strong></span> For a given threshold <span class="math inline">\tau</span>, find an input <span class="math inline">z</span> such that <span class="math inline">h(z) \leq \tau</span>.</p>
+</div>
+<p>Which value of <span class="math inline">\tau</span> should we pick? At first glance, the larger <span class="math inline">\tau</span>, the easier it is to find a solution and therefore the more frequently new blocks get created. Moreover, we have argued before that as long as the fraction of hashrate controlled by faulty nodes is strictly less than <span class="math inline">1/2</span>, then the longest-chain consensus protocol based on Proof-of-Work has the property of <em>balanced leader sequences</em>. In particular, it will then satisfy liveness and consistency. Note that this argument does not rely on <span class="math inline">\tau</span> at all. So if we create blocks say twice as fast, then it takes half as long before a block gets finalized. So is there any reason to bound <span class="math inline">\tau</span>?</p>
+<p>Yes! In <a href="LongestChain.html" class="quarto-xref"><span>Chapter 5</span></a> we assumed that honestly created blocks were instantly known to all honest nodes. What this really means is that we assume honest nodes do not inadvertently create a fork. They are always aware of the longest chain(s) in the network. Is that a reasonable assumption? If we assume instantaneous communication for example, then it holds. But instantaneous communication itself clearly does not hold. A more reasonable assumption is that communication is not instantaneous, but happens for example with a delay of at most 10 seconds between any pair of nodes. In that case, if the (expected) time between blocks is much longer than 10 seconds, say 10 minutes, then it is fair to say that if a block is honestly created, then it is “immediately” known to all honest nodes.</p>
+<p>The time frame of 10 minutes is in fact the one that Bitcoin aims for. It chooses the parameter <span class="math inline">\tau</span> in such a way that on expectation it takes 10 minutes for a new block to be created.</p>
+<p>If the total hashrate is <span class="math inline">H</span> nonces per second, and the probability of success is <span class="math inline">p = \tau/2^{256}</span>, then the average duration <span class="math inline">L</span> of the round in seconds satisfies <span class="math display">
+L = \frac{1}{Hp} = \frac{2^{256}}{H \cdot \tau}.
+</span></p>
+<p>In other words, if the total hashrate is known, then it is easy to choose the difficulty of the puzzles in such a way that the expected duration of a round is <span class="math inline">10</span> minutes.</p>
+<p>In a permissionless protocol, there is however no way to know the total hashrate. Nakamoto came up with a very elegant solution for this problem. Nakamoto anticipated that the total hashrate could vary significantly over time. They therefore built into the protocol a mechanism for how to adjust the difficulty. The idea is quite simple. If we expect a block to be created every <span class="math inline">10</span> minutes, then after two weeks we expect to see <span class="math inline">14 \cdot 24 \cdot 6 = 2016</span> new blocks. The mechanism Nakamoto put in place is thus the following: every time 2016 new blocks have been created the protocol evaluates how many days have passed since the previous batch of 2016 blocks. If that time is <span class="math inline">\beta \cdot 14</span> days, then the difficulty parameter <span class="math inline">\tau</span> gets updated to <span class="math inline">\beta \cdot \tau</span>.</p>
+<p>As an example, if it took 7 days instead of 14, then <span class="math inline">\beta = 1/2</span>, meaning that <span class="math inline">\tau</span> will get divided by two. As a consequence, if the hashrate doesn’t change, the expected time between blocks goes up by a factor 2.</p>
+<p><strong>Note</strong>: to implement this mechanism, it is important that blocks include a timestamp. We will simply treat this as an exact timestamp, but is should be clear that the protocol is relatively robust against slight errors in the timestamps the nodes put on their blocks.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise*
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Prove that a faulty node that controls <span class="math inline">10%</span> of the total hashrate can break finality of a longest-chain consensus protocol if we measure the length of a chain as the number of blocks it contains (as in <a href="LongestChain.html" class="quarto-xref"><span>Chapter 5</span></a>).</p>
+</div>
+</div>
+<p>In a chain based on Proof-of-Work we therefore slightly modify the definition of the length of a chain: we take into account the (expected) work that went into creating each of the blocks. Concretely, this means that every block gets assigned a weight that is equal to the expected number of nonces that needed to be evaluated for it to be created: <span class="math inline">2^{256}/\tau</span>. We will not do so here, but one can show that with these modifications the liveness and consistency properties from the previous chapter still hold, mostly unchanged.</p>
 
 
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>The proof here is not a figure of speech: under well-defined assumptions, the proof establishes that you have done a certain amount of work with high probability.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Named after a 1973 book called Sybil, a case study of a woman diagnosed with a dissociative identity disorder.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
