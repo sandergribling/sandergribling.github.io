@@ -618,7 +618,7 @@ Case ii) is essentially a generalization of case i): suppose that the integer $K
 </ul>
 <p>Can we turn this “on expectation” statement into a “with high probability” statement? To gain some intuition, you are invited to experiment with different values of <span class="math inline">\alpha</span> and <span class="math inline">K</span>, using the Python code snippets below.</p>
 <p>To create one such leader sequence, use the following code:</p>
-<div id="ba8bb824" class="cell" data-execution_count="1">
+<div id="b3173a0f" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -640,7 +640,7 @@ Case ii) is essentially a generalization of case i): suppose that the integer $K
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> samples</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="ceaa2deb" class="cell" data-execution_count="2">
+<div id="7b0a1540" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="dv">10</span>      <span class="co"># number of leaders</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.45</span> <span class="co"># probability of leader being faulty</span></span>
@@ -649,12 +649,12 @@ Case ii) is essentially a generalization of case i): suppose that the integer $K
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Fraction of faulty leaders:"</span>, np.<span class="bu">sum</span>(samples)<span class="op">/</span>K)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Sampled leaders: [0 0 0 0 0 0 1 0 1 0]
-Fraction of faulty leaders: 0.2</code></pre>
+<pre><code>Sampled leaders: [0 1 1 0 0 1 1 0 1 1]
+Fraction of faulty leaders: 0.6</code></pre>
 </div>
 </div>
 <p>If you run the above code several times, you will see that the outcome varies a bit. The following code allows you to run the process <span class="math inline">T</span> times and create a histogram of the fractions of faulty nodes.</p>
-<div id="85c29bfe" class="cell" data-execution_count="3">
+<div id="d8a011dc" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sample_T_sequences(T, K, alpha):</span>
@@ -693,7 +693,7 @@ Fraction of faulty leaders: 0.2</code></pre>
   background-color: #ffffff;
 }
 </style>
-<div id="0b9b69ae" class="cell" data-execution_count="4">
+<div id="eac02035" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage:</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">10000</span>     <span class="co"># Number of leader sequences</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="dv">50</span>       <span class="co"># Number of leaders per sequence</span></span>
@@ -707,7 +707,7 @@ Fraction of faulty leaders: 0.2</code></pre>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the histogram of fractions</span></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plot_histogram(fractions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>The fraction of leader sequences that are balanced is: 0.7233</code></pre>
+<pre><code>The fraction of leader sequences that are balanced is: 0.7129</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
