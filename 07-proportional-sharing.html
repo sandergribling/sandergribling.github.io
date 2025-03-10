@@ -244,7 +244,7 @@ window.Quarto = {
 
 <p><link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""> <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&amp;family=Fira+Sans&amp;display=swap" rel="stylesheet"></p>
 <p>In the previous chapter, we saw that in the Proof-of-Work protocol the leader for the next round is chosen at random with a probability proportional to a miner’s hash rate <span class="math inline">\mu_i</span> with <span class="math inline">i = 1,\dots,n</span> the indices of the participating miners. That is, the probability that miner <span class="math inline">i</span> becomes the next leader is <span class="math display">
-p_i = \frac{\mu_i}{\sum_{i=1}^n \mu_i}.
+p_i = \frac{\mu_i}{\sum_{j=1}^n \mu_j}.
 </span> Recall that the hash rate (or hashing power) of a miner is, roughly speaking, the amount of effort that a miner puts into solving the puzzle that is used to determine the leader of the next round in the Proof-of-Work protocol.</p>
 <p>This seems like a decent idea: The more effort you put into solving the puzzle, the more likely it is that you become the next leader. Is this also the “best” thing to do, in some (for now undefined) sense?</p>
 <p>For example, as an alternative, we might also simply select the leader uniformly at random after some miner has solved the puzzle. However, this would be a bad idea, because then miners do not have any incentive to put effort into the mining process, because performing more work does not increase their chances of becoming the next leader. Furthermore, this also increases the chances of a Sybil attack, as was discussed in the previous chapter (and that we will come back to later).</p>
