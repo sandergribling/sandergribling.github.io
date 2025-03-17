@@ -283,7 +283,7 @@ window.Quarto = {
 
 <p><link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""> <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&amp;family=Fira+Sans&amp;display=swap" rel="stylesheet"></p>
 <p>In the previous chapter we saw that (in theory) the proportional allocation rule is a good way to divide the (expected) rewards of mining a unit of cryptocurrency. One aspect that this rule did not take into account is the fact that it costs time and money to guess solutions for the puzzle contest that determines the leader of the next round in the Proof-of-Work protocol.</p>
-<p>A more realistic way of denoting the reward, or said better, the * (expected) payoff* of miner <span class="math inline">i</span>, is <span class="math display">
+<p>A more realistic way of denoting the reward, or said better, the <em>(expected) payoff</em> of miner <span class="math inline">i</span>, is <span class="math display">
 \frac{\mu_i}{\sum_j \mu_j} - c_i(\mu_i)
 </span> where the function <span class="math inline">c_i : \mathbb{R}_{\geq 0} \rightarrow \mathbb{R}_{\geq 0}</span> is a nondecreasing cost function: The more hashing power miner <span class="math inline">i</span> uses, the higher the cost <span class="math inline">c_i(\mu_i)</span> she has to pay. For example, this cost could model the energy consumption of the computers used to guess solutions with. Note that <span class="math inline">c_i</span> is a miner-specific function.</p>
 <p>In this chapter we will allow real values of <span class="math inline">\mu_i</span>, as opposed to only integer values, so that the payoff of miner <span class="math inline">i</span> is continuous. For simplicity, we will assume that for every <span class="math inline">i=1,\dots,n</span>, <span class="math inline">c_i</span> is a linear function of the form <span class="math inline">c_i(\mu_i) = a_i\cdot \mu_i</span> for <span class="math inline">a_i &gt; 0</span>, so that the payoff of miner <span class="math inline">i</span> becomes <span class="math display">
@@ -349,7 +349,7 @@ g_2(x) = 2 \cdot \frac{x}{8/9 + x} - x
   background-color: #ffffff;
 }
 </style>
-<div id="941e95af" class="cell" data-execution_count="1">
+<div id="956ede73" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show code generating the plot below</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
