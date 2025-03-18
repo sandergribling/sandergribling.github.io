@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Preliminaries – Decentralized Finance and Blockchains</title>
+<title>Game Theory – Decentralized Finance and Blockchains</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,8 +25,8 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
-<link href="./intro-computer-science.html" rel="next">
-<link href="./01-introduction.html" rel="prev">
+<link href="./07-proportional-rule.html" rel="next">
+<link href="./06-ProofofWork.html" rel="prev">
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -53,49 +53,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -109,7 +66,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-prelim.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Preliminaries</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro-game-theory.html">Game Theory</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -143,7 +100,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-prelim.html" class="sidebar-item-text sidebar-link active">
+  <a href="./02-prelim.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Preliminaries</span></span></a>
   </div>
 </li>
@@ -184,7 +141,7 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./intro-game-theory.html" class="sidebar-item-text sidebar-link">
+            <a href="./intro-game-theory.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Game Theory</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -210,23 +167,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#commonly-used-symbols" id="toc-commonly-used-symbols" class="nav-link active" data-scroll-target="#commonly-used-symbols"><span class="header-section-number">2.1</span> Commonly used symbols</a></li>
-  <li><a href="#graph-theory-preliminaries" id="toc-graph-theory-preliminaries" class="nav-link" data-scroll-target="#graph-theory-preliminaries"><span class="header-section-number">2.2</span> Graph theory preliminaries</a></li>
-  <li><a href="#frequently-used-probability-distributions" id="toc-frequently-used-probability-distributions" class="nav-link" data-scroll-target="#frequently-used-probability-distributions"><span class="header-section-number">2.3</span> Frequently used probability distributions</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-prelim" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Preliminaries</span></span></h1>
+<h1 class="title">Game Theory</h1>
 </div>
 
 
@@ -244,22 +193,10 @@ window.Quarto = {
 
 
 <p><link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""> <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&amp;family=Fira+Sans&amp;display=swap" rel="stylesheet"></p>
-<p>Here we gather frequently used notation. We also recall some basic concepts that we expect as prior knowledge and we provide some pointers to related literature.</p>
-<section id="commonly-used-symbols" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="commonly-used-symbols"><span class="header-section-number">2.1</span> Commonly used symbols</h2>
-<p>We let <span class="math inline">\mathbb{N}</span> denote the set of natural numbers, i.e., <span class="math inline">\mathbb{N} := \{1,2,3,\ldots\}</span>. For <span class="math inline">n \in \mathbb{N}</span>, we write <span class="math inline">[n] := \{1,2,\ldots,n\}</span>. We use <span class="math inline">\log</span> to denote the natural logarithm.</p>
-</section>
-<section id="graph-theory-preliminaries" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="graph-theory-preliminaries"><span class="header-section-number">2.2</span> Graph theory preliminaries</h2>
-<p>We will use the concepts of undirected and directed graphs, which we recall below.</p>
-<p>A <em>graph</em> <span class="math inline">G</span> is defined by a set of vertices <span class="math inline">V</span> and a set of edges <span class="math inline">E</span>. We write <span class="math inline">G = (V,E)</span>. Here the set of edges is a subset of pairs of vertices. Throughout, we assume an edge consists of a pair of distinct vertices <span class="math inline">u,v \in V</span> (distinct meaning <span class="math inline">u \neq v</span>). When such an edge is <em>undirected</em> we write <span class="math inline">\{u,v\}</span>. When the edge is directed we write <span class="math inline">(u,v)</span> to denote an edge from vertex <span class="math inline">u</span> to vertex <span class="math inline">v</span>. We have seen an example of an undirected graph in <a href="01-introduction.html#fig-3-cycle" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>: this is the graph with vertex set <span class="math inline">V=[3]</span> and edge set <span class="math inline">E = \{\{1,2\},\{2,3\},\{1,3\}\}</span>.</p>
-<p>We have also seen an example of a directed graph in <a href="01-introduction.html#fig-3-chain" class="quarto-xref">Figure&nbsp;<span>1.2</span></a>: here the vertex set is again <span class="math inline">V=[3]</span> and if we label the vertices <span class="math inline">1</span>, <span class="math inline">2</span>, and <span class="math inline">3</span> from left to right, then the edge set is <span class="math inline">E = \{(2,1), (3,2)\}</span>.</p>
-</section>
-<section id="frequently-used-probability-distributions" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="frequently-used-probability-distributions"><span class="header-section-number">2.3</span> Frequently used probability distributions</h2>
+<p>In this part of the course, we will focus on various game-theoretic aspects that arise in blockchain protocols and related settings. We will see various ways (both cooperative and non-cooperative) of looking at these problems.</p>
+<p>All of the materials presented in this section are based on scientific research papers. We will acknowledge these at the end of a chapter. None of this is the author/teacher’s own original work.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -684,13 +621,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./01-introduction.html" class="pagination-link" aria-label="Introduction">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      <a href="./06-ProofofWork.html" class="pagination-link" aria-label="Proof of Work">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Proof of Work</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./intro-computer-science.html" class="pagination-link" aria-label="Computer Science">
-        <span class="nav-page-text">Computer Science</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./07-proportional-rule.html" class="pagination-link" aria-label="Proportional rule">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Proportional rule</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
