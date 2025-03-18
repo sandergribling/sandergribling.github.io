@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.52">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; Proof of Work – Decentralized Finance and Blockchains</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<link href="./game-theory-intro.html" rel="next">
+<link href="./05-LongestChain.html" rel="prev">
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./computer-science-intro.html">Computer Science</a></li><li class="breadcrumb-item"><a href="./06-ProofofWork.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Proof of Work</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Decentralized Finance and Blockchains</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Decentralized-Finance-and-Blockchains.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-prelim.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Preliminaries</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./computer-science-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Computer Science</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-distributed.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to distributed computing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-DolevStrong.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The Dolev-Strong protocol</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-LongestChain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longest-chain protocols</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-ProofofWork.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Proof of Work</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./game-theory-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Game Theory</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-proportional-rule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Proportional rule</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-tullock-contest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tullock contest</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-is-proof-of-work" id="toc-what-is-proof-of-work" class="nav-link active" data-scroll-target="#what-is-proof-of-work"><span class="header-section-number">6.1</span> What is proof of work?</a></li>
+  <li><a href="#cryptographic-hash-functions" id="toc-cryptographic-hash-functions" class="nav-link" data-scroll-target="#cryptographic-hash-functions"><span class="header-section-number">6.2</span> Cryptographic hash functions</a>
+  <ul class="collapse">
+  <li><a href="#the-random-oracle-assumption" id="toc-the-random-oracle-assumption" class="nav-link" data-scroll-target="#the-random-oracle-assumption"><span class="header-section-number">6.2.1</span> The random oracle assumption</a></li>
+  </ul></li>
+  <li><a href="#sha-256" id="toc-sha-256" class="nav-link" data-scroll-target="#sha-256"><span class="header-section-number">6.3</span> SHA-256</a></li>
+  <li><a href="#how-do-we-define-a-puzzle-based-on-sha-256" id="toc-how-do-we-define-a-puzzle-based-on-sha-256" class="nav-link" data-scroll-target="#how-do-we-define-a-puzzle-based-on-sha-256"><span class="header-section-number">6.4</span> How do we define a puzzle based on SHA-256?</a></li>
+  <li><a href="#what-should-puzzle-solutions-encode" id="toc-what-should-puzzle-solutions-encode" class="nav-link" data-scroll-target="#what-should-puzzle-solutions-encode"><span class="header-section-number">6.5</span> What should puzzle solutions encode?</a></li>
+  <li><a href="#sec-sybil" id="toc-sec-sybil" class="nav-link" data-scroll-target="#sec-sybil"><span class="header-section-number">6.6</span> Sybil-resistance</a></li>
+  <li><a href="#nakamoto-consensus" id="toc-nakamoto-consensus" class="nav-link" data-scroll-target="#nakamoto-consensus"><span class="header-section-number">6.7</span> Nakamoto consensus</a>
+  <ul class="collapse">
+  <li><a href="#how-to-set-and-adjust-the-difficulty-parameter" id="toc-how-to-set-and-adjust-the-difficulty-parameter" class="nav-link" data-scroll-target="#how-to-set-and-adjust-the-difficulty-parameter"><span class="header-section-number">6.7.1</span> How to set and adjust the difficulty parameter</a></li>
+  </ul></li>
+  <li><a href="#safe-blocks" id="toc-safe-blocks" class="nav-link" data-scroll-target="#safe-blocks"><span class="header-section-number">6.8</span> Safe blocks</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./computer-science-intro.html">Computer Science</a></li><li class="breadcrumb-item"><a href="./06-ProofofWork.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Proof of Work</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-Proof-of-Work" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Proof of Work</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""> <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&amp;family=Fira+Sans&amp;display=swap" rel="stylesheet"></p>
+<p>In this final chapter on the computer science aspects of blockchains we make the step to permissionless consensus protocols. More accurately, we discuss the concept of proof of work as a means to select a new block proposer.</p>
+<p>We will see that proof of work gives us many desirable properties:</p>
+<ul>
+<li>As long as the strict majority of the work is done by honest nodes, we will get a balanced leader sequence.</li>
+<li>In applications such as Bitcoin it also guarantees assumption A4’: each leader can only produce one block.</li>
+</ul>
+<p>Proof of work also comes with its own set of problems / challenges. We will see some of them in this lecture and others in the next part of the course.</p>
+<section id="what-is-proof-of-work" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="what-is-proof-of-work"><span class="header-section-number">6.1</span> What is proof of work?</h2>
+<p>Throughout your studies you have been exposed to many different proofs. But what constitutes a proof of work? In a nutshell, it is a proof that you have done a certain amount of work.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Let us make this a bit more concrete by connecting it to our application. In the previous chapter we have discussed longest-chain protocols at length. We did that in the relatively safe environment of the <em>permissioned</em> setting. Because we were in the permissioned setting, we had a well-defined way of selecting a leader uniformly at random. Indeed, if there are <span class="math inline">n</span> nodes in the network, then we simply draw a uniformly random number between <span class="math inline">1</span> and <span class="math inline">n</span> to decide the leader of the next round (who gets to propose a new block).</p>
+<p>In the <em>permissionless</em> setting this approach no longer works. That’s where proof of work comes in: we will use it as a mechanism to choose the leader of the next round. The basic idea is that we decide on some (hard) puzzle and then we declare as the leader of the next round the first node that comes up with a solution to that puzzle. If the puzzle is chosen appropriately, and we will see how to do so soon, then the likelihood of being the first node to solve the puzzle is directly proportional to the computational effort put into solving this puzzle.</p>
+<p>Notice that the mechanism described above does not allow us to sample a node uniformly at random, instead, we sample nodes proportional to their computational efforts. How does this affect the balanced-leader sequence analysis from the previous chapter? Perhaps surprisingly, it almost doesn’t! In the permissioned setting we required the fraction <span class="math inline">\alpha = f/n</span> of faulty nodes to be strictly less than a half. Now, we require the total fraction of computational effort controlled by faulty nodes to be strictly less than a half.</p>
+<p>As a side remark, the notion of proof of work actually predates Bitcoin by about 17 years. Dwork and Naor introduced the idea in <a href="https://www.wisdom.weizmann.ac.il/~naor/PAPERS/pvp.pdf">1992</a> in the context of spam-fighting “Combatting Junk Mail”, actually before spam was really a problem. See also the related <a href="http://www.hashcash.org/papers/hashcash.pdf">2002</a> paper by Back on HashCash.</p>
+<p>To illustrate some desirable properties of the “proof”, consider the following example. The puzzle is this week’s NY Times crossword puzzle. The key property that we want to illustrate here is that the proof is <em>concise</em> and <em>efficiently verifiable</em>: the proof that you need to provide is simply the filled-in crossword puzzle. To verify it, every node can simply check that all the words are correctly spelled and fit together nicely. Would the NY Times crossword be a good puzzle to use in a blockchain protocol? Probably not… It is reasonable to say that the more effort you put into solving the crossword, the more likely you are to solve it first. Although the likelihood is probably not directly proportional to the effort you put in (at least for me).</p>
+</section>
+<section id="cryptographic-hash-functions" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="cryptographic-hash-functions"><span class="header-section-number">6.2</span> Cryptographic hash functions</h2>
+<p>To define the puzzles that we want to solve, we need to introduce <em>cryptographic hash functions</em>. You might have heard about <em>hash functions</em> at some point in your academic career (but don’t worry if you didn’t); they have many applications in the context of compressing or expanding data, or “spreading out” data (hash tables).</p>
+<p>For our purposes, a hash function is just a function from some domain to some range. A unifying feature of hash functions is that they are very easy to compute. A <em>cryptographic hash function</em> is designed with the following goal in mind: it should be completely unpredictable. Ideally, if you put a new input into the function, you get an output that looks completely random.</p>
+<p>We will formalize this goal as an assumption.</p>
+<section id="the-random-oracle-assumption" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="the-random-oracle-assumption"><span class="header-section-number">6.2.1</span> The random oracle assumption</h3>
+<p>The <em>random oracle assumption</em> states that the hash function that we are using may as well be a random function, in the sense that there is no (efficient) way of telling the difference. Here by a <em>random function</em> we really mean a random function: chosen uniformly at random from the set of all functions with the given domain and range.</p>
+<p>Another way to think of a random function is that it is defined through <em>lazy evaluation</em>: the first time the function is applied to a certain input, it picks a uniformly random element from the range as the output. Why do we do this only the first time? If we would also do it a second time, then a single input gets mapped to two different outputs, which would violate the fact that we are talking about a function.</p>
+<p>As with any assumption, you should question how realistic this assumption is. It turns out that this assumption is both clearly false and very true at the same time. In the next section we will see an example of a completely deterministic function (you can look up the source code on the internet), that is still very much unpredictable. This deterministic function looks completely random to anyone with bounded computational power.</p>
+<p>A very important consequence of the random oracle assumption is that the function is <em>hard</em> to invert. By this we mean that for a given output (or set of outputs) it is hard to find an input that maps to that output.</p>
+</section>
+</section>
+<section id="sha-256" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="sha-256"><span class="header-section-number">6.3</span> SHA-256</h2>
+<p>Here we give a brief illustration of how hashing works. We will use as example the SHA-256 hash function. SHA stands for Secure Hash Algorithm. The number 256 refers to the number of bits of the output.</p>
+<p>We will use the python <code>hashlib</code> module, which we first need to import.</p>
+<div id="fd2dc13c" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hashlib</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Here is an example of how to use SHA256 to hash a short message. The input message will be ``Decentralized finance is cool!’’ and the output is a bitstring of length 256.</p>
+<div id="814371a5" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The message to hash</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>message <span class="op">=</span> <span class="st">"Decentralized finance is cool!"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Encode the message to bytes, then hash it using sha256</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>hashed_message <span class="op">=</span> hashlib.sha256(message.encode()).digest()</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the hash to a bitstring</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>bitstring1 <span class="op">=</span> <span class="st">''</span>.join(<span class="ss">f'</span><span class="sc">{</span>byte<span class="sc">:08b}</span><span class="ss">'</span> <span class="cf">for</span> byte <span class="kw">in</span> hashed_message)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The SHA-256 hash as a bitstring is:</span><span class="ch">\n</span><span class="sc">{</span>bitstring1<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Length of the bitstring: </span><span class="sc">{</span><span class="bu">len</span>(bitstring1)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The SHA-256 hash as a bitstring is:
+1000000101101100111100011000101011001010011111101011001001110001110001011101000101011011101010000000110100110111100110011011000011111111011001000010110011110000001100011111111100010111000111000011100011000001100111000011100011101010000100101110110110100110
+Length of the bitstring: 256</code></pre>
+</div>
+</div>
+<p>Let us now investigate the key property of hash functions: they look like a random function. In particular, this implies that it is hard to predict the output of the function. To illustrate this, let us hash a second message that is very similar to the first: ``Decentralized finance is cool!!!’’</p>
+<div id="086cd171" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">### Second message </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The message to hash</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>message <span class="op">=</span> <span class="st">"Decentralized finance is cool!!!"</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Encode the message to bytes, then hash it using sha256</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>hashed_message <span class="op">=</span> hashlib.sha256(message.encode()).digest()</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the hash to a bitstring</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>bitstring2 <span class="op">=</span> <span class="st">''</span>.join(<span class="ss">f'</span><span class="sc">{</span>byte<span class="sc">:08b}</span><span class="ss">'</span> <span class="cf">for</span> byte <span class="kw">in</span> hashed_message)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The SHA-256 hash as a bitstring is:</span><span class="ch">\n</span><span class="sc">{</span>bitstring2<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Length of the bitstring: </span><span class="sc">{</span><span class="bu">len</span>(bitstring2)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>The SHA-256 hash as a bitstring is:
+0010101111101010000100000011110010000100111010011011010010011101110101101000011100101110100101001101110101011100011111010111011100111100100111011111101011011000000001110111000111100011110000011101111111011010001110001011100010100011101110001001100000110011
+Length of the bitstring: 256</code></pre>
+</div>
+</div>
+<p>If you compare the two strings, you will notice some differences right away. How different are the two strings? If the hash function assigns a random output to every input, then you would expect the two bitstrings to differ in roughly half their entries. Let us use python to count the number of different entries in the two strings.</p>
+<div id="838d5522" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_differences(bitstring1, bitstring2):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Ensure the bitstrings are the same length</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(bitstring1) <span class="op">!=</span> <span class="bu">len</span>(bitstring2):</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Bitstrings must be of the same length"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Count the differences</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    differences <span class="op">=</span> <span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> b1, b2 <span class="kw">in</span> <span class="bu">zip</span>(bitstring1, bitstring2) <span class="cf">if</span> b1 <span class="op">!=</span> b2)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> differences</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of differences</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>difference_count <span class="op">=</span> count_differences(bitstring1, bitstring2)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of different characters: </span><span class="sc">{</span>difference_count<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of different characters: 131</code></pre>
+</div>
+</div>
+<p>Indeed, for this particular example, the number of different characters is very close to 256/2 = 128.</p>
+<div class="line-block">The takeaway: SHA-256 is widely considered to satisfy the random oracle assumption.</div>
+</section>
+<section id="how-do-we-define-a-puzzle-based-on-sha-256" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="how-do-we-define-a-puzzle-based-on-sha-256"><span class="header-section-number">6.4</span> How do we define a puzzle based on SHA-256?</h2>
+<p>Now that we have seen a concrete example of a cryptographic hash function, it is time to define our puzzle(s). Remember that SHA-256 takes any input and maps it to a bitstring of length 256. In other words, the range is <span class="math inline">\{0,1\}^{256}</span>.</p>
+<p>There is a natural way to think of bitstrings as numbers between <span class="math inline">0</span> and <span class="math inline">2^{256}-1</span>: if <span class="math inline">x = (x_{256},x_{255},\ldots,x_1) \in \{0,1\}^{256}</span>, then we associate to it the number <span class="math display">
+\sum_{i=1}^{256} x_i 2^{i-1}.
+</span></p>
+<p>To make this a bit less abstract, consider the case of only three bits. In this case,</p>
+<ul>
+<li>the string <span class="math inline">000</span> corresponds to the value <span class="math inline">0</span>,</li>
+<li>the string <span class="math inline">001</span> to <span class="math inline">1 \cdot 2^{1-1} = 1</span>,</li>
+<li>the string <span class="math inline">111</span> to <span class="math inline">1 \cdot 2^{2} + 2 \cdot 2^1 + 1 \cdot 2^0 = 7</span>.</li>
+</ul>
+<p>Why did we discuss this interpretation of bitstrings? This is precisely how we will define our cryptographic puzzles! If we let <span class="math inline">h</span> denote our hash function (think SHA-256), then the puzzle is as follows.</p>
+<div id="def-puzzle" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6.1 (Canonical Proof-of-Work puzzle)</strong></span> For a given threshold <span class="math inline">\tau</span>, find an input <span class="math inline">z</span> such that <span class="math inline">h(z) \leq \tau</span>.</p>
+</div>
+<p>The threshold <span class="math inline">\tau</span> determines the difficulty of the puzzle. The two extreme cases being</p>
+<ul>
+<li><span class="math inline">\tau = 2^{256}-1</span>: in this case any input is a valid solution. This is thus an extremely easy puzzle!</li>
+<li><span class="math inline">\tau = 0</span>: in this case we are asked to find an input that maps to the all-zero string. This is an extremely hard task under the random oracle assumption!</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Under the random oracle assumption, what is the probability of any given input being mapped to the all-zero string?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Under the random oracle assumption, what is the probability of any given input <span class="math inline">z</span> being mapped to an output with <span class="math inline">h(z) \leq \tau</span>?</p>
+</div>
+</div>
+<p>To build some intuition, it is helpful to think of <span class="math inline">\tau</span> as a number of the form <span class="math inline">2^{256-k} -1</span> for some <span class="math inline">k</span> between <span class="math inline">0</span> and <span class="math inline">256</span>. In this case, <span class="math inline">k</span> specifies the number of zeros that the output should start with. If we go back to the previous section, then the message “Decentralized finance is cool!!!” would thus be a valid solution for the threshold <span class="math inline">2^{256-2} -1</span>: its hash starts with two zeros.</p>
+<p>What is the probability that a single input gets mapped to a string of length 256 starting with <span class="math inline">k</span> zeros? Well, under the random oracle assumption the output is chosen uniformly at random from the set <span class="math inline">\{0,1\}^{256}</span>. A good way of thinking about a uniformly random element from that set is that, for each of the <span class="math inline">256</span> bits independently, we flip an unbiased coin: if it’s heads, we get <span class="math inline">1</span>, and if it’s tails, we get <span class="math inline">0</span>. What is then the probability that we start the sequence with <span class="math inline">k</span> zeroes? Note that this depends only on the outcomes of the first <span class="math inline">k</span> coin flips: they all need to be tails. The probability of that is <span class="math inline">2^{-k}</span>.</p>
+<p>How many inputs would you expect to need to try to find one that maps to a bitstring starting with <span class="math inline">k</span> zeroes? This is the expectation of a geometric random variable with probability <span class="math inline">p = 2^{-k}</span>. It’s expectation is <span class="math inline">1/p</span> and thus we expect to need to try <span class="math inline">2^k</span> different inputs.</p>
+<p>The fact that our canonical Proof-of-Work puzzle has such a nicely tunable complexity is crucial for the stability of protocols relying on Proof-of-Work and longest-chain consensus. By tuning the complexity of the puzzle, we can control how frequently new blocks get created. We will get back to how to choose the complexity when we discuss Bitcoin in a bit more depth.</p>
+<p>Now that we have decided on a puzzle, it is a good moment to ask ourselves the following question:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What would go wrong in a longest-chain protocol if we simply elect as the next leader, the next node that provides us any input <span class="math inline">z</span> that satisfies <span class="math inline">h(z)\leq \tau</span> for the current value of <span class="math inline">\tau</span>?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Would an NP-hard problem such as Traveling Salesperson be a good alternative for a hard puzzle? Explain why (not).</p>
+</div>
+</div>
+</section>
+<section id="what-should-puzzle-solutions-encode" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="what-should-puzzle-solutions-encode"><span class="header-section-number">6.5</span> What should puzzle solutions encode?</h2>
+<p>To make use of Proof-of-Work in a longest-chain protocol, we thus need to avoid that nodes can save up valid solutions for use in later rounds. If you go back to the previous chapter, there was another assumption that we promised Proof-of-Work would take care of:</p>
+<blockquote class="blockquote">
+<p><strong>A4’)</strong> The leader of round <span class="math inline">r</span> produces exactly one block, and this block claims as its predecessor a block that belongs to a previous round.</p>
+</blockquote>
+<p>Here we discuss how to solve both these problems in one go. We essentially do so by merging the leader election and block-proposal steps. Our protocol will not just accept any solution <span class="math inline">z</span> that satisfies <span class="math inline">h(z) \leq \tau</span>. Instead, we will require the solution <span class="math inline">z</span> to have some structure. We ask for the following structure on <span class="math inline">z</span>:</p>
+<ul>
+<li>It starts by writing down a block <span class="math inline">B</span> that it proposes,</li>
+<li>It is followed by the identifier <span class="math inline">pred</span> of the predecessor of the block <span class="math inline">B</span>,</li>
+<li>The third part is <span class="math inline">pk</span>, the public key (think identifier), of the node proposing the block.</li>
+<li>The fourth and final part is a <span class="math inline">nonce</span>, which stands for <em>number used once</em>.</li>
+</ul>
+<div id="def-valid-sol" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6.2 (Format for puzzle solutions)</strong></span> A valid puzzle solution is of the form <span class="math inline">z = B||pred||pk||nonce</span>, where <span class="math inline">||</span> denotes concatenation.</p>
+</div>
+<p>We can think of the four parts of the solution as four fields in which we can write information. The first two neatly ensure that the node that submits this solution gets to propose exactly one block, and that block has to point to a predecessor that was known at the time of creating the solution. In fact, the block proposer already has to commit to a block <em>before</em> they find a valid solution. The third field, containing the identifier of the block proposer can be used to determine who gets the reward for creating that block (we will get to rewards briefly when we discuss Bitcoin). The <span class="math inline">nonce</span> is perhaps the most mysterious part of the solution. It is there simply as a way to make it easy to generate many inputs corresponding to the same triple <span class="math inline">B||pred||pk</span>: one simply has to change the <span class="math inline">nonce</span> at the end.</p>
+<p>Recall from the previous chapter, our generic blockchain protocol was as follows:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>A blockchain protocol:</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>1.  Initialize with a hard-coded genesis block B0</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>2.  In each round r = 1,2,3,.... do:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    a)  Choose one node i as the leader of round r. </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    b)  Node i proposes a set of blocks, </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        each specifying a single predecessor block.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In a Proof-of-Work protocol, we merge the last two steps:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>A Proof-of-Work blockchain protocol:</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>1.  Initialize with a hard-coded genesis block B0</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>2.  In each round r = 1,2,3,.... do:</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    Choose as leader in round $r$ the first node </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    that provides a valid puzzle solution </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    z = B||pred||pk||nonce with h(z) &lt;= tau. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="sec-sybil" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="sec-sybil"><span class="header-section-number">6.6</span> Sybil-resistance</h2>
+<p>Now that we understand Proof of Work, let us introduce one of the key problems that Proof of Work solves: <em>resistance to Sybil attacks</em>.</p>
+<p>A Sybil attack<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> on a computer system is a type of attack in which an attacker tries to gain an advantage by creating a large number of identities. We call a protocol <em>Sybil-resistant</em> if no such Sybil attack is possible.</p>
+<p>As an example, consider the leader selection mechanism from <a href="05-LongestChain.html" class="quarto-xref"><span>Chapter 5</span></a>: we chose a leader uniformly at random from the set of nodes participating in the protocol. It is easy to see that for such a leader selection protocol, a Sybil attack would be very dangerous (if possible!). Indeed, if a faulty node can pose as many nodes, then it greatly increases the chances of being selected as a leader in the next round. For a faulty node, it is a huge advantage if it is selected as a leader much more often, so if possible, this would constitute a Sybil attack. Note that we wrote “if possible”: in <a href="05-LongestChain.html" class="quarto-xref"><span>Chapter 5</span></a> we were working in the permissioned setting: nodes need permission to join the network before the start of the protocol and presumably this permission is only granted after some sort of verification of identity.</p>
+<p>If we use Proof-of-Work to select the next leader, then we get Sybil-resistance automatically:</p>
+<div id="thm-sybil-resistance-PoW" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 6.1 (Sybil-resistance of Proof-of-Work)</strong></span> Suppose <span class="math inline">n</span> nodes make <span class="math inline">\mu_1,\mu_2,\ldots,\mu_n</span> distinct nonce guesses per second. Then, for every node <span class="math inline">i</span> and round <span class="math inline">r</span>, we have <span class="math display">
+\Pr(\text{node $i$ is the round-$r$ leader}) = \frac{\mu_i}{\sum_{j=1}^n \mu_j}.
+</span></p>
+</div>
+<p>At least two remarks are in order here. First, although the theorem references a set of <span class="math inline">n</span> nodes, this is simply for notational purposes. The Proof-of-Work protocol works in the permisionless setting. Second, the numbers <span class="math inline">\mu_i</span> are often referred to as <em>hashrates</em>.</p>
+<p>The most important observation about <a href="#thm-sybil-resistance-PoW" class="quarto-xref">Theorem&nbsp;<span>6.1</span></a> is that the quantity on the right hand side is simply node <span class="math inline">i</span>’s fraction of the overall hashrate; it does not depend on how many identities it controls.</p>
+<p>Looking at <a href="#thm-sybil-resistance-PoW" class="quarto-xref">Theorem&nbsp;<span>6.1</span></a>, there is a clear way in which a node can influence the probability with which they are selected as the leader of the next round: they need to increase their hashrate. Assuming the other nodes don’t do the same, this would increase the fraction of node <span class="math inline">i</span>’s hashrate in the total hashrate. Creating new hashrate is however not cheap! It essentially amounts to buying new computers to try new nonces. If we for instance assume that currently the amount of hashrate controlled by faulty nodes is less than <span class="math inline">1/4</span> of the total hashrate, then to mount a successful Sybil-attack, the faulty nodes would have to at least double their hashrate (and then some). This is practically impossible for large implementations such as Bitcoin…</p>
+<p>Looking ahead, in the next part of the course you will revisit Sybil-resistance, but then from a different perspective: that of sharing rewards.</p>
+</section>
+<section id="nakamoto-consensus" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="nakamoto-consensus"><span class="header-section-number">6.7</span> Nakamoto consensus</h2>
+<p>Combining Proof-of-Work and Longest-chain consensus protocols is sometimes referred to as <em>Nakamoto consensus</em>. Bitcoin being of course the most famous example. In this final part of the chapter we will go a bit deeper into the specifics of Bitcoin. In particular, we will discuss how Bitcoin sets and adjusts the difficulty parameter of the puzzles. We then briefly discuss rewards in the Bitcoin protocol (with a more in-depth discussion being deferred to subsequent chapters).</p>
+<section id="how-to-set-and-adjust-the-difficulty-parameter" class="level3" data-number="6.7.1">
+<h3 data-number="6.7.1" class="anchored" data-anchor-id="how-to-set-and-adjust-the-difficulty-parameter"><span class="header-section-number">6.7.1</span> How to set and adjust the difficulty parameter</h3>
+<p>First, let us recall the definition of our canonical Proof-of-Work puzzle:</p>
+<div id="def-puzzle" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6.3 (Canonical Proof-of-Work puzzle)</strong></span> For a given threshold <span class="math inline">\tau</span>, find an input <span class="math inline">z</span> such that <span class="math inline">h(z) \leq \tau</span>.</p>
+</div>
+<p>Which value of <span class="math inline">\tau</span> should we pick? At first glance, the larger <span class="math inline">\tau</span>, the easier it is to find a solution and therefore the more frequently new blocks get created. Moreover, we have argued before that as long as the fraction of hashrate controlled by faulty nodes is strictly less than <span class="math inline">1/2</span>, then the longest-chain consensus protocol based on Proof-of-Work has the property of <em>balanced leader sequences</em>. In particular, it will then satisfy liveness and consistency. Note that this argument does not rely on <span class="math inline">\tau</span> at all. So if we create blocks say twice as fast, then it takes half as long before a block gets finalized. So is there any reason to bound <span class="math inline">\tau</span>?</p>
+<p>Yes! In <a href="05-LongestChain.html" class="quarto-xref"><span>Chapter 5</span></a> we assumed that honestly created blocks were instantly known to all honest nodes. What this really means is that we assume honest nodes do not inadvertently create a fork. They are always aware of the longest chain(s) in the network. Is that a reasonable assumption? If we assume instantaneous communication for example, then it holds. But instantaneous communication itself clearly does not hold. A more reasonable assumption is that communication is not instantaneous, but happens for example with a delay of at most 10 seconds between any pair of nodes. In that case, if the (expected) time between blocks is much longer than 10 seconds, say 10 minutes, then it is fair to say that if a block is honestly created, then it is “immediately” known to all honest nodes.</p>
+<p>The time frame of 10 minutes is in fact the one that Bitcoin aims for. It chooses the parameter <span class="math inline">\tau</span> in such a way that on expectation it takes 10 minutes for a new block to be created.</p>
+<p>If the total hashrate is <span class="math inline">H</span> nonces per second, and the probability of success is <span class="math inline">p = \tau/2^{256}</span>, then the average duration <span class="math inline">L</span> of the round in seconds satisfies <span class="math display">
+L = \frac{1}{Hp} = \frac{2^{256}}{H \cdot \tau}.
+</span></p>
+<p>In other words, if the total hashrate is known, then it is easy to choose the difficulty of the puzzles in such a way that the expected duration of a round is <span class="math inline">10</span> minutes.</p>
+<p>In a permissionless protocol, there is however no way to know the total hashrate. Nakamoto came up with a very elegant solution for this problem. Nakamoto anticipated that the total hashrate could vary significantly over time. They therefore built into the protocol a mechanism for how to adjust the difficulty. The idea is quite simple. If we expect a block to be created every <span class="math inline">10</span> minutes, then after two weeks we expect to see <span class="math inline">14 \cdot 24 \cdot 6 = 2016</span> new blocks. The mechanism Nakamoto put in place is thus the following: every time 2016 new blocks have been created the protocol evaluates how many days have passed since the previous batch of 2016 blocks. If that time is <span class="math inline">\beta \cdot 14</span> days, then the difficulty parameter <span class="math inline">\tau</span> gets updated to <span class="math inline">\beta \cdot \tau</span>.</p>
+<p>As an example, if it took 7 days instead of 14, then <span class="math inline">\beta = 1/2</span>, meaning that <span class="math inline">\tau</span> will get divided by two. As a consequence, if the hashrate doesn’t change, the expected time between blocks goes up by a factor 2.</p>
+<p><strong>Note</strong>: to implement this mechanism, it is important that blocks include a timestamp. We will simply treat this as an exact timestamp, but is should be clear that the protocol is relatively robust against slight errors in the timestamps the nodes put on their blocks.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise*
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Prove that a faulty node that controls <span class="math inline">10\%</span> of the total hashrate can break finality of a longest-chain consensus protocol if we measure the length of a chain as the number of blocks it contains (as in <a href="05-LongestChain.html" class="quarto-xref"><span>Chapter 5</span></a>).</p>
+</div>
+</div>
+<p>In a chain based on Proof-of-Work we therefore slightly modify the definition of the length of a chain: we take into account the (expected) work that went into creating each of the blocks. Concretely, this means that every block gets assigned a weight that is equal to the expected number of nonces that needed to be evaluated for it to be created: <span class="math inline">2^{256}/\tau</span>. We will not do so here, but one can show that with these modifications the liveness and consistency properties from the previous chapter still hold, mostly unchanged.</p>
+</section>
+</section>
+<section id="safe-blocks" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="safe-blocks"><span class="header-section-number">6.8</span> Safe blocks</h2>
+<p>Above, we gave a handwavy argument stating that if messages arrive within a bounded delay of, say, 10 seconds, and the expected duration of a round was 10 minutes, then that is “as good as” messages arriving instantaneously.</p>
+<p>In this section we make this argument more precise. Let us assume time is measured in seconds. We also assume our communication network is such that messages arrive with a delay of at most <span class="math inline">\Delta</span> seconds. Suppose we have set the difficulty parameter of our Proof-of-Work puzzles in such a way that the expected duration of a round is <span class="math inline">L</span> seconds.</p>
+<p>We now introduce the notion of a <em>safe block</em>. We call a block <em>safe</em> if it is produced by an honest node at some time <span class="math inline">t</span>, and if it is the only honestly produced block in the time steps <span class="math inline">t-\Delta+1,t-\Delta+2,\ldots,t</span>.</p>
+<div id="lem-safe-height" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 6.1 (One safe block per height)</strong></span> The heights of safe blocks are strictly increasing over time.</p>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Prove <a href="#lem-safe-height" class="quarto-xref">Lemma&nbsp;<span>6.1</span></a></p>
+</div>
+</div>
+<p>Let <span class="math inline">\beta</span> denote the fraction of the blocks that are safe.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise*
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Prove a lower bound on <span class="math inline">\beta</span>, the fraction of the blocks that are safe, by computing</p>
+<p><span class="math inline">\Pr(</span> puzzle solution creates safe block <span class="math inline">) = \Pr(</span> solution found by honest node <span class="math inline">) \times \Pr(</span> no puzzle solutions in last <span class="math inline">\Delta</span> timesteps <span class="math inline">)</span>.</p>
+<p>Your answer should be a function of <span class="math inline">\alpha, \Delta, L</span>.</p>
+</div>
+</div>
+<p>Let us call a block <em>unsafe</em> if it is honestly produced, but not safe. Unsafe blocks are blocks that we cannot trust: even though they are honestly produced, the producer might not have been aware of the last previously produced honest block. So even though the unsafe block is honestly produced, it might inadvertently produce a fork.</p>
+<p>We thus need to update our analysis. Before, we argued that as long as <span class="math inline">\alpha</span>, the fraction of the total hashrate that was controlled by faulty nodes, is strictly less than <span class="math inline">1/2</span>, then the longest chain consensus protocol works well (i.e.&nbsp;we get a balanced leader sequence and therefore consistency and liveness).</p>
+<p>We now want to consider unsafe blocks as blocks produced by faulty nodes. The inequality we want to satisfy then becomes</p>
+<p><span class="math display">
+\text{fraction of safe blocks} &gt; \text{fraction of faulty blocks } + \text{ fraction of unsafe blocks}.
+</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise*
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Prove that the above inequality holds when <span class="math display">
+\alpha &lt; \frac{1-2\frac{\Delta}{L}}{2-2\frac{\Delta}{L}}.
+</span></p>
+</div>
+</div>
+<p>Notice that if <span class="math inline">\Delta=0</span>, then the above inequality recovers the usual condition <span class="math inline">\alpha &lt; 1/2</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What fraction of the hashrate can be controlled by faulty nodes if <span class="math inline">\Delta=10</span> and <span class="math inline">L=600</span> (as in Bitcoin)?</p>
+</div>
+</div>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>The proof here is not a figure of speech: under well-defined assumptions, the proof establishes that you have done a certain amount of work with high probability.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Named after a 1973 book called Sybil, a case study of a woman diagnosed with a dissociative identity disorder.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./05-LongestChain.html" class="pagination-link" aria-label="Longest-chain protocols">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longest-chain protocols</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./game-theory-intro.html" class="pagination-link" aria-label="Game Theory">
+        <span class="nav-page-text">Game Theory</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

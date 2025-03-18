@@ -25,7 +25,7 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
-<link href="./prelim.html" rel="next">
+<link href="./02-prelim.html" rel="next">
 <link href="./index.html" rel="prev">
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -100,13 +100,13 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./prelim.html" class="sidebar-item-text sidebar-link">
+  <a href="./02-prelim.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Preliminaries</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./cs.html" class="sidebar-item-text sidebar-link">
+            <a href="./computer-science-intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Computer Science</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -115,25 +115,25 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./distributed.html" class="sidebar-item-text sidebar-link">
+  <a href="./03-distributed.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to distributed computing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./DolevStrong.html" class="sidebar-item-text sidebar-link">
+  <a href="./04-DolevStrong.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The Dolev-Strong protocol</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./LongestChain.html" class="sidebar-item-text sidebar-link">
+  <a href="./05-LongestChain.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longest-chain protocols</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ProofofWork.html" class="sidebar-item-text sidebar-link">
+  <a href="./06-ProofofWork.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Proof of Work</span></span></a>
   </div>
 </li>
@@ -141,7 +141,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./gt.html" class="sidebar-item-text sidebar-link">
+            <a href="./game-theory-intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Game Theory</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -226,7 +226,7 @@ Figure&nbsp;1.1: A network with three nodes
 <li>If a transaction is to take place, say Alice transfers money to Bob, how do we ensure that everyone updates their records correctly?</li>
 <li>Can we do it in such a way that Alice cannot “double-spend” her money, i.e., also give it to Charlie?</li>
 </ul>
-<p>It is not hard to imagine that it is a lot of work to maintain knowledge in a decentralized fashion, indeed, it will take us several chapters to do so! A natural question is therefore, how do we <em>incentivize</em> parties to perform this work? If you have ever read a popular science article about Bitcoin, you might have heard the terms “Proof of Work” or “Bitcoin mining” (if not, we will get to this in <a href="ProofofWork.html" class="quarto-xref"><span>Chapter 6</span></a>). These are examples in which parties perform some action (work, e.g., mining a Bitcoin) and are rewarded for this work. Often, the task is too large to perform by a single party and therefore parties form <em>coalitions</em>. How do we divide rewards in this case? This is one of the topics covered in Part II.</p>
+<p>It is not hard to imagine that it is a lot of work to maintain knowledge in a decentralized fashion, indeed, it will take us several chapters to do so! A natural question is therefore, how do we <em>incentivize</em> parties to perform this work? If you have ever read a popular science article about Bitcoin, you might have heard the terms “Proof of Work” or “Bitcoin mining” (if not, we will get to this in <a href="06-ProofofWork.html" class="quarto-xref"><span>Chapter 6</span></a>). These are examples in which parties perform some action (work, e.g., mining a Bitcoin) and are rewarded for this work. Often, the task is too large to perform by a single party and therefore parties form <em>coalitions</em>. How do we divide rewards in this case? This is one of the topics covered in Part II.</p>
 <p>Once one has settled on the technology and protocols behind a blockchain-based currency, we can turn to applications. This is what Part III is all about.</p>
 <p>In the remainder of this introductory chapter, we will give a high-level overview of the three different perspectives on blockchains and their applications that we will discuss in this course. At a first reading, we do not expect you to understand everything in these sections. As the course progresses, you should be able to answer more and more of the questions raised in these sections. (Let us know if we forgot to answer some!)</p>
 <section id="a-computer-science-perspective" class="level2" data-number="1.1">
@@ -700,7 +700,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./prelim.html" class="pagination-link" aria-label="Preliminaries">
+      <a href="./02-prelim.html" class="pagination-link" aria-label="Preliminaries">
         <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Preliminaries</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>

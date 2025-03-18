@@ -6,11 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Sander Gribling">
-<meta name="author" content="Pieter Kleer">
-<meta name="author" content="Nikolaus Schweizer">
 
-<title>Decentralized Finance and Blockchains</title>
+<title>Computer Science – Decentralized Finance and Blockchains</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -28,7 +25,8 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
-<link href="./01-introduction.html" rel="next">
+<link href="./03-distributed.html" rel="next">
+<link href="./02-prelim.html" rel="prev">
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -68,7 +66,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">About</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./computer-science-intro.html">Computer Science</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -90,7 +88,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">About</span></a>
   </div>
 </li>
@@ -108,7 +106,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./computer-science-intro.html" class="sidebar-item-text sidebar-link">
+            <a href="./computer-science-intro.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Computer Science</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -169,41 +167,21 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#about" id="toc-about" class="nav-link active" data-scroll-target="#about">About</a>
-  <ul class="collapse">
-  <li><a href="#course-description" id="toc-course-description" class="nav-link" data-scroll-target="#course-description">Course description</a></li>
-  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning goals</a></li>
-  <li><a href="#acknowledgments" id="toc-acknowledgments" class="nav-link" data-scroll-target="#acknowledgments">Acknowledgments</a></li>
-  <li><a href="#contact-information" id="toc-contact-information" class="nav-link" data-scroll-target="#contact-information">Contact information</a></li>
-  </ul></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Decentralized Finance and Blockchains</h1>
+<h1 class="title"><span id="part-CS" class="quarto-section-identifier">Computer Science</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Authors</div>
-    <div class="quarto-title-meta-contents">
-             <p>Sander Gribling </p>
-             <p>Pieter Kleer </p>
-             <p>Nikolaus Schweizer </p>
-          </div>
-  </div>
     
   
     
@@ -214,49 +192,9 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="about" class="level1 unnumbered">
-<h1 class="unnumbered">About</h1>
 <p><link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""> <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&amp;family=Fira+Sans&amp;display=swap" rel="stylesheet"></p>
-<section id="course-description" class="level2">
-<h2 class="anchored" data-anchor-id="course-description">Course description</h2>
-<p>Welcome to the course “Decentralized Finance and Blockchains”!</p>
-<p>This course approaches decentralized finance and blockchains from three different angles: the computer science or cryptography angle (CS), the game-theoretic or incentives angle (GT), and the financial economics angle (FE).</p>
-<p>The three different parts are taught by three different lecturers: Sander Gribling (CS), Pieter Kleer (GT), and Nikolaus Schweizer (FE). Likewise, these lecture notes are also split into three parts. Below, you can find a brief description of each of the three angles, as well as the learning goals of the course.</p>
-<p><strong>Computer Science</strong>: A key principle underlying blockchain technology is maintaining consensus about a distributed ledger, the archive of past transactions. We will study the security aspects related to establishing consensus. We discuss various (im)possibility results in the presence of malicious agents (Byzantine Fault Tolerance) in the general setting of distributed networks. We then discuss the mathematical models behind two famous mechanisms to maintain consensus: Proof of Work and Proof of Stake.</p>
-<p><strong>Game Theory</strong>: Game theory and mechanism design play an important role in the analysis and design of decentralized financial protocols such as those building on blockchain technology. Prominent examples here are cryptocurrencies like Bitcoin. We will be studying such protocols from a game-theoretical perspective by looking at equilibria of their mathematical description, as well as various mechanisms that are used to guide those systems to the desired outcomes.</p>
-<p><strong>Financial Economics</strong>: One of the most intriguing capabilities of the blockchain technology are so-called smart contracts, computer programs that run on the blockchain in a transparent and decentralized manner, thus providing the basis for decentralized finance, the creation of decentralized counterparts to traditional financial institutions. In recent years, a particular success have been decentralized exchanges such as Uniswap which run in the blockchain and replace the traditional market maker and order book of a centralized exchange with an automated market maker. In the course, we will study and compare both types of exchanges using tools from the classical theory of market microstructure and analyze how different aspects of their design affect the functioning of the resulting financial market.</p>
-</section>
-<section id="learning-goals" class="level2">
-<h2 class="anchored" data-anchor-id="learning-goals">Learning goals</h2>
-<p>After successful completion of this course, you are able to:</p>
-<ol type="1">
-<li>model blockchain technologies from the perspective of distributed computing and prove the (im)possibility of Byzantine Fault Tolerance under various assumptions.</li>
-<li>explain consensus protocols in distributed networks and compute the probability that malicious agents can change the outcome (e.g.&nbsp;for the Dolev-Strong and longest-chain consensus protocols).</li>
-<li>model decentralized financial protocols from a game-theoretical perspective and compute their equilibria.</li>
-<li>explain how mechanism design and game theory can be used to create the desired incentives in decentralized systems and compute the outcome of the relevant mechanisms.</li>
-<li>analyze both centralized and decentralized financial exchanges using tools from market microstructure theory.</li>
-<li>explain how the design of a financial exchange affects the properties of the resulting financial market regarding, e.g., liquidity and absence of arbitrage.</li>
-</ol>
-</section>
-<section id="acknowledgments" class="level2">
-<h2 class="anchored" data-anchor-id="acknowledgments">Acknowledgments</h2>
-<p>The first part of these lecture notes, the computer science perspective, is heavily inspired by a course taught by Tim Roughgarden called “Foundations of Blockchain Protocols”. You can find this course here: <a href="https://timroughgarden.github.io/fob21/">Course website</a>, <a href="https://timroughgarden.org/notes.html">Lecture notes</a>.</p>
-<p>Note that Roughgarden’s course is geared towards computer science students. The expected prior knowledge is thus very different compared to this course. The scope of Roughgarden’s course is therefore also much larger than ours: it covers the computer science angle in much more depth than we do here. If you want to learn (much) more about the CS perspective, this is a great starting point.</p>
-<p>For full disclosure, the Python code snippets were sometimes/often generated using ChatGPT.</p>
-</section>
-<section id="contact-information" class="level2">
-<h2 class="anchored" data-anchor-id="contact-information">Contact information</h2>
-<p>Lecturers:</p>
-<ul>
-<li><a href="https://www.tilburguniversity.edu/nl/medewerkers/s-j-gribling">Sander Gribling</a></li>
-<li><a href="https://www.tilburguniversity.edu/nl/medewerkers/p-s-kleer">Pieter Kleer</a></li>
-<li><a href="https://www.tilburguniversity.edu/staff/n-f-f-schweizer">Nikolaus Schweizer</a> (course coordinator)</li>
-</ul>
-<p>Note that this is a new course, it is likely that we can still improve the clarity of the exposition. We therefore welcome constructive feedback on these lecture notes either via email, Canvas, or in class.</p>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -681,10 +619,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./02-prelim.html" class="pagination-link" aria-label="Preliminaries">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Preliminaries</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01-introduction.html" class="pagination-link" aria-label="Introduction">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./03-distributed.html" class="pagination-link" aria-label="Introduction to distributed computing">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to distributed computing</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
