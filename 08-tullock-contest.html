@@ -349,7 +349,7 @@ g_2(x) = 2 \cdot \frac{x}{8/9 + x} - x
   background-color: #ffffff;
 }
 </style>
-<div id="04e8cd8e" class="cell" data-execution_count="1">
+<div id="5496cd93" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show code generating the plot below</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -555,15 +555,26 @@ Exercise 8.5
 </span> for <span class="math inline">i = 1,\dots,n</span>. This is called a <em>symmetric</em> pure Nash equilibrium, because all <span class="math inline">\mu_i</span> are the same.</p>
 </div>
 </div>
-<!--
-::: {.callout-tip}
-# Exercise 8.6
-We will derive a concise expression for the market share $x_i(\mu)  = \mu_i/(\sum_j \mu_j)$ of miner $i$ in two parts.
-
-1. Show that $x_i(\mu) = 1 - \frac{1}{w_i}\lambda$ for $i = 1,\dots,\hat{n}$ with $\lambda$ as in @thm-equilibrium-computation.
-2. Based on part 1., show that $x_i(\mu) = \max\{0,1 -  \frac{1}{w_i}\lambda\}$ for $i = 1,\dots,n$.
-:::
--->
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 8.6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We will derive a concise expression for the market share <span class="math inline">x_i(\mu)  = \mu_i/(\sum_j \mu_j)</span> of miner <span class="math inline">i</span> in the pure Nash equilibrium.</p>
+<ol type="1">
+<li>Show that <span class="math inline">x_i(\mu) = 1 - \frac{1}{w_i}\lambda</span> for <span class="math inline">i = 1,\dots,\hat{n}</span> with <span class="math inline">\lambda</span> as in <a href="#thm-equilibrium-computation" class="quarto-xref">Theorem&nbsp;<span>8.1</span></a>.</li>
+<li>Based on part 1., show that<br>
+<span class="math display">
+x_i(\mu) = \max\left\{0,1 -  \frac{1}{w_i}\lambda\right\}
+</span> for <span class="math inline">i = 1,\dots,n</span>.</li>
+</ol>
+</div>
+</div>
 </section>
 </section>
 <section id="best-response-dynamics" class="level2" data-number="8.3">
