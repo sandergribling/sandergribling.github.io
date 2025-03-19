@@ -323,7 +323,7 @@ p_i(\mu) = w_i \cdot \frac{\mu_i}{\sum_j \mu_j} - \mu_i.
 (\mu_i',\mu_{-i}) = (\mu_1,\dots,\mu_{i-1},\mu_i',\mu_{i+1},\dots,\mu_n),
 </span> i.e., the vector in which only miner <span class="math inline">i</span> changes its rate, while all the other rates are kept fixed. An equilibrium, also called <em>pure Nash equilibrium</em>, is a hash rate vector in which no miner <span class="math inline">i</span> can unilaterally deviate in order to improve her payoff. We next give the formal definition of this statement.</p>
 <div id="def-pne" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8.1 (Pure Nash equilibrium)</strong></span> A hash rate vector <span class="math inline">\mu</span> is a pure Nash equilibrium if for all <span class="math inline">i = 1,\dots,n</span>, it holds that <span class="math display">
+<p><span class="theorem-title"><strong>Definition 8.1 (Pure Nash equilibrium)</strong></span> A hash rate vector <span class="math inline">\mu</span> is a pure Nash equilibrium (PNE) if for all <span class="math inline">i = 1,\dots,n</span>, it holds that <span class="math display">
 p_i(\mu) \geq p_i(\mu_i',\mu_{-i})
 </span> for all <span class="math inline">\mu_i' \geq 0</span>.</p>
 </div>
@@ -349,7 +349,7 @@ g_2(x) = 2 \cdot \frac{x}{8/9 + x} - x
   background-color: #ffffff;
 }
 </style>
-<div id="f6c16913" class="cell" data-execution_count="1">
+<div id="f79b0567" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show code generating the plot below</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -457,7 +457,7 @@ Exercise 8.2
 p_1(\mu) = w_1 \cdot \frac{\mu_1}{\mu_1 + \mu_2} - \mu_1 \ \text{ and } \ p_2(\mu) = w_2 \cdot \frac{\mu_2}{\mu_1 + \mu_2} - \mu_2.
 </span> Compute the (unique) pure Nash equilibrium <span class="math inline">\mu = (\mu_1,\mu_2)</span> of this Tullock contest by deriving explicit formulas for <span class="math inline">\mu_1 = \mu_1(w_1,w_2)</span> and <span class="math inline">\mu_2 = \mu_2(w_1,w_2)</span>, i.e., the equilibrium hash rates in terms of <span class="math inline">w_1</span> and <span class="math inline">w_2</span>. You can use the following steps for this:</p>
 <ol type="1">
-<li>Show that if one or both of the <span class="math inline">\mu_i</span> equal zero, then <span class="math inline">\mu = (\mu_1,\mu_2)</span> cannot be a pure Nash equilibrium.</li>
+<li>Show that if one or both of the <span class="math inline">\mu_i</span> equal zero, then <span class="math inline">\mu = (\mu_1,\mu_2)</span> cannot be a pure Nash equilibrium. <em>Recall that a best response for miner <span class="math inline">i</span> is to choose a (small) hash rate of <span class="math inline">\delta &gt; 0</span> when all other miners have hash rate <span class="math inline">0</span> (see remark under PNE definition).</em></li>
 <li>Argue next that <span class="math inline">\mu</span> is a pure Nash equilibrium if and only if the following <em>first-order conditions</em> are satisfied: <span class="math display">
 \frac{\partial p_1}{\partial \mu_1}(\mu) = 0 \ \text{ and }\  \frac{\partial p_2}{\partial \mu_2}(\mu) = 0.
 </span></li>
@@ -484,8 +484,7 @@ p_1(\mu) = w_1 \cdot \frac{\mu_1}{\mu_1 + \mu_2} - \mu_1 \ \text{ and } \ p_2(\m
 <p>There exists an explicit formula known for <span class="math inline">\hat{n}</span>, namely <span id="eq-hat_n"><span class="math display">
 \hat{n} = \max\left\{i \in [n] : w_i &gt; \frac{i-2}{\sum_{j=1}^{i-1} \frac{1}{w_j}} \right\}.
 \tag{8.1}</span></span> In other words, <span class="math inline">\hat{n}</span> is the largest index <span class="math inline">i</span> for which the inequality <span class="math inline">w_i &gt; \frac{i-2}{\sum_{j=1}^{i-1} \frac{1}{w_j}}</span> holds. We use the convention that <span class="math inline">\sum_{j=1}^0  \frac{1}{w_j} = 1</span>.</p>
-<p>Note that for any values of <span class="math inline">w_1,\dots,w_n</span> we have <span class="math inline">\hat{n} \geq 2</span>. This corresponds with the fact that in a pure Nash equilibrium, there will always be at least to miners with a strictly positive hash rate.</p>
-<p>Note that <span class="math inline">\hat{n}</span> can be computed using only the input parameters <span class="math inline">w_1, \dots, w_n</span> of the Tullock contest. Also observe that we always have <span class="math inline">\hat{n} \geq 2</span>, because we assume the <span class="math inline">w_i</span> to be strictly positive. Proving the correctness of the formula for <span class="math inline">\hat{n}</span> requires some nontrivial arguments, that we omit here.</p>
+<p>Note that <span class="math inline">\hat{n}</span> can be computed using only the input parameters <span class="math inline">w_1, \dots, w_n</span> of the Tullock contest. Also observe that we always have <span class="math inline">\hat{n} \geq 2</span>, because we assume the <span class="math inline">w_i</span> to be strictly positive. This correspond with the fact that in a pure Nash equilibrium, there will always be at least two miners with a strictly positive hash rate. Proving the correctness of the formula for <span class="math inline">\hat{n}</span> requires some nontrivial arguments, that we omit here.</p>
 <p>The remaining (strictly positive) values of <span class="math inline">\mu_1,\dots,\mu_{\hat{n}}</span> can be determined by solving the system of equations <span id="eq-system-positive"><span class="math display">
 \frac{\partial p_i}{\partial \mu_i}(\mu) = 0 \ \text{ for } \ i = 1,\dots,\hat{n}
 \tag{8.2}</span></span> with <span class="math inline">\mu_{\hat{n}+1} = \dots = \mu_n = 0</span> substituted in these equations. This leaves a (non-linear) system of <span class="math inline">\hat{n}</span> equalities with <span class="math inline">\hat{n}</span> unknown variables.</p>
