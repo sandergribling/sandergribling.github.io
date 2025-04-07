@@ -216,8 +216,9 @@ window.Quarto = {
    
   <ul>
   <li><a href="#commonly-used-symbols" id="toc-commonly-used-symbols" class="nav-link active" data-scroll-target="#commonly-used-symbols"><span class="header-section-number">2.1</span> Commonly used symbols</a></li>
-  <li><a href="#graph-theory-preliminaries" id="toc-graph-theory-preliminaries" class="nav-link" data-scroll-target="#graph-theory-preliminaries"><span class="header-section-number">2.2</span> Graph theory preliminaries</a></li>
-  <li><a href="#frequently-used-probability-distributions" id="toc-frequently-used-probability-distributions" class="nav-link" data-scroll-target="#frequently-used-probability-distributions"><span class="header-section-number">2.3</span> Frequently used probability distributions</a></li>
+  <li><a href="#graph-theory" id="toc-graph-theory" class="nav-link" data-scroll-target="#graph-theory"><span class="header-section-number">2.2</span> Graph theory</a></li>
+  <li><a href="#real-analysis" id="toc-real-analysis" class="nav-link" data-scroll-target="#real-analysis"><span class="header-section-number">2.3</span> Real analysis</a></li>
+  <li><a href="#sec-prelim-concave-maximization" id="toc-sec-prelim-concave-maximization" class="nav-link" data-scroll-target="#sec-prelim-concave-maximization"><span class="header-section-number">2.4</span> Concave maximization</a></li>
   </ul>
 </nav>
     </div>
@@ -247,16 +248,57 @@ window.Quarto = {
 <p>Here we gather frequently used notation. We also recall some basic concepts that we expect as prior knowledge and we provide some pointers to related literature.</p>
 <section id="commonly-used-symbols" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="commonly-used-symbols"><span class="header-section-number">2.1</span> Commonly used symbols</h2>
-<p>We let <span class="math inline">\mathbb{N}</span> denote the set of natural numbers, i.e., <span class="math inline">\mathbb{N} := \{1,2,3,\ldots\}</span>. For <span class="math inline">n \in \mathbb{N}</span>, we write <span class="math inline">[n] := \{1,2,\ldots,n\}</span>. We use <span class="math inline">\log</span> to denote the natural logarithm.</p>
+<p>We let <span class="math inline">\mathbb{N}</span> denote the set of natural numbers, i.e., <span class="math inline">\mathbb{N} := \{1,2,3,\ldots\}</span>. For <span class="math inline">n \in \mathbb{N}</span>, we write <span class="math inline">[n] := \{1,2,\ldots,n\}</span>.</p>
+<p>We let <span class="math inline">\mathbb{R}</span> denote the set of all real numbers and <span class="math inline">\mathbb{R}_{\geq 0}</span> the set of all nonnegative real numbers.</p>
+<p>We use <span class="math inline">\log()</span> to denote the natural logarithm and <span class="math inline">\log_2()</span> to denote the logarithm with base <span class="math inline">2</span>.</p>
 </section>
-<section id="graph-theory-preliminaries" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="graph-theory-preliminaries"><span class="header-section-number">2.2</span> Graph theory preliminaries</h2>
+<section id="graph-theory" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="graph-theory"><span class="header-section-number">2.2</span> Graph theory</h2>
 <p>We will use the concepts of undirected and directed graphs, which we recall below.</p>
 <p>A <em>graph</em> <span class="math inline">G</span> is defined by a set of vertices <span class="math inline">V</span> and a set of edges <span class="math inline">E</span>. We write <span class="math inline">G = (V,E)</span>. Here the set of edges is a subset of pairs of vertices. Throughout, we assume an edge consists of a pair of distinct vertices <span class="math inline">u,v \in V</span> (distinct meaning <span class="math inline">u \neq v</span>). When such an edge is <em>undirected</em> we write <span class="math inline">\{u,v\}</span>. When the edge is directed we write <span class="math inline">(u,v)</span> to denote an edge from vertex <span class="math inline">u</span> to vertex <span class="math inline">v</span>. We have seen an example of an undirected graph in <a href="01-introduction.html#fig-3-cycle" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>: this is the graph with vertex set <span class="math inline">V=[3]</span> and edge set <span class="math inline">E = \{\{1,2\},\{2,3\},\{1,3\}\}</span>.</p>
 <p>We have also seen an example of a directed graph in <a href="01-introduction.html#fig-3-chain" class="quarto-xref">Figure&nbsp;<span>1.2</span></a>: here the vertex set is again <span class="math inline">V=[3]</span> and if we label the vertices <span class="math inline">1</span>, <span class="math inline">2</span>, and <span class="math inline">3</span> from left to right, then the edge set is <span class="math inline">E = \{(2,1), (3,2)\}</span>.</p>
 </section>
-<section id="frequently-used-probability-distributions" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="frequently-used-probability-distributions"><span class="header-section-number">2.3</span> Frequently used probability distributions</h2>
+<section id="real-analysis" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="real-analysis"><span class="header-section-number">2.3</span> Real analysis</h2>
+<p>For a given <em>domain</em> <span class="math inline">A \subseteq \mathbb{R}^n</span>, a <em>function</em> <span class="math inline">f</span> maps every number <span class="math inline">x = (x_1,\dots,x_n) \in A</span> to a number <span class="math inline">f(x) \in \mathbb{R}^m</span>. We denote this mapping by <span class="math inline">f : A \rightarrow \mathbb{R}^m</span>. We assume familiarity with basic concepts from real analysis such as continuity and differentiability of functions, as well as limit calculations, in <span class="math inline">n</span>-dimensional (Euclidean) space.</p>
+<p>If <span class="math inline">m = 1</span> and <span class="math inline">f</span> is differentiable, we denote the <em>gradient</em> of <span class="math inline">f</span> by <span class="math display">
+\nabla f = \left(\frac{\partial f}{\partial x_1},\frac{\partial f}{\partial x_2},\dots,\frac{\partial f}{\partial x_n}\right)
+</span> which is the vector containing the partial derivatives of <span class="math inline">f</span>.</p>
+<p>A one-dimensional function <span class="math inline">f : A \rightarrow \mathbb{R}</span> is <em>increasing</em> on <span class="math inline">A \subseteq \mathbb{R}</span> if <span class="math inline">f(x) \leq f(y)</span> for all <span class="math inline">x,y \in A</span> with <span class="math inline">x \leq y</span>. If <span class="math inline">f</span> is differentiable on <span class="math inline">A</span>, then <span class="math inline">f</span> is increasing if and only if the derivative of <span class="math inline">f</span> is non-negative on (the interior of) <span class="math inline">A</span>.</p>
+</section>
+<section id="sec-prelim-concave-maximization" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="sec-prelim-concave-maximization"><span class="header-section-number">2.4</span> Concave maximization</h2>
+<p>For <span class="math inline">A \subseteq \mathbb{R}^n</span>, we say that a function <span class="math inline">f: A \rightarrow \mathbb{R}^m</span> is <em>concave</em> on <span class="math inline">A</span> if for all <span class="math inline">x,y \in A</span> and <span class="math inline">\lambda \in (0,1)</span> it holds that <span class="math display">
+\lambda f(x) + (1- \lambda)f(y) \leq f(\lambda x + (1- \lambda) y).
+</span> An example of a concave functions is an <em>affine/linear function</em>, which is of the form <span class="math display">
+f(x) = a_1x_1 + a_2x_2 + \dots a_nx_n - b.
+</span></p>
+<p>A function <span class="math inline">f</span> is <em>strictly concave</em> if the inequality above is strict (<span class="math inline">&lt;</span> instead of <span class="math inline">\leq</span>) for every <span class="math inline">x,y \in A</span> and <span class="math inline">\lambda \in (0,1)</span>. Note that an affine function is not strictly concave.</p>
+<p>A differentiable, univariate function <span class="math inline">f : A\rightarrow \mathbb{R}</span> is concave on <span class="math inline">A</span> if and only if <span class="math inline">f'(x)</span> is a nonincreasing function on <span class="math inline">A</span>.</p>
+<p>A (strictly) concave function is nice to optimize over: There are neat characterizations determining when a point <span class="math inline">x \in A</span> is a maximizer, i.e., we can characterize the solutions to the problem <span class="math display">
+\max_{x \in A} f(x).
+</span> We will consider two such cases here: The unconstrained case where <span class="math inline">A = \mathbb{R}^n</span> and the case where <span class="math inline">A \subseteq \mathbb{R}^n</span> can be described by a set of linear (in)equalities. If <span class="math inline">A = \mathbb{R}^n</span>, then <span class="math inline">x</span> is a maximizer of <span class="math inline">f</span> if and only if <span class="math inline">\nabla f (x) = 0</span>.</p>
+<p>If <span class="math inline">A</span> is described by a set of <span class="math inline">q</span> linear inequality and <span class="math inline">r</span> linear equality constraints, the maximization problem is of the form <span class="math display">
+\begin{array}{lll}
+\max_{x \in \mathbb{R}^n} &amp; f(x) &amp; \\
+\text{subject to} &amp; g_i(x) \leq 0 &amp; \text{ for } i = 1,\dots,q \\
+&amp; h_j(x) = 0 &amp; \text{ for } j = 1,\dots,r \\
+\end{array}
+</span> where the <span class="math inline">g_i</span> and <span class="math inline">h_j</span> are affine functions.</p>
+<p>We can use the well known Karush-Kuhn-Tucker (KKT) conditions to characterize a maximizer of <span class="math inline">f</span> over <span class="math inline">A</span>. To state these conditions, we introduce for every inequality constraint a (dual) multiplier <span class="math inline">\lambda_i \leq 0</span> for <span class="math inline">i = 1,\dots,q</span>, summarized in the vector <span class="math inline">\lambda = (\lambda_1,\dots,\lambda_q)</span>, and (dual) multiplier <span class="math inline">\nu_j \in \mathbb{R}</span> for <span class="math inline">j = 1,\dots,r</span>, summarized in the vector <span class="math inline">\nu = (\nu_1,\dots,\nu_r)</span>. The difference in domain of the multipliers, <span class="math inline">\lambda_i \leq 0</span> and <span class="math inline">\mu_j \in \mathbb{R}</span>, comes from the fact that they are identified with different type of constraints, inequalities and equalities, respectively.</p>
+<p>We define the <em>Lagrangian</em> as <span class="math display">
+L(x,\lambda,\nu) = f(x) + \sum_{i=1}^q \lambda_i g_i(x) + \sum_{j=1}^r \nu_j h_j(x).
+</span></p>
+<p>Then <span class="math inline">x \in A</span> is a maximizer of <span class="math inline">f</span> if and only if there exists vectors <span class="math inline">\lambda \in \mathbb{R}^q</span> and <span class="math inline">\nu \in \mathbb{R}^r</span> such that the point <span class="math inline">(x,\lambda,\nu)</span> satisfies the following four KKT conditions:</p>
+<ol type="1">
+<li><strong>(Zero gradient).</strong> The partial derivatives of <span class="math inline">L</span> with respect to <span class="math inline">x</span> are zero, i.e., <span class="math display">
+\frac{\partial L(x,\lambda,\nu)}{\partial x_k} = \frac{\partial f(x)}{\partial x_k} + \sum_{i=1}^q \lambda_i \frac{\partial g_i(x)}{\partial x_k} + \sum_{j=1}^r \nu_j \frac{\partial h_j(x)}{\partial x_k} = 0
+</span> for <span class="math inline">k = 1,\dots,n</span>.</li>
+<li><strong>(Primal feasibility).</strong> <span class="math inline">g_i(x) \leq 0</span> for <span class="math inline">i = 1,\dots,q</span> and <span class="math inline">h_j(x) = 0</span> for <span class="math inline">j = 1,\dots,r</span>.</li>
+<li><strong>(Dual feasibility).</strong> <span class="math inline">\lambda_i \leq 0</span> for <span class="math inline">i = 1,\dots,q</span>.</li>
+<li><strong>(Complementary slackness).</strong> <span class="math inline">\lambda_ig_i(x) = 0</span> for <span class="math inline">i = 1,\dots,q</span>.</li>
+</ol>
+<p>Note that if there are no constraints, these conditions simply reduce to the statement that the gradient of <span class="math inline">f</span> should be zero. The complementarity conditions imply that if a dual variable <span class="math inline">\lambda_i &gt; 0</span>, then the corresponding constraint <span class="math inline">g_i(x) \leq 0</span> must be binding, i.e., equality must hold in the point <span class="math inline">x</span>. Similarly, if a constraint is not binding in a point <span class="math inline">x</span>, i.e., <span class="math inline">g_i(x) &lt; 0</span>, then the corresponding dual variable <span class="math inline">\lambda_i = 0</span>.</p>
 
 
 </section>

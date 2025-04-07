@@ -254,8 +254,17 @@ window.Quarto = {
   <li><a href="#computation-for-n-2" id="toc-computation-for-n-2" class="nav-link" data-scroll-target="#computation-for-n-2"><span class="header-section-number">8.2.1</span> Computation for <span class="math inline">n = 2</span></a></li>
   <li><a href="#computation-for-n-2-1" id="toc-computation-for-n-2-1" class="nav-link" data-scroll-target="#computation-for-n-2-1"><span class="header-section-number">8.2.2</span> Computation for <span class="math inline">n &gt; 2</span></a></li>
   </ul></li>
-  <li><a href="#best-response-dynamics" id="toc-best-response-dynamics" class="nav-link" data-scroll-target="#best-response-dynamics"><span class="header-section-number">8.3</span> Best response dynamics</a></li>
-  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements"><span class="header-section-number">8.4</span> Acknowledgements</a></li>
+  <li><a href="#best-response-dynamics" id="toc-best-response-dynamics" class="nav-link" data-scroll-target="#best-response-dynamics"><span class="header-section-number">8.3</span> Best response dynamics</a>
+  <ul class="collapse">
+  <li><a href="#potential-function" id="toc-potential-function" class="nav-link" data-scroll-target="#potential-function"><span class="header-section-number">8.3.1</span> Potential function</a></li>
+  <li><a href="#convergence-to-epsilon-pne" id="toc-convergence-to-epsilon-pne" class="nav-link" data-scroll-target="#convergence-to-epsilon-pne"><span class="header-section-number">8.3.2</span> Convergence to <span class="math inline">\epsilon</span>-PNE</a></li>
+  </ul></li>
+  <li><a href="#two-model-variations" id="toc-two-model-variations" class="nav-link" data-scroll-target="#two-model-variations"><span class="header-section-number">8.4</span> Two model variations</a>
+  <ul class="collapse">
+  <li><a href="#concave-utilities" id="toc-concave-utilities" class="nav-link" data-scroll-target="#concave-utilities"><span class="header-section-number">8.4.1</span> Concave utilities</a></li>
+  <li><a href="#economies-of-scale" id="toc-economies-of-scale" class="nav-link" data-scroll-target="#economies-of-scale"><span class="header-section-number">8.4.2</span> Economies of scale</a></li>
+  </ul></li>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements"><span class="header-section-number">8.5</span> Acknowledgements</a></li>
   </ul>
 </nav>
     </div>
@@ -298,7 +307,7 @@ p_i(\mu) = U_i\left(\frac{\mu_i}{\sum_j \mu_j}\right) - \mu_i
 $$ 
 with $U_i: \mathbb{R}_{\geq 0} \rightarrow \mathbb{R}_{\geq 0}$ a strictly increasing, concave utility function with $U_i(0) = 0$. These utility functions are similar to those we considered in the previous chapter. Our setting in this chapter is a special case with $U_i(x) = w_i x$.
 -->
-<p>The proportional rule had the property that a miner <span class="math inline">i</span> could increase its reward by increasing their hash rate <span class="math inline">\mu_i</span>. If the goal of a miner is to maximize its payoff <span class="math inline">p_i(\mu)</span>, it is no longer necessarily optimal for her to increase her hash rate, because <span class="math inline">\lim_{\mu_i \rightarrow \infty} p_i(\mu) = -\infty</span> (note that the other hash rates are kept contant in this reasoning).</p>
+<p>The proportional rule had the property that a miner <span class="math inline">i</span> could increase its reward by increasing their hash rate <span class="math inline">\mu_i</span>. If the goal of a miner is to maximize its payoff <span class="math inline">p_i(\mu)</span>, it is no longer necessarily optimal for her to increase her hash rate, because <span class="math inline">\lim_{\mu_i \rightarrow \infty} p_i(\mu) = -\infty</span> (note that the other hash rates are kept constant in this reasoning).</p>
 <p>This gives rise to a <em>strategic</em> consideration for miner <span class="math inline">i</span>. Knowning the hash rates <span class="math display">
 \mu_{-i} = (\mu_1,\dots,\mu_{i-1},\mu_{i+1},\dots,\mu_n)
 </span> of the other miners, what hash rate <span class="math inline">\mu_i</span> maximizes the payoff function <span class="math inline">p_i(\mu)</span>? This setting, in which every miner has the goal of maximizing their indivual payoff function, can be seen as a <em>non-cooperative</em> game. It is important to observe that the payoff of miner <span class="math inline">i</span> depends on the choices made by the other miners, i.e., the vector <span class="math inline">\mu_{-i}</span>!</p>
@@ -349,7 +358,7 @@ g_2(x) = 2 \cdot \frac{x}{8/9 + x} - x
   background-color: #ffffff;
 }
 </style>
-<div id="2f977c10" class="cell" data-execution_count="1">
+<div id="bd861688" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show code generating the plot below</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -582,13 +591,644 @@ x_i(\mu) = \max\left\{0,1 -  \frac{1}{w_i}\lambda\right\}
 <section id="best-response-dynamics" class="level2" data-number="8.3">
 <h2 data-number="8.3" class="anchored" data-anchor-id="best-response-dynamics"><span class="header-section-number">8.3</span> Best response dynamics</h2>
 <p>We conclude this chapter with some remarks about best response dynamics. Formally, such dynamics are defined as an iterative process where in every iteration, given a hash rate profile <span class="math inline">\mu = (\mu_1,\dots,\mu_n)</span> one miner <span class="math inline">i</span> gets to compute their best response against <span class="math inline">\mu_{-i}</span>, i.e., maximize their best response function <span class="math inline">g_i(x) = p_i(x,\mu_{-i}).</span> We keep repeating this procedure until no miner wants to change their hash rate anymore.</p>
-<p>For sake of simplicity, we will focus on the case with two miners and we will assume that they take turns optimizing their best response function. Without loss of generality, we let miner <span class="math inline">1</span> optimize its best response function in the uneven rounds <span class="math inline">t = 1,3,5,7,\dots</span> and miner <span class="math inline">2</span> in the even rounds <span class="math inline">t = 2,4,6,\dots</span>. The process starts in round <span class="math inline">t = 1</span> at some chosen hash rate vector <span class="math inline">\mu = (\mu_1, \mu_2)</span>. We assume that <span class="math inline">\mu_1,\mu_2 &gt; 0</span> to avoid some technicalities.</p>
-<p>In general, best response dynamics are not guaranteed to converge if <span class="math inline">w_1 \neq w_2</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> This means we have to reflect a bit on what we did before. We studied the pure Nash equilibrium as “natural” outcome of the best response dynamics process, but the dynamics is not guaranteed to end up there! Despite the existence of examples where the best response dynamics does not converge, it does converge in many cases.</p>
-<p>One class where best response dynamics are guaranteed to converge is when the miners have a common value <span class="math inline">w_1 = w_2 = w</span> (similar to the symmetric setting we considered in an exercise in the previous section). We will look more into this in the next lecture.</p>
+<p>By solving the first order conditions, and recalling that the best response to the all-zeros vector <span class="math inline">\mu_{-i} = (0,\dots,0)</span> is a small number <span class="math inline">\delta</span>, we can express the best response of miner <span class="math inline">i</span> given <span class="math inline">\mu_{-i}</span> as <span class="math display">
+\text{BR}_i(\mu_{-i}) = \left\{
+\begin{array}{ll}
+\delta &amp; \text{ if } \sum_{j \neq i} \mu_j = 0 \\
+\sqrt{w_i(\sum_{j \neq i} \mu_j)} - \sum_{j \neq i} \mu_j &amp; \text{ if } 0 &lt; \sum_{j\neq i} \mu_j &lt; w_i \\
+0 &amp; \text{ if } \sum_{j \neq i} \mu_j \geq w_i
+\end{array}
+\right.
+</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 8.7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Verify the correctness of the formula for <span class="math inline">\text{BR}_i</span> above.</p>
+</div>
+</div>
+<p>We will assume the iterative process is done in a <em>round-robin</em> fashion, that is, we iterate over miners <span class="math inline">1,\dots,n</span> and then start at miner <span class="math inline">1</span> again. More precisely, the miner updating their best response in round <span class="math inline">t</span> is <span class="math inline">i = t \text{ mod } n</span>. The pseudo-code of best response dynamics is therefore as follows.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Best response dynamics</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>1.  Initialize </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    - Weight vector w = [w_1,..,w_n] </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    - Initial hash rate vector mu = [mu_1,...,mu_n]</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    - Number of rounds T</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    - Parameter delta (best response against all-zeros vector).</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>2.  In each round t = 1,2,3,...,T do:</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    - Compute best response of miner i = t (mod n)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    - Update value mu_i with the computed best response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A Python implementation of this procedure with <span class="math inline">n = 4</span> miners is given below with</p>
+<ul>
+<li><span class="math inline">w = (5, 2, 0.5, 0.2)</span></li>
+<li><span class="math inline">\mu = (1,1,1,1)</span></li>
+<li><span class="math inline">T = 40</span></li>
+<li><span class="math inline">\delta = 1/(w_{\max}\cdot n^3) \approx 0.0039</span> (any small enough number is allowed here).</li>
+</ul>
+<style>
+.cell-output-display {
+  background-color: #ffffff;
+}
+</style>
+<div id="ebed291d" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Show code for executing best response dynamics</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Weight vector</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> np.array([<span class="dv">4</span>, <span class="dv">2</span>, <span class="fl">0.5</span>, <span class="fl">0.2</span>])</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of miners</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> np.size(w)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial hash rate vector</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> np.array([<span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">1.0</span>])</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of best response iterations</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Value of delta (brd against all-zeros vector)</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>delta <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(np.<span class="bu">max</span>(w)<span class="op">*</span>n<span class="op">**</span><span class="dv">3</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Function that computes best response for miner i given hash rate vector mu</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> best_response(i, mu, wi, delta):</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    rate_minus_i <span class="op">=</span> np.<span class="bu">sum</span>(mu) <span class="op">-</span> mu[i]</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> np.allclose(rate_minus_i, <span class="dv">0</span>):  <span class="co"># First BRD case</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        br <span class="op">=</span> delta</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> (rate_minus_i <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">&amp;</span> (rate_minus_i <span class="op">&lt;=</span> wi):  <span class="co"># Second BRD case</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        br <span class="op">=</span> np.sqrt(wi <span class="op">*</span> rate_minus_i) <span class="op">-</span> rate_minus_i</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> rate_minus_i <span class="op">&gt;</span> wi:  <span class="co"># Third BRD case</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>        br <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> br</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Executing best response dynamics procedure</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> best_response_dynamics(w,mu,T,delta):</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create an empty list to store the results</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    mu_history <span class="op">=</span> []</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Append initial hash rate vector to results list</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    mu_history.append(mu.copy())</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(T):</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>        i <span class="op">=</span> np.mod(t, n)</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>        mu[i] <span class="op">=</span> best_response(i, mu, w[i], delta)    </span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>        mu_history.append(mu.copy())  <span class="co"># Append hash rate vector to results list</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert the mu_history list to a pandas DataFrame</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    mu_df <span class="op">=</span> pd.DataFrame(mu_history, columns<span class="op">=</span>[<span class="ss">f'mu_</span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n)])</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add an "Iteration" column for the index</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    mu_df.insert(<span class="dv">0</span>, <span class="st">'Iteration'</span>, np.arange(T <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Display the DataFrame without the index column</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> mu_df.to_string(index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> results</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>brd <span class="op">=</span> best_response_dynamics(w,mu,T,delta)</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(brd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> Iteration     mu_1     mu_2     mu_3  mu_4
+         0 1.000000 1.000000 1.000000   1.0
+         1 0.464102 1.000000 1.000000   1.0
+         2 0.464102 0.000000 1.000000   1.0
+         3 0.464102 0.000000 0.000000   1.0
+         4 0.464102 0.000000 0.000000   0.0
+         5 0.003906 0.000000 0.000000   0.0
+         6 0.003906 0.084482 0.000000   0.0
+         7 0.003906 0.084482 0.121836   0.0
+         8 0.003906 0.084482 0.121836   0.0
+         9 0.702127 0.084482 0.121836   0.0
+        10 0.702127 0.459753 0.121836   0.0
+        11 0.702127 0.459753 0.000000   0.0
+        12 0.702127 0.459753 0.000000   0.0
+        13 0.896349 0.459753 0.000000   0.0
+        14 0.896349 0.442568 0.000000   0.0
+        15 0.896349 0.442568 0.000000   0.0
+        16 0.896349 0.442568 0.000000   0.0
+        17 0.887948 0.442568 0.000000   0.0
+        18 0.887948 0.444680 0.000000   0.0
+        19 0.887948 0.444680 0.000000   0.0
+        20 0.887948 0.444680 0.000000   0.0
+        21 0.889006 0.444680 0.000000   0.0
+        22 0.889006 0.444415 0.000000   0.0
+        23 0.889006 0.444415 0.000000   0.0
+        24 0.889006 0.444415 0.000000   0.0
+        25 0.888874 0.444415 0.000000   0.0
+        26 0.888874 0.444448 0.000000   0.0
+        27 0.888874 0.444448 0.000000   0.0
+        28 0.888874 0.444448 0.000000   0.0
+        29 0.888891 0.444448 0.000000   0.0
+        30 0.888891 0.444444 0.000000   0.0
+        31 0.888891 0.444444 0.000000   0.0
+        32 0.888891 0.444444 0.000000   0.0
+        33 0.888889 0.444444 0.000000   0.0
+        34 0.888889 0.444445 0.000000   0.0
+        35 0.888889 0.444445 0.000000   0.0
+        36 0.888889 0.444445 0.000000   0.0
+        37 0.888889 0.444445 0.000000   0.0
+        38 0.888889 0.444444 0.000000   0.0
+        39 0.888889 0.444444 0.000000   0.0
+        40 0.888889 0.444444 0.000000   0.0</code></pre>
+</div>
+</div>
+<p>In the output above we can see that the vector <span class="math inline">\mu</span> seems to converge to <span class="math inline">(8/9,4/9,0,0)</span> which was indeed the PNE that we saw earlier in this chapter for this specific choice of weight vector <span class="math inline">w</span> (see Exercise <span class="math inline">8.4</span>). It should be noted though, that we never <em>exactly</em> reach this vector <span class="math inline">\mu</span>. The dynamics converges to the PNE over time, but does not attain it in a finite number of iterations.</p>
+<p>To deal with this, we can look at a relaxed equilibrium notion, called the <em><span class="math inline">\epsilon</span>-approximate pure Nash equilibrium (<span class="math inline">\epsilon</span>-PNE)</em>. Intuitively, if <span class="math inline">\mu</span> is an <span class="math inline">\epsilon</span>-PNE then some miners might have an incentive to deviate, but the improvement in payoff that this will give them is at most an additive term <span class="math inline">\epsilon</span>. Note that a pure Nash equilibrium is an <span class="math inline">\epsilon</span>-PNE for <span class="math inline">\epsilon = 0</span>.</p>
+<div id="def-epsilon-pne" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 8.2 (<span class="math inline">\epsilon</span>-approximate Pure Nash equilibrium)</strong></span> A hash rate vector <span class="math inline">\mu</span> is an <span class="math inline">\epsilon</span>-approximate pure Nash equilibrium (PNE) if for all <span class="math inline">i = 1,\dots,n</span>, it holds that <span class="math display">
+p_i(\mu) \geq p_i(\mu_i',\mu_{-i}) - \epsilon
+</span> for all <span class="math inline">\mu_i' \geq 0</span>.</p>
+</div>
+<!--
+:::{.callout-tip}
+# Exercise 8.8
+
+[TWO EXERCISES ABOUT DETERMINING THE SMALLEST EPSILON FOR WHICH A GIVEN HASH RATE VECTOR IS AN EPSILON NASH EQUILIBRIUM]
+:::
+-->
+<p>We can now instead run the dynamics until an <span class="math inline">\epsilon</span>-PNE is found. The updated pseudo-code is given below.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Best response dynamics for computing epsilon-PNE</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>1.  Initialize </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    - Weight vector w = [w_1,..,w_n] </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    - Initial hash rate vector mu = [mu_1,...,mu_n]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    - Number of rounds T</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    - Parameter delta (best response against all-zeros vector).</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    - Parameter epsilon</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>2.  While mu is not an epsilon-PNE, do:</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    - Compute best response of miner i = t (mod n)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    - Update value mu_i with the computed best response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In general, best response dynamics are not guaranteed to converge to an (<span class="math inline">\epsilon</span>-)PNE. This means that the while-loop in the pseudo-code above is not guaranteed to terminate. Let us look at such an example with two miners and <span class="math inline">\epsilon = 0</span>.</p>
+<div id="e58360b9" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weight vector</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> np.array([<span class="fl">0.1</span>, <span class="dv">1</span>])</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of miners</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> np.size(w)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of best response iterations</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">12</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Value of delta (best reponse against all-zeros vector)</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>delta <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>(<span class="op">-</span><span class="dv">5</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial hash rate vector</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> np.array([<span class="dv">0</span>,delta])</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Function best_response_dynamics() is defined in previous snippet</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>brd <span class="op">=</span> best_response_dynamics(w,mu,T,delta)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(brd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Iteration     mu_1     mu_2
+         0 0.000000 0.000010
+         1 0.000990 0.000010
+         2 0.000990 0.030474
+         3 0.024729 0.030474
+         4 0.024729 0.132526
+         5 0.000000 0.132526
+         6 0.000000 0.000010
+         7 0.000990 0.000010
+         8 0.000990 0.030474
+         9 0.024729 0.030474
+        10 0.024729 0.132526
+        11 0.000000 0.132526
+        12 0.000000 0.000010</code></pre>
+</div>
+</div>
+<p>After <span class="math inline">t = 6</span> iterations we are back at the hash rate vector that we started with! And so, the best response dynamics keeps cycling through the first six hash rate vectors in the above list without ever approaching the PNE of the game.</p>
+<p>This means we have to reflect a bit on what we did before. We studied the pure Nash equilibrium as “natural” outcome of the best response dynamics process, but the dynamics is not guaranteed to end up there! Despite the existence of examples where the best response dynamics does not converge, it does converge in many cases, though.</p>
+<p>One class where best response dynamics are guaranteed to converge is when the miners have a common value <span class="math inline">w_1 = \dots = w_n = w</span> as in the symmetric setting we considered in Exercise 8.6. For simplicity, we will set <span class="math inline">w = 1</span>. The common payoff function of all miners <span class="math inline">i = 1,\dots,n</span> is then <span class="math display">
+p_i(\mu) = \frac{\mu_i}{\sum_j \mu_j} - \mu_i.
+</span></p>
+<section id="potential-function" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="potential-function"><span class="header-section-number">8.3.1</span> Potential function</h3>
+<p>We can use a <em>(best response) potential function argument</em> to show that best response dynamics always converge under equal payoff functions. The idea of such an argument is to construct a (bounded from above) function <span class="math inline">P : \mathbb{R}^n_{\geq 0} \rightarrow \mathbb{R}</span> that takes as input a hash rate vector <span class="math inline">\mu = (\mu_1,\dots,\mu_n)</span> and outputs a real number. Bounded from above here means that there exists a constant <span class="math inline">c \in \mathbb{R}</span> such that <span class="math inline">P(\mu) \leq c</span> for all <span class="math inline">\mu \in \mathbb{R}^n_{\geq 0}</span>.</p>
+<p>The function <span class="math inline">P</span> will be constructed in such a way that if a miner <span class="math inline">i</span> makes a best response move in <span class="math inline">\mu = (\mu_1,\dots\mu_{i-1},\mu_{i},\mu_{i+1},\mu_n) = (\mu_i,\mu_{-i})</span> to <span class="math inline">\mu' =  (\mu_1,\dots\mu_{i-1},\mu_{i}',\mu_{i+1},\mu_n) = (\mu_i',\mu_{-i})</span>, i.e, miner <span class="math inline">i</span> unilaterally deviates from <span class="math inline">\mu_i</span> to <span class="math inline">\mu_i'</span>, then the value of <span class="math inline">P(\mu')</span> will be higher than <span class="math inline">P(\mu)</span>. In other words, whenever a miner makes a best response move, the value of the potential function goes up.</p>
+<p>Because <span class="math inline">P</span> is bounded from above, the intuition is that if we perform enough best response rounds, and increase the potential function value in every round a little bit, then we must get close to an (approximate) pure Nash equilibrium in a finite number of steps, because the potential function is bounded from above and so it cannot increase indefinitely. There is a small caveat in this reasoning, which is that the increments might get smaller and smaller (as we saw in one of the examples above as well), so we need to guarantee that enough “progress” is made in every round. We will get back to this last point later on.</p>
+<p>For now, let us look at a potential function that has the property that its value increases whenever a miner makes a best response move. To find such a function, you typically have to make an educated guess and show that it does what it needs to do. In our setting, we can define <span class="math display">
+P(\mu) = -\frac{1}{3}\left(\sum_{i=1}^n \mu_i\right)^3 + \sum_{i &lt; j } \mu_i\mu_j
+</span> as the potential function. As an example, for <span class="math inline">n = 3</span>, we have <span class="math display">
+P(\mu) = -\frac{1}{3}\left(\mu_1 + \mu_2 + \mu_3\right)^3 + \mu_1\mu_2 + \mu_1\mu_3 + \mu_2\mu_3.
+</span></p>
+<p>We have to address one technicality with respect to the domain of the function <span class="math inline">P</span>. Recall that, to avoid limit arguments, we define the best response of a miner <span class="math inline">i</span> to be a small (fixed) number <span class="math inline">\delta</span> whenever the hash rates of all the other miners are zero in <span class="math inline">\mu</span>. To deal with this appropriately in the potential function <span class="math inline">P</span>, we formally define <span class="math inline">P</span> as a function <span class="math inline">P : \mathbb{R}^n_{\geq 0} \setminus (\cup_{i=1}^n Z_i) \rightarrow \mathbb{R}</span> where for <span class="math inline">i = 1,\dots,n</span>, <span class="math display">
+Z_i = \{ (0,\dots,0,\mu_i,0,\dots,0) : 0 \leq \mu_i &lt; \delta \}.
+</span> That is, we do not allow hash rate vectors <span class="math inline">\mu</span> with one non-zero entry that is smaller than <span class="math inline">\delta</span>.</p>
+<p>We first show that the function <span class="math inline">P</span> is indeed bounded from above.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 8.9
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Show that <span class="math inline">P(\mu) \leq \frac{2}{3}</span> for all <span class="math inline">\mu \in \mathbb{R}^n_{\geq 0}</span>. <em>Hint: Use that <span class="math inline">\sum_{i &lt;j} x_ix_j \leq (\sum_i x_i)^2</span> and then the substitution <span class="math inline">y = \sum_i x_i</span></em>.</p>
+</div>
+</div>
+<p>In fact, we can show a stronger result, namely that <span class="math inline">P</span> has a global maximizer. Recall that in Exercise 8.5, we showed that the PNE <span class="math inline">\mu</span> of a symmetric Tullock contest is given by <span class="math inline">\mu_i = (n-1)/n^2</span> for <span class="math inline">i = 1,\dots,n</span> if <span class="math inline">w = 1</span>. It can be shown that this <span class="math inline">\mu</span> is the global maximizer of <span class="math inline">P</span> over its formal domain, as well as over <span class="math inline">\mathbb{R}^n_{\geq 0}</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 8.10
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For <span class="math inline">n = 2</span>, show that <span class="math inline">\mu = (\frac{1}{4},\frac{1}{4})</span> is the global maximizer of <span class="math display">
+P(\mu) = -\frac{1}{3}\left(\mu_1 + \mu_2 \right)^3 + \mu_1\mu_2
+</span> on <span class="math inline">\mathbb{R}^{2}</span> by executing the following steps (that together analyse <span class="math inline">P</span> on the whole of <span class="math inline">\mathbb{R}^2</span>):</p>
+<ol type="1">
+<li>Show that <span class="math inline">P(\mu) \leq 0</span> for all <span class="math inline">\mu \in \{ (\mu_1,\mu_2) : \mu_1 + \mu_2 &gt; 3, \mu_1, \mu_2 \geq 0\}</span>.</li>
+<li>Show that <span class="math inline">P(\mu) \leq 0</span> on the boundary of the set <span class="math display">
+D = \{ (\mu_1,\mu_2) : \mu_1 + \mu_2 \leq 3, \mu_1, \mu_2 \geq 0\}.
+</span></li>
+<li>Show that in the interior of <span class="math inline">D</span>, we have<br>
+<span class="math display">
+\nabla P =  \left( \frac{\partial P}{\partial \mu_1}, \frac{\partial P}{\partial \mu_2}\right) = (0,0)
+</span> if and only if <span class="math inline">\mu = (\frac{1}{4},\frac{1}{4})</span>.</li>
+</ol>
+<p>Conclude from the above three steps that <span class="math inline">\mu = (\frac{1}{4},\frac{1}{4})</span> is indeed the global maximizer of <span class="math inline">P</span>.</p>
+</div>
+</div>
+<p>With a bit more effort, the above exercise can be generalized to an arbitrary value of <span class="math inline">n</span> (feel free to try this yourself).</p>
+<p>Now comes the most important part: We want to show that if a miner makes a best response, then the potential function increases. This is summarized in the following theorem, that states that doing a single-variable optimization of <span class="math inline">P</span> over <span class="math inline">\mu_i</span> yields the same optimal point as computing a best response of miner <span class="math inline">i</span>.</p>
+<div id="thm-brd-potential" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 8.2 (Best response potential function)</strong></span> Let <span class="math inline">w_1 = \dots = w_n = 1</span> so that the common payoff function of miners <span class="math inline">i = 1,\dots,n</span> is given by <span class="math display">
+p_i(\mu) = \frac{\mu_i}{\sum_j \mu_j} - \mu_i.
+</span> Then for any <span class="math inline">\mu \in \mathbb{R}^n_{\geq 0} \setminus (\cup_{i=1}^n Z_i)</span>, it holds that <span class="math display">
+\text{argmax}_{x \geq 0} P(x,\mu_{-i}) = \text{argmax}_{x \geq 0} p_i(x,\mu_{-i}).
+</span></p>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 8.11
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Show that for a given fixed <span class="math inline">\mu_{-i}</span>, it holds that <span class="math display">
+\text{argmax}_{x \geq 0} P(x,\mu_{-i}) = \left\{
+\begin{array}{ll}
+\delta &amp; \text{ if } \sum_{j \neq i} \mu_j = 0 \\
+\sqrt{\sum_{j \neq i} \mu_j} - \sum_{j \neq i} \mu_j &amp; \text{ if } 0 &lt; \sum_{j\neq i} \mu_j &lt; 1 \\
+0 &amp; \text{ if } \sum_{j \neq i} \mu_j \geq 1
+\end{array}
+\right.
+</span> which shows that <span class="math inline">\text{argmax}_{x \geq 0} P(x,\mu_{-i})</span> is the same function as <span class="math inline">\text{BR}_i(\mu_{-i}) = \text{argmax}_{x \geq 0} p_i(x,\mu_{-i})</span>, and thereby proves <a href="#thm-brd-potential" class="quarto-xref">Theorem&nbsp;<span>8.2</span></a>.</p>
+</div>
+</div>
+<p>Let us finally illustrate that the function <span class="math inline">P</span> indeed increases by considering a small example of best response dynamics with initial hash rate vector <span class="math inline">\mu = (2,3)</span>. Recall that <span class="math inline">w_1 = w_2 = 1</span>.</p>
+<style>
+.cell-output-display {
+  background-color: #ffffff;
+}
+</style>
+<div id="59a019e1" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show code for best response dynamics with potential function values</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Weight vector</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>])</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of miners</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> np.size(w)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial hash rate vector</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> np.array([<span class="fl">2.0</span>,<span class="fl">3.0</span>])</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of best response iterations</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Value of delta (brd against all-zeros vector)</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>delta <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(np.<span class="bu">max</span>(w)<span class="op">*</span>n<span class="op">**</span><span class="dv">3</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Function that computes best response for miner i</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> best_response(i, mu, wi, delta):</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    rate_minus_i <span class="op">=</span> np.<span class="bu">sum</span>(mu) <span class="op">-</span> mu[i]</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> np.allclose(rate_minus_i, <span class="dv">0</span>):  </span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        br <span class="op">=</span> delta</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> (rate_minus_i <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">&amp;</span> (rate_minus_i <span class="op">&lt;=</span> wi): </span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>        br <span class="op">=</span> np.sqrt(wi <span class="op">*</span> rate_minus_i) <span class="op">-</span> rate_minus_i</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> rate_minus_i <span class="op">&gt;</span> wi:  </span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>        br <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> br</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to compute P(mu)</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_P(mu):</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">/</span><span class="dv">3</span> <span class="op">*</span> (mu[<span class="dv">0</span>] <span class="op">+</span> mu[<span class="dv">1</span>])<span class="op">**</span><span class="dv">3</span> <span class="op">+</span> mu[<span class="dv">0</span>] <span class="op">*</span> mu[<span class="dv">1</span>]</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Executing best response dynamics procedure</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> best_response_dynamics(w, mu, T, delta):</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create an empty list to store the results</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    mu_history <span class="op">=</span> []</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    P_history <span class="op">=</span> []</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Append initial hash rate vector to results list</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    mu_history.append(mu.copy())</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    P_history.append(compute_P(mu))</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(T):</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>        i <span class="op">=</span> np.mod(t, n)</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>        mu[i] <span class="op">=</span> best_response(i, mu, w[i], delta)    </span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>        mu_history.append(mu.copy()) </span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>        P_history.append(compute_P(mu))</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert the mu_history and P_history lists to a pandas DataFrame</span></span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>    mu_df <span class="op">=</span> pd.DataFrame(mu_history, </span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>                            columns<span class="op">=</span>[<span class="ss">f'mu_</span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n)])</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add an "Iteration" column for the index</span></span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>    mu_df.insert(<span class="dv">0</span>, <span class="st">'Iteration'</span>, np.arange(T <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add P(mu) as an extra column</span></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>    mu_df[<span class="st">'P(mu)'</span>] <span class="op">=</span> P_history</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Display the DataFrame without the index column</span></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> mu_df.to_string(index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> results</span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>brd <span class="op">=</span> best_response_dynamics(w, mu, T, delta)</span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(brd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> Iteration     mu_1     mu_2      P(mu)
+         0 2.000000 3.000000 -35.666667
+         1 0.000000 3.000000  -9.000000
+         2 0.000000 0.125000  -0.000651
+         3 0.228553 0.125000   0.013838
+         4 0.228553 0.249519   0.020607
+         5 0.250000 0.249519   0.020833</code></pre>
+</div>
+</div>
 </section>
-<section id="acknowledgements" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="acknowledgements"><span class="header-section-number">8.4</span> Acknowledgements</h2>
-<p>This section is based on Chapter 4.4 of the book “Contest Theory: Incentive Mechanisms and Ranking Methods” by Milan Vojnović that can be found <a href="https://www.cambridge.org/core/books/contest-theory/D25DFD8F016963420A08A9526D7D2253">here</a>.</p>
+<section id="convergence-to-epsilon-pne" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="convergence-to-epsilon-pne"><span class="header-section-number">8.3.2</span> Convergence to <span class="math inline">\epsilon</span>-PNE</h3>
+<p>Now that we now that the potential function value increases in ever round of the best response dynamics, what is left is to argue that the dynamics reaches a hash rate vector that comes close to the global maximizer of <span class="math inline">P</span>, which is the PNE of the Tullock contest.</p>
+<p>This turns out to be a highly nontrivial task, but some results are known in the literature on Tullock contests. Here we (informally) mention one such a result.</p>
+<div id="thm-brd-convergence" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 8.3 (Ghosh and Golberg, 2023)</strong></span> Consider an initial hash rate vector <span class="math inline">\bar{\mu}</span> and let <span class="math inline">\epsilon &gt; 0</span>. Then best response dynamics for <span class="math inline">n = 2</span> miners with <span class="math inline">w_1 = w_2 = 1</span> reaches an <span class="math inline">\epsilon</span>-PNE in at most <span class="math display">
+T = \log_2\left(\log_2\left(\frac{1}{\epsilon}\right)\right) + C_{\bar{\mu}}
+</span> rounds, where <span class="math inline">C_{\bar{\mu}}</span> is a constant number depending on <span class="math inline">\bar{\mu}</span>, but independent of <span class="math inline">\epsilon</span>.</p>
+</div>
+<p>Note that this means the convergence goes quite quickly with respect to <span class="math inline">\epsilon</span>. For example, for <span class="math inline">\epsilon = 10^{-10}</span> we have <span class="math inline">\log_2(\log_2(1/\epsilon)) \approx 5</span>. The proof of Ghosh and Golberg (2023) makes use of the best response potential function <span class="math inline">P</span> that we introduced, but the analysis is very involved and beyond the scope of this course.</p>
+</section>
+</section>
+<section id="two-model-variations" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="two-model-variations"><span class="header-section-number">8.4</span> Two model variations</h2>
+<p>In this section we will study extensions of the basic Tullock contest, in which the payoff functions are of the form <span class="math display">
+p_i(\mu) = u_i\left(\frac{\mu_i}{\sum_j \mu_j}\right) - \mu_i
+</span> where the <span class="math inline">u_i: \mathbb{R}_{\geq 0} \rightarrow \mathbb{R}</span> are given functions for <span class="math inline">i = 1,\dots,n</span>.</p>
+<p>We will first consider the setting where the <span class="math inline">u_i</span> are concave functions, modeling risk averse miners as in <a href="07-proportional-rule.html#sec-risk-averse" class="quarto-xref"><span>Section 7.3</span></a>. We will also consider a case corresponding to a so-called <em>economy of scale</em>. Here we provide some evidence why there tend to be only a couple of “big players” in the mining contest.</p>
+<section id="concave-utilities" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="concave-utilities"><span class="header-section-number">8.4.1</span> Concave utilities</h3>
+<p>In this section we assume that the utility function of miner <span class="math inline">i</span> is given by <span class="math display">
+p_i(\mu) = u_i\left(\frac{\mu_i}{\sum_j \mu_j}\right) - \mu_i
+</span> with <span class="math inline">u_i</span> a strictly increasing, concave function with <span class="math inline">u_i(0) = 0</span> for <span class="math inline">i = 1,\dots,n</span>.</p>
+<p>Also for these payoff functions, we make the assumption that a best response of miner <span class="math inline">i</span> against the all-zeros hash rate vector is a sufficiently small number <span class="math inline">\delta &gt; 0</span>. For our purposes below, it will be sufficient to choose <span class="math inline">\delta = 10^{-1}\cdot \min_i u_i(\frac{1}{2})</span>. Note that <span class="math inline">\delta &gt; 0</span> because we assume <span class="math inline">u_i(0) = 0</span> and <span class="math inline">u_i</span> to be strictly increasing.</p>
+<p>Tullock contests of this form still have a pure Nash equilibrium, but it can no longer be explicitly computed as in <a href="#thm-equilibrium-computation" class="quarto-xref">Theorem&nbsp;<span>8.1</span></a>, nor is a potential function known (whose maximizer is the pure Nash equilibrium) that can be used to analyze best response dynamics for this setting.</p>
+<p>Nevertheless, it turns out we can compute a PNE by solving a (concave) maximization problem!<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> To be more precise, if we define <span class="math display">
+x_i = \frac{\mu_i}{\sum_j \mu_j}
+</span> as the market share (or winning probability) of miner <span class="math inline">i</span>, we can determine the optimal market shares by solving an optimization problem. Because the problem turns out to be a concave maximization problem, there exist many efficient optimization algorithms that can solve this problem quickly!</p>
+<p>From the solution we can also obtain the individual hash rates <span class="math inline">\mu_i</span> for <span class="math inline">i = 1,\dots,n</span>. We will discuss the second point after showing the main result for the market shares.</p>
+<p>The (concave) maximization problem for determining the shares <span class="math inline">x_i</span> is given in the theorem below. We will prove its correctness by showing that the first-order conditions of a PNE correspond to the KKT conditions (see <a href="02-prelim.html#sec-prelim-concave-maximization" class="quarto-xref"><span>Section 2.4</span></a>) of the optimization problem.</p>
+<div id="thm-pne-concave-utilities" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 8.4 (Computing pure Nash equilibrium under concave utilities)</strong></span> Suppose that the payoff of miner <span class="math inline">i=1,\dots,n</span> is given by <span class="math display">
+p_i(\mu) = u_i\left(\frac{\mu_i}{\sum_j \mu_j}\right) - \mu_i
+</span> with <span class="math inline">u_i</span> a strictly increasing, concave function with <span class="math inline">u_i(0) = 0</span> for <span class="math inline">i = 1,\dots,n</span>. Then the market shares <span class="math inline">x_i = \frac{\mu_i}{\sum_j \mu_j}</span> of a pure Nash equilibrium of the resulting Tullock contest can be computed by solving the concave maximization problem <span class="math display">
+\begin{array}{lll}
+\displaystyle \max_{x \in \mathbb{R}^n} &amp; \displaystyle \sum_{i=1}^n \hat{u}_i(x_i) &amp; \\
+\displaystyle\text{subject to} &amp; \displaystyle \sum_i x_i = 1 &amp; \\
+\displaystyle &amp; x_i \geq 0 &amp; \text{ for } i = 1,\dots,n
+\end{array}
+</span> where for <span class="math inline">i = 1,\dots,n</span> we have <span class="math display">
+\hat{u}_i(x_i) = (1-x_i)u_i(x_i) + \int_0^{x_i} u_i(z) \mathrm{d}z.
+</span></p>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 8.12
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Show that <span class="math inline">\hat{u}_i(x_i) = w_ix_i\left(1 - \frac{1}{2}x_i\right)</span> for <span class="math inline">u_i(z) = w_i z</span>.</p>
+</div>
+</div>
+<p><em>Proof of <a href="#thm-pne-concave-utilities" class="quarto-xref">Theorem&nbsp;<span>8.4</span></a>.</em> We first argue that if <span class="math inline">\mu</span> is a PNE, then at least two miners have a strictly positive hash rate. (Recall that this was also the case in the basic model in <a href="#sec-pne" class="quarto-xref"><span>Section 8.2</span></a>.)</p>
+<p><strong>Claim 1:</strong> If <span class="math inline">\mu \in \mathbb{R}^n_{\geq 0}</span> is a PNE, then at least two miners have a strictly positive hash rate.</p>
+<p><em>Proof of Claim 1.</em> First suppose that <span class="math inline">\mu = (0,0,0,\dots,0)</span> is the all-zeros vector. Note that then <span class="math inline">p_i(\mu) = u_i(0) - 0 = 0</span> for every <span class="math inline">i</span>. Now any fixed miner can improve their utility by playing <span class="math inline">\delta</span>. For example, if miner <span class="math inline">i = 1</span> deviates to <span class="math inline">\mu_1' = \delta</span>, we obtain <span class="math inline">p_i(\mu_1',\mu_{-1}) = u_i(1) - \delta &gt; 0</span> by our choice of <span class="math inline">\delta = 10^{-1}\cdot \min_i u_i(\frac{1}{2})</span>.</p>
+<p>Second, suppose that exactly one miner <span class="math inline">i</span> has strictly positive hash rate in <span class="math inline">\mu</span>. Then this miner chooses their hash rate as small as possible, i.e., <span class="math inline">\mu_i = \delta</span>, to maximize their payoff. Now any other miner <span class="math inline">j \neq i</span> can improve their payoff by also choosing <span class="math inline">\mu_j' = \delta</span>, because then <span class="math inline">p_i(\mu_j',\mu_{-j}) = u_i(1/2) - \delta &gt; 0</span>. This means <span class="math inline">\mu</span> cannot be a best response. This completes the proof of Claim 1.</p>
+<p>Note that Claim 1 implies that for every <span class="math inline">i = 1,\dots, n</span> it holds that <span class="math display">
+\sum_{j \neq i} \mu_j &gt; 0.
+</span></p>
+<p>We will next write down the first-order conditions characterizing a pure Nash equilibrium <span class="math inline">\mu</span> and then argue that these correspond to the KKT conditions of the maximization problem in the theorem statement.</p>
+<p>Note that, because <span class="math inline">u_i</span> is concave, the best response function <span class="math inline">g_i(z) = p_i(z,\mu_{-i})</span> is also concave (which is to be shown in the next exercise).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 8.13
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Assuming that <span class="math inline">\sum_{j \neq i} \mu_j &gt; 0</span>, show that the function <span class="math inline">g_i(z) = p_i(z,\mu_{-i})</span> is concave.</p>
+</div>
+</div>
+<p>Because <span class="math inline">\lim_{z \rightarrow \infty} g_i(z) = -\infty</span> it follows that the maximum of <span class="math inline">g_i(z)</span> on <span class="math inline">[0,\infty)</span> is either attained in <span class="math inline">z = 0</span> with <span class="math inline">g_i'(0) \leq 0</span>, or at an internal maximum <span class="math inline">z</span> with <span class="math inline">g_i'(z) = 0.</span> In other words, if <span class="math inline">\mu</span> is a pure Nash equilibrium it (just as in the basic model) satisfies the first order conditions <span class="math display">
+\left\{
+\begin{array}{ll}
+\frac{\partial p_i}{\partial \mu_i}(\mu) = 0 &amp; \text{ if } \mu_i &gt; 0 \\[1ex]
+\frac{\partial p_i}{\partial \mu_i}\Big|_{\mu_i = 0} \leq 0 &amp; \text{ if } \mu_i = 0
+\end{array}
+\right.
+</span> which in this case translates to the equations <span class="math display">
+\left\{
+\begin{array}{ll}
+\displaystyle u_i'\left(\frac{\mu_i}{\sum_j \mu_j}\right)\left(1 - \frac{\mu_i}{\sum_j \mu_j}\right) = \sum_j \mu_j &amp; \text{ if } \mu_i &gt; 0 \\[3ex]
+\displaystyle u_i'\left(0\right) \leq  \sum_j \mu_j &amp; \text{ if } \mu_i = 0
+\end{array}
+\right..
+</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 8.14
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Verify the correctness of the first order conditions above.</p>
+</div>
+</div>
+<p>We next write down the KKT conditions of the maximization problem above. The objective function is in fact concave, because the sum of concave functions is again a concave function. To see that <span class="math inline">\hat{u}_i</span> is concave for every <span class="math inline">i</span>, observe that <span class="math inline">\hat{u}_i' = (1-x_i)u_i'(x_i)</span>. This is the product of two decreasing functions (the latter function is decreasing because <span class="math inline">u_i</span> is concave), and, hence, also decreasing. Therefore, we may conclude that <span class="math inline">\hat{u}_i</span> is concave. Therefore, we are in fact dealing with a concave maximization problem subject to linear constraints for which the KKT conditions form a characterization of an optimal solution (see <a href="02-prelim.html#sec-prelim-concave-maximization" class="quarto-xref"><span>Section 2.4</span></a>).</p>
+<p>Note that in what is to come, we switch between the hash rates <span class="math inline">\mu_i</span> and the market shares <span class="math inline">x_i</span> as variables. To align our setting with the description in <a href="02-prelim.html#sec-prelim-concave-maximization" class="quarto-xref"><span>Section 2.4</span></a>, we write the nonnegativity constraints as <span class="math inline">-x_i \leq 0</span> for <span class="math inline">i = 1,\dots,n</span>. Furthermore, we write the equality constraint as <span class="math inline">-(\sum_i x_i - 1) = 0</span> for notational convenience.</p>
+<p>The Lagrangian of the maximization problem is then <span class="math display">
+L(x,\lambda,\nu) = \sum_{i=1}^n \hat{u}_i(x_i) - \sum_{i=1}^n \lambda_i x_i - \nu \left(\sum_{i=1}^n x_i - 1\right),
+</span> where <span class="math inline">\lambda = (\lambda_1,\dots,\lambda_n)</span>. Note that <span class="math inline">\nu</span> is a scalar and not a vector, because we only have one equality constraint. The KKT conditions reduce to the following:</p>
+<ol type="1">
+<li><strong>(Zero gradient).</strong> The partial derivatives of <span class="math inline">L</span> with respect to the <span class="math inline">x_i</span> are zero, i.e., <span class="math inline">\hat{u}_i'(x_i) - \lambda_i - \nu = 0 \text{ \ for \ } i = 1,\dots,n</span>. Note that <span class="math inline">u_i'(x_i) = -u_i(x_i) + (1-x_i)u_i'(x_i) + u_i(x_i) =  (1-x_i)u_i'(x_i)</span> so that the equations reduce to <span class="math display">
+(1-x_i)u_i'(x_i) = \lambda_i + \nu  \text{ \ for \ } i = 1,\dots,n.
+</span></li>
+<li><strong>(Primal feasibility).</strong> <span class="math inline">x_i \geq 0</span> for <span class="math inline">i = 1,\dots,n</span> and <span class="math inline">\sum_i x_i = 1</span></li>
+<li><strong>(Dual feasibility).</strong> <span class="math inline">\lambda_i \leq 0</span> for <span class="math inline">i = 1,\dots,n</span>.</li>
+<li><strong>(Complementary slackness).</strong> <span class="math inline">\lambda_i x_i = 0</span> for <span class="math inline">i = 1,\dots,n</span>.</li>
+</ol>
+<p>A point <span class="math inline">x</span> solves the maximization problem if and only if there exists a point <span class="math inline">(x,\lambda,\nu)</span> satisfiying the KKT conditions. In the next exercise will wil show that in the latter case, <span class="math inline">x</span> equals the market shares of a pure Nash equilibrium</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 8.15
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Show that if a point <span class="math inline">(x,\lambda,\nu)</span> satisfies the KKT conditions, then <span class="math inline">x</span> corresponds to the market shares of the pure Nash equilibrium <span class="math inline">\mu = \nu\cdot x</span> where <span class="math inline">\nu = (1-x_i)u_i'(x_i)</span> for any choice of <span class="math inline">i</span> with <span class="math inline">x_i &gt; 0</span>.</p>
+</div>
+</div>
+<p>This completes the proof of the theorem.</p>
+<p>Recall from Exercise 8.11 that <span class="math inline">\hat{u}_i(x_i) = w_ix_i\left(1 - \frac{1}{2}x_i\right)</span> for <span class="math inline">u_i(z) = w_i z</span>. Below we solve the optimization problem for a Tullock contest with four miners with <span class="math inline">w_1 = 4, w_2 = 2, w_3 = 0.5, w_4 = 0.2</span> using <a href="https://docs.scipy.org/doc/scipy/tutorial/optimize.html">SciPy’s optimization package</a>.</p>
+<style>
+.cell-output-display {
+  background-color: #ffffff;
+}
+</style>
+<div id="e2b88dd3" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show code for solving maximization problem</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Given data</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> np.array([<span class="dv">4</span>, <span class="dv">2</span>, <span class="fl">0.5</span>, <span class="fl">0.2</span>])  <span class="co"># Weights w_1, w_2, ..., w_n</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(w)  <span class="co"># Number of variables</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the utility function hat_u_i(x_i) for each i</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> hat_u(x_i, w_i):</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> w_i <span class="op">*</span> x_i<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span>  x_i <span class="op">/</span> <span class="dv">2</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the total utility function to be maximized </span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># (negated for minimization)</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> objective(x):</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>np.<span class="bu">sum</span>([hat_u(x[i], w[i]) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n)])</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the constraint: sum of x_i's must be 1</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> constraint_sum(x):</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>(x) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Bounds for each x_i (since x_i &gt;= 0)</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>bounds <span class="op">=</span> [(<span class="dv">0</span>, <span class="va">None</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n)]</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial guess for the decision variables</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> np.ones(n) <span class="op">/</span> n  <span class="co"># Initialize with equal distribution</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the constraint dictionary (sum of x_i's must be 1)</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>constraints <span class="op">=</span> [{<span class="st">'type'</span>: <span class="st">'eq'</span>, <span class="st">'fun'</span>: constraint_sum}]</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the optimization problem using the SLSQP method</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> minimize(objective, x0, method<span class="op">=</span><span class="st">'SLSQP'</span>, </span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>                    bounds<span class="op">=</span>bounds, constraints<span class="op">=</span>constraints)</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Output the results</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> result.success:</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Optimal decision variables (x_i):"</span>)</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(np.<span class="bu">round</span>(result.x, <span class="dv">2</span>))  <span class="co"># Round to 2 decimal places</span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Optimization failed:"</span>, result.message)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Optimal decision variables (x_i):
+[0.67 0.33 0.   0.  ]</code></pre>
+</div>
+</div>
+<p>In Exercise 8.4 we showed that the pure Nash equilibrium of this contest is given by <span class="math inline">\mu = (8/9,4/9,0,0)</span>, and so its market shares are <span class="math inline">x = (2/3,1/3,0,0)</span> using <span class="math inline">x_i = \mu_i/(\sum_j \mu_j)</span>. This indeed corresponds to the solution found by Python.</p>
+<p>Can we also obtain the pure Nash equilibrium <span class="math inline">\mu</span> from the solution as opposed to only the market shares <span class="math inline">x</span>? Yes, by observing from the proof of <a href="#thm-pne-concave-utilities" class="quarto-xref">Theorem&nbsp;<span>8.4</span></a> that the normalizing constant is given by <span class="math inline">\nu = (1-x_i)u_i'(x_i)</span> for any <span class="math inline">i</span> with <span class="math inline">x_i &gt; 0</span>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> In our case we have <span class="math inline">u_i'(x_i) = w_i</span>. Taking <span class="math inline">i = 1</span>, we obtain <span class="math display">
+\nu = (1-x_i)u_i'(x_i) = \left(1-\frac{2}{3}\right)u_1'\left(\frac{2}{3}\right) = \frac{1}{3}\cdot 4 = \frac{4}{3},
+</span> so that <span class="math inline">\mu = \nu \cdot x = \frac{4}{3}\cdot (2/3,1/3,0,0) = (8/9,4/9,0,0).</span></p>
+</section>
+<section id="economies-of-scale" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="economies-of-scale"><span class="header-section-number">8.4.2</span> Economies of scale</h3>
+<p>The second variation that we consider is when the payoff functions of the miners are, for <span class="math inline">\alpha &gt; 1</span>, given by <span class="math display">
+p_i(\mu) = \frac{\mu_i^{\alpha}}{\sum_j \mu_j^{\alpha}} - a_i \mu_i.
+</span> Recall that for <span class="math inline">\alpha = 1</span> this is the payoff form we started this chapter with (before doing the transformation <span class="math inline">w_i = 1/a_i)</span>.</p>
+<p>The idea here is that the mining power grows quicker than the cost associated with mining. Mathematically speaking, if we invest <span class="math inline">a_i \mu_i</span> in mining power, then the hash rate becomes <span class="math inline">\mu_i^{\alpha}</span>, which grows (as a function of <span class="math inline">\mu_i</span>) at a faster rate than <span class="math inline">a_i\mu_i</span> because <span class="math inline">\alpha &gt; 1</span>. Such a setting, where mining power grows at a faster rate than investment costs, is called an <em>economy of scale</em> in the literature.</p>
+<p>For sake of exposition we will assume that <span class="math inline">a_1 = \dots = a_n = 1</span>. Furthmore, also here we make the assumption that a best response against the all-zeros hash rate vector <span class="math inline">\mu_{-i} = (0,\dots,0)</span> is a sufficiently small number <span class="math inline">\delta &gt; 0</span>.</p>
+<p>Computing a pure Nash equilibrium in closed form is not possible for this model. It is also not possible to phrase this problem as a concave maximization problem as we did in the previous section. Nevertheless, we can prove an interesting property of this model. If <span class="math inline">\mu</span> is a pure Nash equilibrium of this Tullock contest and miner <span class="math inline">i</span> has a strictly positive market share, i.e., <span class="math display">
+x_i(\mu) = \frac{\mu_i^{\alpha}}{\sum_j \mu_j^{\alpha}} &gt; 0
+</span> then it must be that <span class="math inline">x_i(\mu) = 1 - 1/\alpha</span>, i.e., miner <span class="math inline">i</span>’s market share can be bounded away from zero independent of the other hash rates.</p>
+<p>This implies that there can be at most <span class="math inline">\alpha/(\alpha - 1)</span> miners active in the mining process in an equilibrium! For sake of illustration if <span class="math inline">\alpha = 1.1</span> then at most <span class="math inline">11</span> miners are active. This might explain, to some extent, why typically only a couple of “big players” are active in a mining markets (under the assumption of having an economy of scale).</p>
+<p>We summarize the main result in the theorem below.</p>
+<div id="thm-economies-of-scale" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 8.5 (Economies of scale)</strong></span> If the common payoff function of the Tullock contest, for <span class="math inline">\alpha &gt; 1</span>, is given by <span class="math display">
+p_i(\mu) = \frac{\mu_i^{\alpha}}{\sum_j \mu_j^{\alpha}} - \mu_i = x_i(\mu) - \mu_i,
+</span> then in a pure Nash equilibrium <span class="math inline">\mu</span>, for every <span class="math inline">i = 1,\dots,n</span> either <span class="math inline">x_i(\mu) = 0</span> or <span class="math inline">x_i(\mu) &gt; 1 - 1/\alpha</span>. This implies there can be at most <span class="math inline">\alpha/(\alpha - 1)</span> miners with strictly positive market share <span class="math inline">x_i(\mu)</span>.</p>
+</div>
+<p>We will prove this theorem in the following exercise.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 8.16
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let <span class="math inline">\mu</span> be a pure Nash equilibrium of the above Tullock contest.</p>
+<ol type="1">
+<li>Show that <span class="math inline">\mu_i = \alpha x_i(\mu)(1 - x_i(\mu))</span> for every <span class="math inline">i = 1,\dots,n</span> by optimizing the best response function <span class="math inline">g_i(z) = p_i(z,\mu_{-i})</span> over <span class="math inline">z \geq 0</span>.</li>
+<li>Argue that, if <span class="math inline">x_i(\mu) &gt; 0</span>, then <span class="math inline">x_i(\mu) \geq 1 - 1/\alpha</span>. <em>Hint: Use that <span class="math inline">p_i(\mu) \geq 0</span> always holds and combine this with the equation from 1.</em></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 8.17
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Show that if the common payoff function of the Tullock contest is given by <span class="math display">
+p_i(\mu) = \frac{\mu_i^{\alpha}}{\sum_j \mu_j^{\alpha}} - \mu_i
+</span> for <span class="math inline">\alpha &gt; 2</span> and <span class="math inline">i = 1,\dots,n</span> with <span class="math inline">n \geq 2</span>, then no pure Nash equilibrium exists in the game.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="acknowledgements" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="acknowledgements"><span class="header-section-number">8.5</span> Acknowledgements</h2>
+<p>Section 8.1, 8.2 and 8.4.1 are loosely based on Chapter 4.4 of the book <a href="https://www.cambridge.org/core/books/contest-theory/D25DFD8F016963420A08A9526D7D2253">Contest Theory: Incentive Mechanisms and Ranking Methods</a> (2016) by Milan Vojnović. The Tullock contest has originally been defined by Tullock (1980).</p>
+<p>Section 8.3 is based on the paper <a href="https://arxiv.org/pdf/2305.10881">Best-Response Dynamics in Lottery Contests</a> by Ghosh and Goldberg (2023). In particular, the example showing that best response dynamics might not converge is taken from this paper. The fact that the function <span class="math inline">P</span> in Section 2.3.1 is a best response potential function has been shown in the paper <a href="https://download.ssrn.com/17/03/22/ssrn_id2939180_code365048.pdf?response-content-disposition=inline&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjENj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQD0awxt8L87yElxEtwaXFnJQkYIIm9r1k7MsLIdsRn0qgIgcOFx1HcmuQN6JbX08Sg4yguYjc%2B%2BsuPKwOlAv0YhHQsqvgUIQRAEGgwzMDg0NzUzMDEyNTciDOydYl3Mvr5Imbp9lyqbBYb7FWy0%2Fvq9EOlHG%2FKX2r1XlzZ6kOvDXtrjukVqzPm5VR48oClHdYA81iO%2F65ni%2Fe1wV4pHgtSi%2BmmmZpIQZaN1vrn4XWzwSA%2FK9FVGawAxah0cURWQXZW4PDgC%2BeO8D8maWtIe%2ByVefiZxFhfs%2FHjpDYC9dHOClU%2BnE4%2BVRcP51SsfNDBIAKJzGkznvZfHwKNGGxsbqIIY1RqJf68LzcHnshrl9nK5XfbVjCTCOcWtiX6P8K%2FMzl4NnOaas47a3kXIsO7AdXvmCYMRCm%2B3UyOOH4gHW47jw4Thjk%2Bkhc9T3G8ngLW%2BaqxrkVNCwTLZu9Spd7QJfijwUGsODepIXFFdBv%2BpbJ4orwA56tIx7KY4RlertrC1MiBUqA%2F2lf%2BR4bTQUqlPg%2BPoM%2FoWbDshC4H9Gku7GZF%2B2PleO3kWcSS0F7uZGjZAXmXzM8C4%2FUwpHMBkg68eIbXcGc8YdoVbz%2F%2BuO8gZhVROoJL5tMc45C0giiC6pFAyeTetlynPmD31WF5Iulu89zb%2BURnrX8feGMj%2BxgMn1M%2BnBV1b71xfgBiMd7WlJAESUTVsiB5u1ks%2BS9i5qXCcrYGmrUPfuB05W1yR4EiVi4qNX5aYYLd3ckZcyU5Fn8fOOCJhF0T0YUMOliKQbbvgIJUlUZFfcNQcs23hfX0MoQWVO3nPvU%2BHKg8yH9dsRA4JaV8wOd9rg%2FNMFyV6U%2FsMrn9ftXP%2FiLpgWf8AKDjQT%2FSv22vJSfc83cqTYc7CkZyA6HFeWoUI2%2Fcq5pKeZTpopoJ6fKONJUqOzR%2BFy84HGJAXTm%2BJBaW8Kh%2FTu1eqTo66l%2BViNPr6G0JoAZpaY%2FnkFdQV16B%2FlXtxw1nhPYm3W7PhC5998hLCEr%2FqB5vfaj40trgyc0Yw7PqTvwY6sQEddkILDsUvjWpoVWu4UaEgFP9ATVNg%2FAEruaF95UzD0RNsV3r3u3sG411hV%2FqYQ3OOiCoD6s0eUsuR48luP7NogmyfBDGIwFeybPZT7stm%2FOfLkVx3Lap4tt1eQMSpoqzXImYytoaBVXm4ZCxk4zW9P3S%2FCkuQYW49XiBLkcY8pj40p2PHSVG8Gjn5kc4hU1Lgr3a1tGRjdib9iUQMLsf%2FfhpuAicEUm2rYFsnJsYsL0g%3D&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20250327T073656Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=300&amp;X-Amz-Credential=ASIAUPUUPRWEQY56UZQR%2F20250327%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Signature=13eaca4838bdd379a73e3ea857f0ead952144371f3f4802454b9d161f87f95b1&amp;abstractId=2913559">The Lottery Contest is a Best-Response Potential Game</a> by Ewerhart (2017).</p>
+<p>Section 8.4.1 is based on the paper <a href="https://arxiv.org/pdf/1811.08572"> Bitcoin: A Natural Oligopoly</a> by Arnosti and Weinberg (2018).</p>
 
 
 </section>
@@ -596,7 +1236,8 @@ x_i(\mu) = \max\left\{0,1 -  \frac{1}{w_i}\lambda\right\}
 <hr>
 <ol>
 <li id="fn1"><p>There are many ways of doing this. You can use your own method as long as you add the proper argumentation for it.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>This is shown in the work “Best-Response Dynamics in Lottery Contests” by Ghosh and Goldberg (2023).<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The PNE is in fact unique, but we do not focus on this aspect here.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>If you would use an optimization package like CVXPY in Python then there are more direct ways of obtaining the dual multipliers of the Lagrangian.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
