@@ -358,7 +358,7 @@ g_2(x) = 2 \cdot \frac{x}{8/9 + x} - x
   background-color: #ffffff;
 }
 </style>
-<div id="bd861688" class="cell" data-execution_count="1">
+<div id="f80ad459" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show code generating the plot below</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -636,7 +636,7 @@ Exercise 8.7
   background-color: #ffffff;
 }
 </style>
-<div id="ebed291d" class="cell" data-execution_count="2">
+<div id="3c79d7dd" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Show code for executing best response dynamics</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -767,7 +767,7 @@ p_i(\mu) \geq p_i(\mu_i',\mu_{-i}) - \epsilon
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    - Compute best response of miner i = t (mod n)</span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    - Update value mu_i with the computed best response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In general, best response dynamics are not guaranteed to converge to an (<span class="math inline">\epsilon</span>-)PNE. This means that the while-loop in the pseudo-code above is not guaranteed to terminate. Let us look at such an example with two miners and <span class="math inline">\epsilon = 0</span>.</p>
-<div id="e58360b9" class="cell" data-execution_count="3">
+<div id="cf258fe3" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weight vector</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> np.array([<span class="fl">0.1</span>, <span class="dv">1</span>])</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -898,7 +898,7 @@ Exercise 8.11
   background-color: #ffffff;
 }
 </style>
-<div id="59a019e1" class="cell" data-execution_count="4">
+<div id="ce3e3ba5" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Show code for best response dynamics with potential function values</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1119,7 +1119,7 @@ Exercise 8.15
   background-color: #ffffff;
 }
 </style>
-<div id="e2b88dd3" class="cell" data-execution_count="5">
+<div id="2cec380f" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Show code for solving maximization problem</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1227,7 +1227,7 @@ p_i(\mu) = \frac{\mu_i^{\alpha}}{\sum_j \mu_j^{\alpha}} - \mu_i
 <section id="acknowledgements" class="level2" data-number="8.5">
 <h2 data-number="8.5" class="anchored" data-anchor-id="acknowledgements"><span class="header-section-number">8.5</span> Acknowledgements</h2>
 <p>Section 8.1, 8.2 and 8.4.1 are loosely based on Chapter 4.4 of the book <a href="https://www.cambridge.org/core/books/contest-theory/D25DFD8F016963420A08A9526D7D2253">Contest Theory: Incentive Mechanisms and Ranking Methods</a> (2016) by Milan Vojnović. The Tullock contest has originally been defined by Tullock (1980).</p>
-<p>Section 8.3 is based on the paper <a href="https://arxiv.org/pdf/2305.10881">Best-Response Dynamics in Lottery Contests</a> by Ghosh and Goldberg (2023). In particular, the example showing that best response dynamics might not converge is taken from this paper. The fact that the function <span class="math inline">P</span> in Section 2.3.1 is a best response potential function has been shown in the paper <a href="https://download.ssrn.com/17/03/22/ssrn_id2939180_code365048.pdf?response-content-disposition=inline&amp;X-Amz-Security-Token=IQoJb3JpZ2luX2VjENj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQD0awxt8L87yElxEtwaXFnJQkYIIm9r1k7MsLIdsRn0qgIgcOFx1HcmuQN6JbX08Sg4yguYjc%2B%2BsuPKwOlAv0YhHQsqvgUIQRAEGgwzMDg0NzUzMDEyNTciDOydYl3Mvr5Imbp9lyqbBYb7FWy0%2Fvq9EOlHG%2FKX2r1XlzZ6kOvDXtrjukVqzPm5VR48oClHdYA81iO%2F65ni%2Fe1wV4pHgtSi%2BmmmZpIQZaN1vrn4XWzwSA%2FK9FVGawAxah0cURWQXZW4PDgC%2BeO8D8maWtIe%2ByVefiZxFhfs%2FHjpDYC9dHOClU%2BnE4%2BVRcP51SsfNDBIAKJzGkznvZfHwKNGGxsbqIIY1RqJf68LzcHnshrl9nK5XfbVjCTCOcWtiX6P8K%2FMzl4NnOaas47a3kXIsO7AdXvmCYMRCm%2B3UyOOH4gHW47jw4Thjk%2Bkhc9T3G8ngLW%2BaqxrkVNCwTLZu9Spd7QJfijwUGsODepIXFFdBv%2BpbJ4orwA56tIx7KY4RlertrC1MiBUqA%2F2lf%2BR4bTQUqlPg%2BPoM%2FoWbDshC4H9Gku7GZF%2B2PleO3kWcSS0F7uZGjZAXmXzM8C4%2FUwpHMBkg68eIbXcGc8YdoVbz%2F%2BuO8gZhVROoJL5tMc45C0giiC6pFAyeTetlynPmD31WF5Iulu89zb%2BURnrX8feGMj%2BxgMn1M%2BnBV1b71xfgBiMd7WlJAESUTVsiB5u1ks%2BS9i5qXCcrYGmrUPfuB05W1yR4EiVi4qNX5aYYLd3ckZcyU5Fn8fOOCJhF0T0YUMOliKQbbvgIJUlUZFfcNQcs23hfX0MoQWVO3nPvU%2BHKg8yH9dsRA4JaV8wOd9rg%2FNMFyV6U%2FsMrn9ftXP%2FiLpgWf8AKDjQT%2FSv22vJSfc83cqTYc7CkZyA6HFeWoUI2%2Fcq5pKeZTpopoJ6fKONJUqOzR%2BFy84HGJAXTm%2BJBaW8Kh%2FTu1eqTo66l%2BViNPr6G0JoAZpaY%2FnkFdQV16B%2FlXtxw1nhPYm3W7PhC5998hLCEr%2FqB5vfaj40trgyc0Yw7PqTvwY6sQEddkILDsUvjWpoVWu4UaEgFP9ATVNg%2FAEruaF95UzD0RNsV3r3u3sG411hV%2FqYQ3OOiCoD6s0eUsuR48luP7NogmyfBDGIwFeybPZT7stm%2FOfLkVx3Lap4tt1eQMSpoqzXImYytoaBVXm4ZCxk4zW9P3S%2FCkuQYW49XiBLkcY8pj40p2PHSVG8Gjn5kc4hU1Lgr3a1tGRjdib9iUQMLsf%2FfhpuAicEUm2rYFsnJsYsL0g%3D&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20250327T073656Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=300&amp;X-Amz-Credential=ASIAUPUUPRWEQY56UZQR%2F20250327%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Signature=13eaca4838bdd379a73e3ea857f0ead952144371f3f4802454b9d161f87f95b1&amp;abstractId=2913559">The Lottery Contest is a Best-Response Potential Game</a> by Ewerhart (2017).</p>
+<p>Section 8.3 is based on the paper <a href="https://arxiv.org/pdf/2305.10881">Best-Response Dynamics in Lottery Contests</a> by Ghosh and Goldberg (2023). In particular, the example showing that best response dynamics might not converge is taken from this paper. The fact that the function <span class="math inline">P</span> in Section 2.3.1 is a best response potential function has been shown in the paper <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2913559">The Lottery Contest is a Best-Response Potential Game</a> by Ewerhart (2017).</p>
 <p>Section 8.4.1 is based on the paper <a href="https://arxiv.org/pdf/1811.08572"> Bitcoin: A Natural Oligopoly</a> by Arnosti and Weinberg (2018).</p>
 
 
