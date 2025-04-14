@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.52">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; Selfish mining attack – Decentralized Finance and Blockchains</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<link href="./08-tullock-contest.html" rel="prev">
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro-game-theory.html">Game Theory</a></li><li class="breadcrumb-item"><a href="./09-selfish-mining.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Selfish mining attack</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Decentralized Finance and Blockchains</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Decentralized-Finance-and-Blockchains.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-prelim.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Preliminaries</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./intro-computer-science.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Computer Science</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-distributed.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to distributed computing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-DolevStrong.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The Dolev-Strong protocol</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-LongestChain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longest-chain protocols</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-ProofofWork.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Proof of Work</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./intro-game-theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Game Theory</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-proportional-rule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Proportional rule</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-tullock-contest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tullock contest</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-selfish-mining.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Selfish mining attack</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#revisiting-longest-chain-protocol" id="toc-revisiting-longest-chain-protocol" class="nav-link active" data-scroll-target="#revisiting-longest-chain-protocol"><span class="header-section-number">9.1</span> Revisiting longest chain protocol</a>
+  <ul class="collapse">
+  <li><a href="#mining-time" id="toc-mining-time" class="nav-link" data-scroll-target="#mining-time"><span class="header-section-number">9.1.1</span> Mining time</a></li>
+  </ul></li>
+  <li><a href="#warm-up-example" id="toc-warm-up-example" class="nav-link" data-scroll-target="#warm-up-example"><span class="header-section-number">9.2</span> Warm-up example</a></li>
+  <li><a href="#general-case" id="toc-general-case" class="nav-link" data-scroll-target="#general-case"><span class="header-section-number">9.3</span> General case</a>
+  <ul class="collapse">
+  <li><a href="#pseudo-code" id="toc-pseudo-code" class="nav-link" data-scroll-target="#pseudo-code"><span class="header-section-number">9.3.1</span> Pseudo-code</a></li>
+  <li><a href="#state-space" id="toc-state-space" class="nav-link" data-scroll-target="#state-space"><span class="header-section-number">9.3.2</span> State space</a></li>
+  <li><a href="#transition-probabilities" id="toc-transition-probabilities" class="nav-link" data-scroll-target="#transition-probabilities"><span class="header-section-number">9.3.3</span> Transition probabilities</a></li>
+  <li><a href="#stationary-distribution" id="toc-stationary-distribution" class="nav-link" data-scroll-target="#stationary-distribution"><span class="header-section-number">9.3.4</span> Stationary distribution</a></li>
+  <li><a href="#reward-analysis" id="toc-reward-analysis" class="nav-link" data-scroll-target="#reward-analysis"><span class="header-section-number">9.3.5</span> Reward analysis</a></li>
+  </ul></li>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements"><span class="header-section-number">9.4</span> Acknowledgements</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro-game-theory.html">Game Theory</a></li><li class="breadcrumb-item"><a href="./09-selfish-mining.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Selfish mining attack</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Selfish mining attack</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""> <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&amp;family=Fira+Sans&amp;display=swap" rel="stylesheet"></p>
+<p>In <a href="07-proportional-rule.html" class="quarto-xref"><span>Chapter 7</span></a> we argued that the proportional allocation rule is collusion-proof in the Proof-of-Work protocol, meaning that no group of miners can increase their (expected) mining rewards by posing as one miner. That is, if a group of miners would combine their mining power in a <em>mining pool</em> then the expected reward that the pool gets is not more than the sum of the expected rewards that the individual miners would have gotten if they would have mined on their own.</p>
+<p>A key assumption that is made in this reasoning<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> is that we are only considering the rewards of mining one block on the blockchain. In practice, miners can participate in the mining of multiple blocks sequentially. All kinds of other strategic considerations then come into play that miners could potentially exploit to gain more expected reward from a sequence of blocks in a colluding pool than they would have gotten in expectation by mining on their own.</p>
+<p>Furthermore, if mining in a pool is more profitable than mining by yourself, more and more miners will join a pool (which are typically “open to all”). At some point a pool might become so large that more than <span class="math inline">50\%</span> of all miners are in it. In this case the Proof-of-Work protocol loses its decentralized nature and the majority pool could compromise the intended functioning of the blockchain; recall from <a href="06-ProofofWork.html" class="quarto-xref"><span>Chapter 6</span></a> that we need a majority of honest nodes to make sure the Proof-of-Work protocol functions correctly.</p>
+<p>Informally speaking, we would like a protocol to be <em>incentive compatible (with respect to collusion)</em>, with respect to miners whose objective is to maximize their total expected reward, meaning they have no miner has an incentive to collude with other miners in a pool (and with that obtain more reward). This term comes from the area of mechanism design, and can be seen as the reverse of game theory: Instead of designing a game and then studying its outcome, one designs the game so that it has an <em>intended</em> outcome. In our case the intented outcome of “the game” should be that miners do not want to collude.</p>
+<p>The main purpose of this chapter is to show that the Proof-of-Work protocol is <em>not</em> incentive compatible when considering reward maximizing miners. It turns out that there exists a “block withholding” strategy, also called <em>selfish mining attack</em>, where the colluding pool can strategically decide not to announce a newly mined block to the chain right away, but instead secretly continue mining on a new block that could extend it (i.e., working on a secret <em>fork</em> of the chain). If this is done cleverly, even some minority pools are able to obtain relatively more reward than they would have gotten if all the miners in it would have mined on their own.</p>
+<div id="thm-selfish-mining-informal" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 9.1 (Selfish mining, informal)</strong></span> For any mining pool that contains at least <span class="math inline">1/3</span> of the total mining power of the blockchain, running a Proof-of-Work protocol, there exists a strategy with which the pool can obtain a total expected reward that is strictly larger than <span class="math inline">1/3</span> of all the rewards handed out by the protocol.</p>
+</div>
+<section id="revisiting-longest-chain-protocol" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="revisiting-longest-chain-protocol"><span class="header-section-number">9.1</span> Revisiting longest chain protocol</h2>
+<p>To better understand this type of attack, let us first recall briefly the relevant notions of <em>blockchain (e.g., Bitcoin) mining</em> in the Proof-of-Work protocol from the Computer Science part of this course (you can also recap <a href="05-LongestChain.html" class="quarto-xref"><span>Chapter 5</span></a> and <a href="06-ProofofWork.html" class="quarto-xref"><span>Chapter 6</span></a> yourself). A blockchain can be represented as a directed graph where every node has out-degree <span class="math inline">1</span>.</p>
+<p>Each node represents a block containing a record of transactions that were made. To distinguish between blocks, each of them contains a unique identifier as well as the identifier of the block that it points towards, i.e., its predecessor. The root block <span class="math inline">B_0</span> is called the <em>genesis block</em>.</p>
+<div id="fig-blockchain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-blockchain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-blockchain-example.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-blockchain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: A labelled blockchain
+</figcaption>
+</figure>
+</div>
+<p>Miners can add a new block to the blockchain by appending it to a <em>leaf</em> block which is a block in the current configuration that is not a predecessor of another block. In <a href="#fig-blockchain" class="quarto-xref">Figure&nbsp;<span>9.1</span></a> these are <span class="math inline">B_2'', B_3'</span> and <span class="math inline">B_4</span>. In other words, these are the blocks at the end of a chain (or path) starting in <span class="math inline">B_0</span>.</p>
+<p>If a miner adds a block so that the resulting new chain is the unique longest chain of the new graph, then as a reward, they receive a unit of cryptocurrency. Adding a new block to an existing leave is only allowed if the miner is the first to solve a leave-specific cryptographic puzzle; the process of solving this puzzle is called <em>mining</em>. Adding a block to a chain that is not the longest eventually leads to the transactions in those blocks being ignored, i.e., not accepted, by the network (they can be resubmitted though).</p>
+<p>Due to the fact that communication is often not <span class="math inline">100\%</span> instantaneous it might happen that two different miners add distinct blocks <span class="math inline">F_1</span> and <span class="math inline">F_2</span> to the current longest chain in the network (ending in <span class="math inline">B_4</span>), creating a <em>fork</em>, or forking, with two branches. The block <span class="math inline">F_1</span> is called the head of the first branch, and <span class="math inline">F_2</span> the head of the second branch.</p>
+<p>At this point, the units of cryptocurrency for adding the blocks <span class="math inline">F_1</span> and <span class="math inline">F_2</span> is not yet awarded to the respective miners that mined the blocks, because the paths leading to <span class="math inline">F_1</span> and <span class="math inline">F_2</span> are at the moment not part of the unique longest chain in the graph. Emperical evidence suggests this type of “accidental bifurcation” happens roughly once every <span class="math inline">60</span> blocks.</p>
+<div id="fig-blockchain-fork" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-blockchain-fork-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-blockchain-forking-complete.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-blockchain-fork-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.2: A fork in the currently longest chain
+</figcaption>
+</figure>
+</div>
+<p>If forking happens then all the miners active in the blockchain network can choose to continue mining on either <span class="math inline">F_1</span> or <span class="math inline">F_2</span>. A miner usually mines on the first branch that they have heard of. As soon as one of the branches gets extended with an additional block (and is accepted by the network as the branch containing the longest chain in the network) the rewards of this block, as well as that of the <span class="math inline">F_i</span> that is its predecessor, are rewarded to the miners that mined those respective blocks.</p>
+<p>Finally, if a group of miners forms a pool, then their <em>expected relative reward</em> (given a configuration of the blockchain network) is the total expected number of cryptocurrency units awarded to the pool, i.e., the number of blocks that they successfully mined and added to the chain, divided by the total number of units awarded to all miners (including the pool) in the system. This latter number is precisely the length of the longest chain in the network.</p>
+<section id="mining-time" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="mining-time"><span class="header-section-number">9.1.1</span> Mining time</h3>
+<p>Recall that the probability with which a miner <span class="math inline">i</span> is the first to solve the cryptographic puzzle (giving the right to add the newly mined block), is proportional to the amount of computation power (or hash rate) <span class="math inline">\mu_i</span> that they put into the mining process.</p>
+<p>Given that we are now considering the mining of multiple blocks over time, we also need a notion of time to model how long it takes for a miner to mine a block (consistent with the fact that the probability of being the first miner to solve the puzzle is proportional to the hash rate of that miner).</p>
+<blockquote class="blockquote">
+<p><strong>(A1)</strong> We assume that the time that it takes for miner <span class="math inline">i</span> with hash rate <span class="math inline">\mu_i</span> to solve the cryptographic puzzle is a random variable <span class="math inline">X_i</span> that follows an exponential distribution with parameter <span class="math inline">\lambda_i = \mu_i</span>, i.e., for <span class="math inline">x \geq 0</span>, <span class="math display">
+\mathbb{P}(X_i \geq x) = 1 - \mathrm{e}^{-\lambda_i x}.
+</span></p>
+</blockquote>
+<p><a href="#prp-memoryless" class="quarto-xref">Proposition&nbsp;<span>9.2</span></a> states that if two miners with hash rates <span class="math inline">\mu_1</span> and <span class="math inline">\mu_2</span> are trying to extend the same leaf block, then <span class="math inline">\mu_1</span> is the first to solve the cryptographic puzzle with probability <span class="math inline">\mu_1/(\mu_1 + \mu_2)</span>, and similarly, miner <span class="math inline">2</span> is the first solve it with probability <span class="math inline">\mu_2/(\mu_1 + \mu_2)</span>.</p>
+<div id="prp-memoryless" class="theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 9.1 (Minimum of exponential random variables)</strong></span> If <span class="math inline">X_1</span> and <span class="math inline">X_2</span> are random variables following an exponential distribution with parameters <span class="math inline">\lambda_1 = \mu_1</span> and <span class="math inline">\lambda_2 = \mu_2</span>, respectively, then <span class="math display">
+\mathbb{P}(X_1 \leq X_2) = \mathbb{P}(X_1 = \min\{X_1,X_2\}) = \frac{\mu_1}{\mu_1 + \mu_2}.
+</span></p>
+</div>
+<p>Similarly, if <span class="math inline">n</span> miners, each with an exponential distribution are trying to solve the puzzle with hash rate <span class="math inline">\mu_i</span> for miner <span class="math inline">i</span>, then <span class="math display">
+\mathbb{P}(X_i = \min\{X_1,\dots,X_n\}) = \frac{\mu_i}{\sum_j \mu_j}.
+</span> This is exactly what we wanted.</p>
+<p>Another useful and desirable property of the exponential distribution is that it is <em>memoryless</em>. If a miner has already spend some time <span class="math inline">s</span> on trying to solve the crypto puzzle, then the probability that they will solve it after time <span class="math inline">t + s</span>, for some <span class="math inline">t</span>, is the same as the probability that they will solve it after time <span class="math inline">t</span>.</p>
+<div id="prp-memoryless" class="theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 9.2 (Memoryless property)</strong></span> If <span class="math inline">X</span> is a random variable following an exponential distribution, then for any <span class="math inline">s,t \geq 0</span>, <span class="math display">
+\mathbb{P}(X &gt; t + s | X &gt; s) = \mathbb{P}(X &gt; t).
+</span></p>
+</div>
+<p>Said differently, the fact that you have already spend some time on solving the puzzle is not going to help you to solve it quicker compared to someone who just started to work on the puzzle. This is a valid assumption because miners essentially only provide random guesses for the puzzle solution (see <a href="06-ProofofWork.html" class="quarto-xref"><span>Chapter 6</span></a>).</p>
+</section>
+</section>
+<section id="warm-up-example" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="warm-up-example"><span class="header-section-number">9.2</span> Warm-up example</h2>
+<p>If risk-neutral miners, whose goal is only to maximize the expected reward that they receive on the blockchain, follow the longest chain protocol and always add new blocks to the chain right after they have mined them, there is no incentive for them to form a pool if within the pool the unit reward is split proportional to the mining power of the miners participating in the pool (see the example in <a href="07-proportional-rule.html#sec-risk-averse" class="quarto-xref"><span>Section 7.3</span></a>).</p>
+<p>However, it turns out that there is an incentive for a pool to not <em>directly</em> reveal their newly mined block to the network, but instead secretly continue mining on a new block that could be appended to the already mined block.</p>
+<p>If it would happen that in the meantime an honest node announces another new block, the pool quickly makes its secret block public as well, resulting in a forking of the longest chain, see, e.g., <a href="#fig-blockchain-fork" class="quarto-xref">Figure&nbsp;<span>9.2</span></a>. The justification for making this possible is the fact that accidental bifurcation is a known phenomenon, as we mentioned earlier. To emphasize the importance of this assumption, we state it below.</p>
+<blockquote class="blockquote">
+<p><strong>(A2)</strong> If a pool has a secretly mined block <span class="math inline">F_p</span> (not yet known to miners outside of the pool) extending a leaf node <span class="math inline">B</span> of the currently longest chain, and a miner from outside the pool announces their own new block <span class="math inline">F_h</span> extending <span class="math inline">B</span>, then the pool can quickly announce its private block <span class="math inline">F_p</span>, resulting in a forking of the longest chain.</p>
+</blockquote>
+<p>To keep the exposition clean, we will always assume that the ensemble of miners can be divided into two groups for a given <span class="math inline">\alpha \in (0,1)</span>: A pool of colluding miners with a total hash rate of <span class="math inline">\alpha</span>, and a group of individual (honest) miners with a total hash rate of <span class="math inline">1 - \alpha</span>. We sometimes say that the <em>pool has size <span class="math inline">\alpha</span></em>.</p>
+<p>To develop some intuition about why it could be useful to withhold a block, let us consider an example (or thought experiment) in which we analyze the reward of a mining pool of size <span class="math inline">\alpha</span> for the next two blocks that are added to the longest chain.</p>
+<p>We will describe a strategy that the pool can follow so that their expected reward for the two newly added blocks exceeds their share <span class="math inline">\alpha</span> of the total mining power in the network, assuming <span class="math inline">\alpha</span> is large enough (we return to this point later). This strategy does not conflict with the Proof-of-Work protocol, as the protocol itself says nothing about when miners should announce newly found blocks; this is not relevant if miners do not care about rewards.</p>
+<p>Suppose that both the pool and the honest miners are trying to mine a new block to append to the current longest chain with leaf (i.e., most recent) node <span class="math inline">B</span>. We will describe a strategy that makes it beneficial (if <span class="math inline">\alpha</span> is large enough) for the pool to withhold a newly mined block.</p>
+<p>To describe this strategy, which is called the <em>selfish mining attack</em>, we make a case distinction depending on whether the honest miner or the pool mines a new block first given the currently (unique) longest chain.</p>
+<ul>
+<li><p><strong>Case 1: An honest miner mines a block <span class="math inline">F_{h,1}</span> extending <span class="math inline">B</span> before the pool does</strong>. This happens with probability <span class="math inline">1 - \alpha</span>. In this case, both the honest miners and pool accept this block as the next block of the longest chain; recall that the pool follows the protocol except for that it might delay the announcement of a block they found themselves. The pool gets no reward.</p></li>
+<li><p><em>Case 1a: An honest miner mines a new block <span class="math inline">F_{h,2}</span> extending <span class="math inline">F_{h,1}</span> before the pool finds a block</em>. This happens with probability <span class="math inline">(1-\alpha)</span> and so overall this subcase happens with probability <span class="math inline">(1-\alpha)^2</span>. Everyone accepts this block and again the pool gets no reward.</p></li>
+<li><p><em>Case 1b: The pool mines a block <span class="math inline">F_{p,2}</span> extending <span class="math inline">F_{h,1}</span>, before an honest miner does.</em> This happens with probability <span class="math inline">\alpha</span>, and so overall this subcase happens with probability <span class="math inline">(1-\alpha)\cdot \alpha</span>. In this case the pool simply makes the block public and collects its unit reward.</p></li>
+<li><p><strong>Case 2: The pool mines a block <span class="math inline">F_{p,1}</span> extending <span class="math inline">B</span> before an honest miner does.</strong> This happens with probability <span class="math inline">\alpha</span>. In this case the strategy of the pool is to not reveal this block right away, but instead <em>secretly</em> start mining on a new block to extend <span class="math inline">F_{p,1}</span> whereas the honest miners continue mining on block <span class="math inline">B</span>.</p></li>
+<li><p><em>Case 2a: The pool mines a block <span class="math inline">F_{p,2}</span> extending <span class="math inline">F_{p,1}</span> before an honest extends <span class="math inline">B</span>.</em> Observe that honest miners don’t have the option to try and extend <span class="math inline">F_{p,1}</span> because they are not yet aware of its existence. The probability that the pool finds <span class="math inline">F_{p,2}</span> before the honest miners extend <span class="math inline">B</span> is <span class="math inline">\alpha</span>. This follows from <span class="quarto-unresolved-ref">?prp-memorlyess</span>: Although the honest miners have been mining longer on extending <span class="math inline">B</span> than the pool has been mining on extending <span class="math inline">F_{p,1}</span>, this does not give an advantage to the honest miners. Therefore, overall this case happens with probability <span class="math inline">\alpha^2</span>. The pool now announces the block <span class="math inline">F_{p,1}</span> followed quickly by the announcement of <span class="math inline">F_{p,2}</span>. Both blocks are accepted and the pool gets two units of reward, one for <span class="math inline">F_{p,1}</span> and one for <span class="math inline">F_{p,2}</span>.</p></li>
+<li><p><em>Case 2b: An honest miner mines a block <span class="math inline">F_{h,1}</span> extending <span class="math inline">B</span> before the pool mines a block <span class="math inline">F_{p,2}</span> extending the (secret) block <span class="math inline">F_{p,1}</span>.</em> This happens overall with probability <span class="math inline">\alpha(1-\alpha)</span>. The pool now quickly also announces their (until now secret) block <span class="math inline">F_{p,1}</span>. This is possible because of Assumption A2. In this case we have a forking in the longest chain. The strategy of the pool is now to keep mining to extend <span class="math inline">F_{p,1}</span>, whereas the honest miners can choose between extending <span class="math inline">F_{p,1}</span> and <span class="math inline">F_{h,1}</span>.</p></li>
+</ul>
+<blockquote class="blockquote">
+<p>Assume in Case 2b that all honest miners will start mining on <span class="math inline">F_{h,1}</span>. We will show in Exercise 9.1 that if some fraction <span class="math inline">\gamma \in [0,1]</span> of the honest miners also mines on <span class="math inline">F_{p,1}</span>, this can only increase the total expected reward obtained by the pool.</p>
+</blockquote>
+<ul>
+<li><strong>Case 2b-I: An honest miner mines a block <span class="math inline">F_{h,2}</span> extending <span class="math inline">F_{h,1}</span> before the pool mines a block extending <span class="math inline">F_{p,1}</span>.</strong> This happens overall with probability <span class="math inline">(\alpha(1-\alpha)) \cdot (1-\alpha) = \alpha(1-\alpha^2)</span>. Everyone accepts <span class="math inline">F_{h,2}</span> and the pool gets no reward.</li>
+<li><strong>Case 2b-II: The pool mines a block <span class="math inline">F_{p,2}</span> extending <span class="math inline">F_{p,1}</span> before an honest miner extends <span class="math inline">F_{h,1}</span>.</strong> This happens overall with probability <span class="math inline">(\alpha(1-\alpha))\cdot \alpha = \alpha^2(1-\alpha)</span>. In this case, because the pool has been the only one mining on both <span class="math inline">F_{p,1}</span> and <span class="math inline">F_{p,2}</span> they receive a total reward of two for these blocks.</li>
+</ul>
+<p>Taken altogether, the pool receives one unit of reward in Case 1b with probability <span class="math inline">\alpha(1-\alpha)</span>, two units of reward in Case 2a with probability <span class="math inline">\alpha^2</span>, and two units of reward in Case 2b-II with probability <span class="math inline">\alpha^2(1-\alpha)</span>. That is, the total expected reward of this selfish mining attack is <span class="math display">
+1 \cdot \alpha(1-\alpha) + 2 \cdot \alpha^2 + 2 \cdot \alpha^2(1-\alpha) = -2\alpha^3 + 3\alpha^2 + \alpha
+</span> Given that <span class="math inline">2</span> units of cryptocurrency were handed out, the expected relative reward of the pool is <span class="math inline">(-2\alpha^3 + 3\alpha^2 + \alpha)/2</span>. Elementary calculus shows that <span class="math display">
+\frac{-2\alpha^3 + 3\alpha^2 + \alpha}{2} &gt; \alpha
+</span> if and only if <span class="math inline">\alpha &gt; 0.5</span>. This means that the selfish mining attack is profitable for a group of colluding miners that form a majority in the system!</p>
+<p>Although collusion has been observed in practice, the assumption that there is a majority of miners that colludes from the start is unrealistic. In fact, the desirable guarantees that we have seen for the Proof-of-Work protocol rely on the fact that at least half of the nodes are honest, i.e, <span class="math inline">\alpha &lt; 0.5</span>. Otherwise, the network is subject to all other kinds of manipulation (that might be way worse than simply withholding newly mined blocks for some time).</p>
+<p>Very suprisingly though, it turns out that a more elaborate analysis of the selfish mining attack (not restricted to the addition of two new blocks) shows that even minority pools can profit from such an attack and obtain more reward than they would have gotten individually! In particular, we will show that also a pool of size <span class="math inline">1/3 &lt; \alpha &lt; 1/2</span> can carry out a selfish mining attack and obtain a reward that is relatively more than <span class="math inline">\alpha</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 9.1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let <span class="math inline">\gamma \in (0,1)</span> and suppose that when the pool announces its secret block <span class="math inline">F_{p,1}</span> in Case 2b, a fraction <span class="math inline">\gamma</span> of the honest miners starts mining to extend <span class="math inline">F_{p,1}</span> and a fraction <span class="math inline">(1-\gamma)</span> of the honest miners starts mining to extend <span class="math inline">F_{h,1}</span>. Show that the expected contribution of Case 2b-II to the total expected reward for the pool is <span class="math display">
+2\alpha^2(1-\alpha) + \alpha(1-\alpha) \cdot \gamma,
+</span> by redoing the analysis of Cases 2b-I and 2b-II (only the latter case yields a nonzero pool reward, but analyse both cases for completeness). <em>Note that if an honest miner ends up extending <span class="math inline">F_{p,1}</span> with a block <span class="math inline">F_{h,2}</span>, then the pool gets no reward for this latter block, but it does get the reward for the block <span class="math inline">F_{p,1}</span>, as the branch containing <span class="math inline">F_{p,1}</span> and <span class="math inline">F_{h,2}</span> is now part of the new longest chain.</em></p>
+</div>
+</div>
+</section>
+<section id="general-case" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="general-case"><span class="header-section-number">9.3</span> General case</h2>
+<p>We continue with the general description of the selfish mining attack. It essentially follows the example with the difference being Case 2a (explained below). If the pool is the first to mine a block extending leaf node <span class="math inline">B</span>, they keep it secret. If the honest miners mine a block, and the pool has a secret block, they announce it right away to create a forking. If then the pool is the first to mine a second block, they announce this as well so that their chain of two blocks is the new longest chain and their last block becomes the new leaf node <span class="math inline">B</span>.</p>
+<p>In Case 2a, when the pool has mined both the secret blocks <span class="math inline">F_{p,1}</span> and <span class="math inline">F_{p,2}</span>, it releases them both and collects a reward for both of them. Instead of doing this, the pool could also have simply kept mining to get a longer <em>private branch</em> (a branch that contains blocks only known to the pool).</p>
+<p>Of course, we have to take into account that honest miners might also find a block in the meantime, which they could use to extend <span class="math inline">B</span>. An extension of <span class="math inline">B</span> using such a block of an honest miner is called an extension into the <em>public branch</em>.</p>
+<p>Roughly speaking, the core idea of the selfish mining attack is that the pool keeps trying to extend their private branch and in this way stay in the lead with respect to the public branch. As an example, suppose that (although probabilistically unlikely) the pool mines four blocks for the private branch, and keeps all these secret, before an honest miner mines a first block for the public branch. Next, suppose an honest miner finds a block to extend <span class="math inline">B</span> that they add to the public branch. To make sure the private branch becomes the longest branch in the long run, the pool right away must make public their first block mined in the secret private branch to create a fork in the publicly known network. This block we now refer to as the <em>publicly known part of the private branch</em>.</p>
+<p>If the pool waits with making public their secret block, the honest miners will agree on the first block of the public branch being added to the longest chain, after which the secret block of the pool becomes usueless.</p>
+<p>The <em>secret part of the private branch</em> are the remaining three secret blocks. The pool can keep mining on the last block of the secret part of the private branch with the hope of extending it. Whenever an honest miner mines a block to extend the public branch, the pool right away also releases a next block to extend the public part of the private branch. In this way, the public part of the private branch (known to both the pool and all honest miners) always stays as long as the public branch.</p>
+<p>If at some point the difference in length between the total private branch and the public branch becomes one block, the selfish mining strategy prescribes to also announce the last secret block of the private branch right away, at which point the publicly known part of the private branch (which is now the complete private branch) is one block longer than the public branch and therefore the unique longest chain. The pool now receives one unit of reward for <em>every</em> block that is on the private branch, which is now fully publicly known. Intuitively, if the difference becomes equal to one, the pool doesn’t want to risk losing its advantage over the public branch and therefore announces their last block to secure the rewards of all blocks on the private branch.</p>
+<p>At this point, the process starts again, i.e., the pool tries to get a secret lead of two or more blocks on the (new) public branch starting in the last node of the previously private branch. Whenever the difference drops down to one block, the pool releases its last secretly mined block of the new private branch. The process then again repeats, etc.</p>
+<section id="pseudo-code" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="pseudo-code"><span class="header-section-number">9.3.1</span> Pseudo-code</h3>
+<p>We next provide the pseudo-code for the above description. To understand this code correctly it is important to realize that the only time that the public branch becomes longer than the private branch, is when both have length <span class="math inline">0</span> (or both length <span class="math inline">1</span>) and the honest miners are the first to find a block. We also emphasize once more that, assuming the public part of the private branch (its first, say, <span class="math inline">k</span> nodes) has length at least one, this part is never shorter than the public branch (apart from the negligible time interval where the honest miners have announced a new block and the pool responds to this by making one of its secret blocks public).</p>
+<p>Finally, we assume that if both the public branch and private branch have length <span class="math inline">1</span> then all honest miners are mining on the public branch. Just as in the warm-up example, if some honest miners would also branch on the publicly known private branch, this can only increase the overall expected reward that the pool obtains in the end.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Initialization:</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>     - Leaf node B of unique longest chain</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>     - Emptpy (full) private branch</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>     - Empty public branch</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>If pool finds a new block F_p:</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    If length(public) = 1 and length(private) = 1: </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    # Forking in which both blocks are public (Case 2b-II)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        - Append F_p to private branch as public block</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        - F_p becomes the new leaf node B (= pools wins)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        - Publich and private branch are set to be empty</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    Else:</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        - Append F_p to private chain as a secret block</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>If honest miner finds a new block F_h on public branch:</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    Append F_h to public branch</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    If length(private) = 0: # Case 1</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        - F_h becomes the new leaf node B (= honest miner wins)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        - Public branch is set to be empty</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    Else if length(private) = 1 and length(public) = 1: </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    # Case 2b; private branch's block was secret until now </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        - Private branch directly makes secret block public</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        # Public part of private and public branch now have length 1</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    Else if length(private) = 1 and length(public) = 2:</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    # Case 2b-II; private branch's block was already public</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        - F_h becomes the new leaf node B (= honest miner wins)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        - Public and private branch set to be empty</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    Else if length(private branch) - length(public branch) = 1</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    # All but two last blocks of private branch are then public</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        - Pool announces last two secret blocks (= pool wins)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        - Last secret block becomes the new leaf node B</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        - Public and private branch set to be empty</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    Else if length(private branch) - length(public branch) = d &gt; 1</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    # Last d + 1 blocks of private branch are then secret</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        - Pool makes oldest secret block public in private branch</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>        # Pool is guaranteed to eventually win this block</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 9.2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Explain that at no point in the selfish mining attack both the public branch and the private branch consist of two blocks (regardless of which blocks in the private branch are public or secret).</p>
+<p>Observe that the same reasoning shows that at no point the public and private branch both consist of <span class="math inline">d \geq 2</span> blocks.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 9.3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Explain that right after the honest miners have announced a newly found block <span class="math inline">F_h</span> to their public branch (but right before the pool has responded to this),</p>
+<ul>
+<li>if <code>length(private branch) - length(public branch) = 1</code>, then it must be that precisely the last two blocks of the private chain are still secret.</li>
+<li>if <code>length(private branch) - length(public branch) = d &gt; 1</code>, then it must be that the last <span class="math inline">d+1</span> bloks of the private branch are still secret.</li>
+</ul>
+</div>
+</div>
+<p>It turns out there is a convenient way to represent the selfish mining process using a <em>Markov chain <span class="math inline">\mathcal{M} = (S,P)</span></em>. A Markov chain consists of a <em>state space <span class="math inline">S</span></em> and a <em>transition matrix <span class="math inline">P \in [0,1]^{S \times S}</span></em> that describes the probabilities with which we move from one state to another.</p>
+</section>
+<section id="state-space" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="state-space"><span class="header-section-number">9.3.2</span> State space</h3>
+<p>In our case the states will be the difference between the length of the (full) private branch and the public branch. This difference is precisely the number of secret blocks that the private branch still has. Therefore our state space is <span class="math inline">\mathbb{N}_0 = \{0,1,2,3,\dots\}</span>.</p>
+<p>Looking at the pseudo-code, there is one special case, which is when the difference is <span class="math inline">0</span>. The selfish mining attack makes different choices depending on whether both the public and private branch have length <span class="math inline">0</span>, or when they both have length <span class="math inline">1</span> (in which case the block of the private branch is public). Recall from Exercise 9.2 that it cannot happen that both chain have a length of <span class="math inline">d \geq 2</span>.</p>
+<p>Therefore, we split the state <span class="math inline">0</span> into two states: <span class="math inline">0</span> and <span class="math inline">0'</span>. The state <span class="math inline">0</span> corresponds to the setting where both branches have length <span class="math inline">0</span>, and <span class="math inline">0'</span> correspond to the case where both branches have length <span class="math inline">1</span> (i.e., the start of the fork). Overall our state space then becomes <span class="math display">
+S = \{0,0',1,2,3,\dots\}.
+</span> Also note that if the difference is <span class="math inline">1</span>, and both the pool and the honest miners are mining, this can only happen when the public branch has length <span class="math inline">0</span> and the private branch has length <span class="math inline">1</span> (with one secret block). In all other cases, a situation with a difference of <span class="math inline">1</span> would result in the public branch becoming part of the new longest chain, or the private branch becoming part of the new longest chain.</p>
+</section>
+<section id="transition-probabilities" class="level3" data-number="9.3.3">
+<h3 data-number="9.3.3" class="anchored" data-anchor-id="transition-probabilities"><span class="header-section-number">9.3.3</span> Transition probabilities</h3>
+<p>The transision probabilities in the matrix <span class="math inline">P</span> are drawn in the figure below.</p>
+<div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-markov-chain.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.3: Transition probabilities in state space <span class="math inline">S</span>
+</figcaption>
+</figure>
+</div>
+<p>Note that for every node, the sum of its outgoing edges equals <span class="math inline">1</span>. We will next explain the transition probabilities.</p>
+<blockquote class="blockquote">
+<p>In all the figures below, the top branch is always the private branch, and the bottom branch is the public branch. Furthermore, publicly known blocks (on the public branch or the public part of the private branch) are denoted with solid squares, whereas secret blocks on the private branch are denoted with dashed squares.</p>
+</blockquote>
+<ul>
+<li><strong>State <span class="math inline">0</span></strong>: Both the private and the public branch have length <span class="math inline">0</span>.
+<ul>
+<li>If honest miners find a block <span class="math inline">F_h</span> first, which happens with probability <span class="math inline">1 - \alpha,</span> it is added to the public branch. The public branch becomes part of the longest chain and the process then restarts with <span class="math inline">F_h</span> being the new leaf node <span class="math inline">B</span>. We therfore start again with a public and private branch of length <span class="math inline">0</span> and so do not move in the state space.</li>
+</ul>
+<div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-markov-chain-state-0.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.4: Honest miner finds block first in state <span class="math inline">0</span>
+</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>If the pool find a block <span class="math inline">F_p</span> first, which happens with probability <span class="math inline">\alpha</span>, the private branch becomes one block (which is secret) longer than the public branch so we move to state <span class="math inline">1</span>.</p>
+<div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-markov-chain-state-0-pool.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.5: Pool finds block first in state <span class="math inline">0</span>; <span class="math inline">F_p</span> stays secret for now (hence, dashed)
+</figcaption>
+</figure>
+</div></li>
+</ul></li>
+<li><strong>State <span class="math inline">0'</span></strong>: Both private and publich branch have length <span class="math inline">1</span>.
+<ul>
+<li><p>If honest miners find a block first, which happens with probability <span class="math inline">1 - \alpha</span>, the public branch becomes part of the longest chain, and the process restarts.</p>
+<div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-markov-chain-state-0prime.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.6: Honest miner finds block first in state <span class="math inline">0'</span>.
+</figcaption>
+</figure>
+</div></li>
+<li><p>If the pool finds a block first, which happens with probability <span class="math inline">\alpha</span>, the private branch becomes part of the longest chain, and the process restarts.</p>
+<div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-markov-chain-state-0prime-pool.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.7: Pool finds block first in state <span class="math inline">0'</span>.
+</figcaption>
+</figure>
+</div></li>
+</ul></li>
+</ul>
+<p>Since the process restarts in both cases here, with an empty private and public branch, we move to state <span class="math inline">0</span> with probability <span class="math inline">\alpha + 1 - \alpha = 1</span>.</p>
+<ul>
+<li><strong>State <span class="math inline">2</span></strong>: The private branch is two (secret) blocks longer than the public branch.
+<ul>
+<li><p>If honest miners find a block first, which happens with probability <span class="math inline">1 - \alpha</span>, the pool right away announces their two secret blocks so that the private branch becomes part of longest chain. The process now restarts so we move to state <span class="math inline">0</span>.</p>
+<div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-markov-chain-state-2.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.8: Honest miners find block first in state <span class="math inline">2</span>. In this example the private branch started out with four blocks of which the first two were public and the last two secret (hence, dashed).
+</figcaption>
+</figure>
+</div></li>
+<li><p>If the pool finds a block first, which happens with probability <span class="math inline">\alpha</span>, we add it to the private branch as a secret block and so the private branch becomes three (secret) blocks longer than the public branch (which are the last three blocks). We therefore move to state <span class="math inline">3</span>.</p>
+<div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-markov-chain-state-2-pool.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.9: Pool finds block first in state <span class="math inline">2</span>, so we now move to state <span class="math inline">3</span>.
+</figcaption>
+</figure>
+</div></li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 9.4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before reading along, explain the transition probabilities for states <span class="math inline">1</span> and <span class="math inline">3,4,\dots</span> using similar descriptions and figures as above.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>State <span class="math inline">1</span></strong>: The private branch consists of one secret block.
+<ul>
+<li><p>If honest miners find a block first, which happens with probability <span class="math inline">1 - \alpha</span>, the pool right away make there secret public private, to create a fork in the publicly known network. In this case we move to state <span class="math inline">0'</span>.</p>
+<div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-markov-chain-state-1.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.10: Honest miners find a block first in state <span class="math inline">1</span>.
+</figcaption>
+</figure>
+</div></li>
+<li><p>If the pool finds a block first, which happens with probability <span class="math inline">\alpha</span>, we add it to the private branch as a secret block and so the private branch now consists of two secret blocks.</p>
+<div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-markov-chain-state-1-pool.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.11: Pool finds block first in state <span class="math inline">1</span>, so we now move to state <span class="math inline">2</span>.
+</figcaption>
+</figure>
+</div></li>
+</ul></li>
+<li><strong>State <span class="math inline">d \geq 3</span></strong>: The private branch is <span class="math inline">d</span> (secret) blocks longer than the public branch.
+<ul>
+<li><p>If honest miners find a block first, which happens with probability <span class="math inline">1 - \alpha</span>, the pool right away makes the left most secret block of the private chain public, so that its public part is as long as the publich branch. Since we now have one secret block less, we move to state <span class="math inline">d-1</span>.</p>
+<div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-markov-chain-state-3.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.12: Honest miners find a block first in state <span class="math inline">d = 3</span>. In this example the length of the private branch is <span class="math inline">4</span> and that of the public branch <span class="math inline">1</span> (so that the difference is three). It could also have been the case, e.g., that the public branch had length <span class="math inline">3</span> and the private branch length <span class="math inline">6</span> (again so that the difference would have been 3).
+</figcaption>
+</figure>
+</div></li>
+<li><p>If the pool finds a block first, which happens with probability <span class="math inline">\alpha</span>, we add it to the private branch as a secret block and so the private branch now consists of <span class="math inline">d+1</span> secret blocks.</p>
+<p><img src="figs/Tikz-pictures/09-tikz-markov-chain-state-3-pool.png" id="fig-markov-chain" class="img-fluid" style="width:100.0%" alt="Pool finds block first in state d = 3, so we now move to state d+1 = 4."><br>
+</p></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="stationary-distribution" class="level3" data-number="9.3.4">
+<h3 data-number="9.3.4" class="anchored" data-anchor-id="stationary-distribution"><span class="header-section-number">9.3.4</span> Stationary distribution</h3>
+<p>Assume we start in state <span class="math inline">0</span>, with <span class="math inline">B</span> being the genesis block of the blockchain. We would like to compute the <em>stationary probabilities <span class="math inline">\pi_i</span></em> of every state <span class="math inline">i</span>. That is, given that we have performed enough probabilistic transitions, what it the probability that we are in state <span class="math inline">i</span> of the state space?</p>
+<p>The (row) vector <span class="math display">
+\pi = (\pi_{0'},\pi_0,\pi_1,\pi_2,\dots)
+</span> is called the <em>stationary distribution</em> of the Markov chain. It can be computed by solving the (infinite) system of equations <span class="math inline">\pi P  = \pi</span>, where <span class="math inline">P</span> is the transition matrix, whose entries <span class="math inline">P_{ij}</span> or transitioning form state <span class="math inline">i</span> to <span class="math inline">j</span> are given in <a href="#fig-markov-chain" class="quarto-xref">Figure&nbsp;<span>9.12</span></a>. For example, for state <span class="math inline">i \geq 3</span>, the <span class="math inline">i</span>-th row of the system <span class="math inline">\pi P  = \pi</span> reads <span class="math display">
+\alpha p_{i-1} + (1-\alpha) p_{i+1} = p_i
+</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 9.5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Write down the equations in <span class="math inline">\pi P = \pi</span> for states <span class="math inline">i \in \{0',0, 1, 2\}</span>.</p>
+</div>
+</div>
+<p>It turns out that our Markov chain is <em>time-reversible</em>. Mathematiclly speaking, this means that the stationary distribution <span class="math inline">\pi</span> satisfies the <em>balance equations</em> <span class="math display">
+\pi_i P_{ij} = \pi_j P_{ji}.
+</span> for every <span class="math inline">i,j \in \{0',0,1,2,\dots\}</span>. This is a convenient fact from which the stationary distributions can be computed.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> (Alternatively, you can also do this by directly solving <span class="math inline">\pi P = \pi</span> together with the fact that the <span class="math inline">\pi_i</span> sum up to one.)</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 9.6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using the equations <span class="math display">
+\pi_i P_{ij} = \pi_j P_{ji}.
+</span> for every <span class="math inline">i,j \in \{0',0,1,2,\dots\}</span> together with the fact that <span class="math display">
+\pi_{0'} + \sum_{i=0}^\infty \pi_i = 1,
+</span> show that the stationary distribution <span class="math inline">\pi = (\pi_{0'},\pi_0,\pi_1,\pi_2,\dots)</span> solving <span class="math inline">\pi P = \pi</span> is given by <span class="math display">
+\left\{
+\begin{array}{ll}
+\pi_{0'} = \displaystyle \frac{(1-\alpha)(\alpha - 2\alpha^2)}{1 - 4\alpha^2 + 2\alpha^3} &amp;  \\[3ex]
+\pi_{0} =  \displaystyle \frac{\alpha - 2\alpha^2}{\alpha(2\alpha^3 - 4\alpha^2 + 1)} &amp; \\[3ex]
+% \pi_{1} =  \displaystyle \frac{\alpha - 2\alpha^2}{2\alpha^3 - 4\alpha^2 + 1} &amp; \\[3ex]
+\pi_{i} = \displaystyle \left(\frac{\alpha}{1-\alpha}\right)^{k-1} \frac{\alpha - 2\alpha^2}{2\alpha^3 - 4\alpha^2 + 1} &amp; \forall i \geq 1
+\end{array}
+\right.
+</span></p>
+</div>
+</div>
+</section>
+<section id="reward-analysis" class="level3" data-number="9.3.5">
+<h3 data-number="9.3.5" class="anchored" data-anchor-id="reward-analysis"><span class="header-section-number">9.3.5</span> Reward analysis</h3>
+<p>To determinte the reward of the pool when using the selfish mining attack, we extend the Markov chain description with the notion of rewards. Given that we move from a state <span class="math inline">i \in \{0',0,1,2,\dots\}</span> to some other state, we can compute the expected rewards associated with moving away from <span class="math inline">i</span>.</p>
+<p>If we multiply these rewards with the stationary probabilities of every state, we obtain the expected overall reward from the selfish mining strategy. In mathematical terms, we turn our Markov chain into a Markov Decision Process (MDP) by introducing a reward associated to every transition.</p>
+<p>We will delve into the reward analysis in the next lecture to investigate how much more reward the selfish mining attack can yield. This analysis will show, in particular, that even mining pools of size <span class="math inline">1/3 &lt; \alpha &lt; 1/2</span> can obtain relatively more reward than by mining on their own.</p>
+</section>
+</section>
+<section id="acknowledgements" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="acknowledgements"><span class="header-section-number">9.4</span> Acknowledgements</h2>
+<p>This section is based on the paper <a href="https://arxiv.org/pdf/1311.0243">Majority is not Enough: Bitcoin Mining is Vulnerable</a> by Eyal and Sirer (2013).</p>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Apart from ignoring other considerations such as risk aversion.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Formally speaking, for readers more familiar with Markov chain theory, this is possible because our Markov chain is <em>ergodic</em>, i.e., aperiodic, irreducible and positive recurrent.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./08-tullock-contest.html" class="pagination-link" aria-label="Tullock contest">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tullock contest</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -237,6 +237,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tullock contest</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-selfish-mining.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Selfish mining attack</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -311,7 +317,7 @@ window.Quarto = {
 <li>There is one “genesis” block, forming the start of the chain, we typically denote it with <span class="math inline">B_0</span>,</li>
 <li>Every block that is not <span class="math inline">B_0</span> points to exactly one other block as its predecessor, in such a way that if we follow the chain of predecessors, we arrive at the genesis block <span class="math inline">B_0</span>.</li>
 </ul>
-<p>The above is a somewhat convoluted way of saying that a blockchain looks like <a href="#fig-blockchain" class="quarto-xref">Figure&nbsp;<span>5.1</span></a>. It is a directed graph where each node has out-degree <span class="math inline">1</span>,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> except for a single out-degree <span class="math inline">0</span> block <span class="math inline">B_0</span>. It moreover has the property that every block is connected to <span class="math inline">B_0</span> by a directed path. As a graph, a blockchain is thus a directed tree whose root is the block <span class="math inline">B_0</span>. If you are not familiar with directed graphs, but you are familiar with undirected graphs, then it suffices to think of a blockchain simply as a tree whose root is the block <span class="math inline">B_0</span>. The direction of the arcs is the one that follows the path towards <span class="math inline">B_0</span>.</p>
+<p>The above is a somewhat convoluted way of saying that a blockchain looks like <a href="09-selfish-mining.html#fig-blockchain" class="quarto-xref">Figure&nbsp;<span>9.1</span></a>. It is a directed graph where each node has out-degree <span class="math inline">1</span>,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> except for a single out-degree <span class="math inline">0</span> block <span class="math inline">B_0</span>. It moreover has the property that every block is connected to <span class="math inline">B_0</span> by a directed path. As a graph, a blockchain is thus a directed tree whose root is the block <span class="math inline">B_0</span>. If you are not familiar with directed graphs, but you are familiar with undirected graphs, then it suffices to think of a blockchain simply as a tree whose root is the block <span class="math inline">B_0</span>. The direction of the arcs is the one that follows the path towards <span class="math inline">B_0</span>.</p>
 <blockquote class="blockquote">
 <p>A <em>blockchain</em> is a directed graph <span class="math inline">G</span> that is an <em>in-tree</em> whose root corresponds to <span class="math inline">B_0</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 </blockquote>
@@ -355,7 +361,7 @@ Figure&nbsp;5.1: A chain of blocks
 <ul>
 <li>the new block extends a <em>longest chain</em>.</li>
 </ul>
-<p>We should of course define what we mean by a longest chain. A longest chain in a blockchain refers to a sequence of blocks that are on a longest path in the blockchain. Let us revisit the example from <a href="#fig-blockchain" class="quarto-xref">Figure&nbsp;<span>5.1</span></a>. We will label the blocks for ease of reference; the particular labels that we use are not important. In a blockchain we typically assume that a block is signed by its creator and this signature can be used as a label (it includes sufficient identifying information such as the name of creator, time of creation, predecessor,…).</p>
+<p>We should of course define what we mean by a longest chain. A longest chain in a blockchain refers to a sequence of blocks that are on a longest path in the blockchain. Let us revisit the example from <a href="09-selfish-mining.html#fig-blockchain" class="quarto-xref">Figure&nbsp;<span>9.1</span></a>. We will label the blocks for ease of reference; the particular labels that we use are not important. In a blockchain we typically assume that a block is signed by its creator and this signature can be used as a label (it includes sufficient identifying information such as the name of creator, time of creation, predecessor,…).</p>
 <div id="fig-blockchain-label" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-blockchain-label-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -624,7 +630,7 @@ Case ii) is essentially a generalization of case i): suppose that the integer $K
 </ul>
 <p>Can we turn this “on expectation” statement into a “with high probability” statement? To gain some intuition, you are invited to experiment with different values of <span class="math inline">\alpha</span> and <span class="math inline">K</span>, using the Python code snippets below.</p>
 <p>To create one such leader sequence, use the following code:</p>
-<div id="29ba600b" class="cell" data-execution_count="1">
+<div id="10dc4b1c" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -646,7 +652,7 @@ Case ii) is essentially a generalization of case i): suppose that the integer $K
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> samples</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="2989749e" class="cell" data-execution_count="2">
+<div id="66b8beea" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="dv">10</span>      <span class="co"># number of leaders</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.45</span> <span class="co"># probability of leader being faulty</span></span>
@@ -655,12 +661,12 @@ Case ii) is essentially a generalization of case i): suppose that the integer $K
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Fraction of faulty leaders:"</span>, np.<span class="bu">sum</span>(samples)<span class="op">/</span>K)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Sampled leaders: [1 0 1 1 0 1 1 0 0 0]
-Fraction of faulty leaders: 0.5</code></pre>
+<pre><code>Sampled leaders: [0 1 1 0 0 1 1 1 1 1]
+Fraction of faulty leaders: 0.7</code></pre>
 </div>
 </div>
 <p>If you run the above code several times, you will see that the outcome varies a bit. The following code allows you to run the process <span class="math inline">T</span> times and create a histogram of the fractions of faulty nodes.</p>
-<div id="0d684914" class="cell" data-execution_count="3">
+<div id="22bad3ed" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sample_T_sequences(T, K, alpha):</span>
@@ -699,7 +705,7 @@ Fraction of faulty leaders: 0.5</code></pre>
   background-color: #ffffff;
 }
 </style>
-<div id="1b221c97" class="cell" data-execution_count="4">
+<div id="1204a6e9" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage:</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">10000</span>     <span class="co"># Number of leader sequences</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="dv">50</span>       <span class="co"># Number of leaders per sequence</span></span>
@@ -713,7 +719,7 @@ Fraction of faulty leaders: 0.5</code></pre>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the histogram of fractions</span></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plot_histogram(fractions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>The fraction of leader sequences that are balanced is: 0.7225</code></pre>
+<pre><code>The fraction of leader sequences that are balanced is: 0.7199</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">

@@ -59,6 +59,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
+<link href="./09-selfish-mining.html" rel="next">
 <link href="./07-proportional-rule.html" rel="prev">
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -236,6 +237,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tullock contest</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-selfish-mining.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Selfish mining attack</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -358,7 +365,7 @@ g_2(x) = 2 \cdot \frac{x}{8/9 + x} - x
   background-color: #ffffff;
 }
 </style>
-<div id="f80ad459" class="cell" data-execution_count="1">
+<div id="b0778663" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show code generating the plot below</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -636,7 +643,7 @@ Exercise 8.7
   background-color: #ffffff;
 }
 </style>
-<div id="3c79d7dd" class="cell" data-execution_count="2">
+<div id="4a795914" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Show code for executing best response dynamics</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -767,7 +774,7 @@ p_i(\mu) \geq p_i(\mu_i',\mu_{-i}) - \epsilon
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    - Compute best response of miner i = t (mod n)</span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    - Update value mu_i with the computed best response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In general, best response dynamics are not guaranteed to converge to an (<span class="math inline">\epsilon</span>-)PNE. This means that the while-loop in the pseudo-code above is not guaranteed to terminate. Let us look at such an example with two miners and <span class="math inline">\epsilon = 0</span>.</p>
-<div id="cf258fe3" class="cell" data-execution_count="3">
+<div id="077df8c6" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weight vector</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> np.array([<span class="fl">0.1</span>, <span class="dv">1</span>])</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -898,7 +905,7 @@ Exercise 8.11
   background-color: #ffffff;
 }
 </style>
-<div id="ce3e3ba5" class="cell" data-execution_count="4">
+<div id="b12bc953" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Show code for best response dynamics with potential function values</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1119,7 +1126,7 @@ Exercise 8.15
   background-color: #ffffff;
 }
 </style>
-<div id="2cec380f" class="cell" data-execution_count="5">
+<div id="2fece81d" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Show code for solving maximization problem</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1669,6 +1676,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./09-selfish-mining.html" class="pagination-link" aria-label="Selfish mining attack">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Selfish mining attack</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
