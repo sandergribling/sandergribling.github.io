@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.52">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; Incentive compatibility – Decentralized Finance and Blockchains</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<link href="./08-tullock-contest.html" rel="prev">
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro-game-theory.html">Game Theory</a></li><li class="breadcrumb-item"><a href="./09-incentive-compatibility.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Incentive compatibility</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Decentralized Finance and Blockchains</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Decentralized-Finance-and-Blockchains.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-prelim.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Preliminaries</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./intro-computer-science.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Computer Science</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-distributed.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to distributed computing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-DolevStrong.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The Dolev-Strong protocol</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-LongestChain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longest-chain protocols</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-ProofofWork.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Proof of Work</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./intro-game-theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Game Theory</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-proportional-rule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Proportional rule</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-tullock-contest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tullock contest</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-incentive-compatibility.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Incentive compatibility</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#revisiting-longest-chain-protocol" id="toc-revisiting-longest-chain-protocol" class="nav-link active" data-scroll-target="#revisiting-longest-chain-protocol"><span class="header-section-number">9.1</span> Revisiting longest chain protocol</a></li>
+  <li><a href="#selfish-mining-attacks" id="toc-selfish-mining-attacks" class="nav-link" data-scroll-target="#selfish-mining-attacks"><span class="header-section-number">9.2</span> Selfish mining attacks</a>
+  <ul class="collapse">
+  <li><a href="#warm-up-example" id="toc-warm-up-example" class="nav-link" data-scroll-target="#warm-up-example"><span class="header-section-number">9.2.1</span> Warm-up example</a></li>
+  <li><a href="#general-description" id="toc-general-description" class="nav-link" data-scroll-target="#general-description"><span class="header-section-number">9.2.2</span> General description</a></li>
+  </ul></li>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements"><span class="header-section-number">9.3</span> Acknowledgements</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro-game-theory.html">Game Theory</a></li><li class="breadcrumb-item"><a href="./09-incentive-compatibility.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Incentive compatibility</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Incentive compatibility</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""> <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&amp;family=Fira+Sans&amp;display=swap" rel="stylesheet"></p>
+<p>In <a href="07-proportional-rule.html" class="quarto-xref"><span>Chapter 7</span></a> we argued that the proportional allocation rule is collusion-proof in the Proof-of-Work protocol, meaning that no group of miners can increase their (expected) mining rewards by posing as one miner. That is, if a group of miners would combine their mining power in a <em>mining pool</em> then the expected reward that the pool gets is not more than the sum of the expected rewards that the individual miners would have gotten if they would have mined on their own.</p>
+<p>A key assumption that is made in this reasoning<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> is that we are only considering the rewards of mining one block on the blockchain. In practice, miners can participate in the mining of multiple blocks sequentially. All kinds of other strategic considerations then come into play that miners could potentially exploit to gain more expected reward from a sequence of blocks in a colluding pool than they would have gotten in expectation by mining on their own.</p>
+<p>Furthermore, if mining in a pool is more profitable then mining by yourself, more and more miners will join a pool (which are typically “open to all”). At some point a pool might become so large that more than <span class="math inline">50\%</span> of the miners are together in it. In this case the Proof-of-Work protocol loses its decentralized nature and the majority pool could compromise the intended functioning of the blockchain; recall from Chapter <a href="06-ProofofWork.html" class="quarto-xref"><span>Chapter 6</span></a> that we need a majority of honest nodes to make sure the Proof-of-Work protocol functions correctly.</p>
+<p>Informally speaking, we call a protocol <em>incentive compatible (with respect to collusion)</em> if miners, whose objective is to maximize their total expected reward, do not have an incentive to collude with other miners in a pool. This term comes from the area of mechanism design, which can be seen as the reverse of game theory: Instead of designing a game and then studying its outcome, one designs the game so that it has an <em>intended</em> outcome. In our case the intented outcome of “the game” should be that miners do not want to collude.</p>
+<p>The main purpose of this chapter is to show that the Proof-of-Work protocol is <em>not</em> incentive compatible when considering reward maximizing miners. It turns out that there exists a “block withholding” strategy, also called <em>selfish mining attack</em>, where the colluding pool can strategically decide not to announce a newly mined block to the chain right away, but instead secretly continue mining on a new block that could extend it (i.e., working on a secret <em>fork</em> of the chain). If this is done cleverly, even some minority pools are able to obtain relative more reward than they would have gotten if all the miners in it would have mined on their own.</p>
+<div id="thm-selfish-mining-informal" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 9.1 (Selfish mining, informal)</strong></span> For any mining pool that contains at least <span class="math inline">1/3</span> of the total mining power of the blockchain running a Proof-of-Work protocol, there exists a strategy with which the pool can obtain a total expected reward that is strictly larger than <span class="math inline">1/3</span> of all the rewards handed out by the protocol.</p>
+</div>
+<section id="revisiting-longest-chain-protocol" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="revisiting-longest-chain-protocol"><span class="header-section-number">9.1</span> Revisiting longest chain protocol</h2>
+<p>To better understand this type of attack, let us first recall briefly the relevant notions of <em>blockchain (e.g., Bitcoin) mining</em> in the Proof-of-Work protocol from the Computer Science part of this course (you can also recap <a href="05-LongestChain.html" class="quarto-xref"><span>Chapter 5</span></a> and <a href="06-ProofofWork.html" class="quarto-xref"><span>Chapter 6</span></a> yourself). A blockchain can be represented as a directed graph where every node has out-degree <span class="math inline">1</span>.</p>
+<p>Each node represents a block containing a record of transactions that were made. To distinguish between blocks, each of them contains a unique identifier as well as the identifier of the block that it points towards, i.e., its predecessor. The root block <span class="math inline">B_0</span> is called the <em>genesis block</em>.</p>
+<div id="fig-blockchain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-blockchain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-blockchain-example.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-blockchain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: A labelled blockchain
+</figcaption>
+</figure>
+</div>
+<p>Miners can add a new block to the blockchain by appending it to a <em>leaf</em> block which is a block in the current configuration that is not a predecessor of another block. In <a href="#fig-blockchain" class="quarto-xref">Figure&nbsp;<span>9.1</span></a> these are <span class="math inline">B_2'', B_3'</span> and <span class="math inline">B_4</span>. In other words, these are the blocks at the end of a chain (or path) starting in <span class="math inline">B_0</span>.</p>
+<p>If a miner adds a block so that the resulting new chain is the unique longest chain of the new graph, then as a reward, they receive a unit of cryptocurrency. Adding a new block to an existing leave is only allowed if the miner is the first to solve a leave-specific cryptographic puzzle; the process of solving this puzzle is called <em>mining</em>. Adding a block to a chain that is not the longest eventually leads to the transactions in those blocks being ignored, i.e., not accepted, by the network (they can be resubmitted though).</p>
+<p>Due to the fact that communication is often not <span class="math inline">100\%</span> instantaneous it might happen that two different miners add a block to the current longest chain in the network (ending in <span class="math inline">B_4</span>), creating two <em>forks (or branches)</em> whose blocks we call <span class="math inline">F_1</span> and <span class="math inline">F_2</span>. The block <span class="math inline">F_1</span> is called the head of the first branch, and <span class="math inline">F_2</span> the head of the second branch.</p>
+<p>At this point, the units of cryptocurrency for adding the blocks <span class="math inline">F_1</span> and <span class="math inline">F_2</span> is not yet awarded to the respective miners that mined the blocks, because the paths leading to <span class="math inline">F_1</span> and <span class="math inline">F_2</span> are at the moment not part of the unique longest chain in the graph. Emperical evidence suggests this type of “accidental bifurcation” happens roughly once every <span class="math inline">60</span> blocks.</p>
+<div id="fig-blockchain-fork" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-blockchain-fork-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-blockchain-forking.png" class="img-fluid figure-img" style="width:25.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-blockchain-fork-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.2: A fork in the currently longest chain
+</figcaption>
+</figure>
+</div>
+<p>If forking happens then all the miners active in the blockchain network can choose to continue mining on either <span class="math inline">F_1</span> or <span class="math inline">F_2</span>. A miner usually mines on the first branch that they have heard of. As soon as one of the branches gets extended with an additional block (and is accepted by the network as the branch containing the longest chain in the network) the rewards of this block, as well as that of the <span class="math inline">F_i</span> that is its predecessor, are rewarded to the miners that mined those blocks.</p>
+<p>Recall that the probability with which a miner <span class="math inline">i</span> is the first to solve the cryptographic puzzle (giving the right to add the newly mined block), is proportional to the amount of computation power (or hash rate) <span class="math inline">\mu_i</span> that they put into the mining process.</p>
+<blockquote class="blockquote">
+<p><strong>(A1)</strong> We assume that the time that it takes for miner <span class="math inline">i</span> with hash rate <span class="math inline">\mu_i</span> to solve the cryptographic puzzle is a random variable <span class="math inline">X_i</span> that follows an exponential distribution with parameter <span class="math inline">\lambda_i = 1/\mu_i</span>, i.e., for <span class="math inline">x \geq 0</span>, <span class="math display">
+\mathbb{P}(X_i \geq x) = 1 - \mathrm{e}^{-\lambda_i x}.
+</span></p>
+</blockquote>
+<p>The reason why the exponential distribution is a well-motivated choice for this, is that it is <em>memoryless</em>. If a miner has already spend some time <span class="math inline">s</span> on trying to solve the crypto puzzle, then the probability that they will solve it after time <span class="math inline">t + s</span>, for some <span class="math inline">t</span>, is the same as the probability that they will solve it after time <span class="math inline">t</span>. In probabilisitic notation, the exponential distribution satisfies <span class="math display">
+\mathbb{P}(X &gt; t + s | X &gt; s) = \mathbb{P}(X &gt; t).
+</span> Said differently, the fact that you have already spend some time on solving the puzzle is not going to help you to solve it quicker compared to someone who just started to work on the puzzle. This is a valid assumption because miners essentially only provide random guesses for the puzzle solution (see <a href="06-ProofofWork.html" class="quarto-xref"><span>Chapter 6</span></a>).</p>
+<p>If a group of miners forms a pool, then their <em>expected relative revenue</em> (given a configuration of the blockchain network) is the total number of cryptocurrency units awarded to the pool, i.e., the number of blocks that they successfully mined and added to the chain, divided by the total number of units awarded to all miners (including the pool) in the system. This latter number is precisely the length of the longest chain in the network.</p>
+</section>
+<section id="selfish-mining-attacks" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="selfish-mining-attacks"><span class="header-section-number">9.2</span> Selfish mining attacks</h2>
+<p>If risk-neutral miners, whose goal is only to maximize the expected reward that they receive on the blockchain, follow the longest chain protocol and always add new blocks to the chain right after they have mined them, there is no incentive for them to form a pool if within the pool the unit reward is split proportional to the mining power of the miners participating in the pool (see the example in <a href="07-proportional-rule.html#sec-risk-averse" class="quarto-xref"><span>Section 7.3</span></a>).</p>
+<p>However, it turns out that there is an incentive for a pool to not <em>directly</em> reveal their newly mined block to the network, but instead secretly continue mining on a block that could be appended to the already mined block.</p>
+<p>To keep the exposition clean, we will always assume that the ensemble of miners can be divided into two groups for a given <span class="math inline">\alpha \in (0,1)</span>: A pool of colluding miners with a total hash rate of <span class="math inline">\alpha</span>, and a group of individual (honest) miners with a total hash rate of <span class="math inline">1 - \alpha</span>. We sometimes say that the <em>pool has size <span class="math inline">\alpha</span></em>.</p>
+<section id="warm-up-example" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="warm-up-example"><span class="header-section-number">9.2.1</span> Warm-up example</h3>
+<p>To develop some intuition about why it could be useful to withhold a block, let us consider a small example (or thought experiment) in which we analyze the reward of a mining pool of size <span class="math inline">\alpha</span> for the next two blocks that are added to the longest chain.</p>
+<p>We will describe a strategy that the pool can follow so that their expected reward for the two newly added blocks exceeds their share <span class="math inline">\alpha</span> of the total mining power in the network, assuming <span class="math inline">\alpha</span> is large enough (we return to this point later). This strategy does not conflict with the Proof-of-Work protocol, as the protocol itself says nothing about when miners should announce newly found blocks; this is not relevant if miners do not care about rewards.</p>
+<p>Suppose that both the pool and the honest miners are trying to mine a new block to append to the current longest chain with leaf (i.e., most recent) node <span class="math inline">B</span>. We will describe a strategy that makes it beneficial (if <span class="math inline">\alpha</span> is large enough) for the pool to withhold a newly mined block.</p>
+<p>To describe this strategy, which is called the <em>selfish mining attack</em>, we make a case distinction depending on whether the honest miner or the pool mines a new block first given the currently (unique) longest chain.</p>
+<ul>
+<li><p><strong>Case 1: An honest miner mines a block <span class="math inline">F_{h,1}</span> extending <span class="math inline">B</span> before the pool does</strong>. This happens with probability <span class="math inline">1 - \alpha</span>. In this case, both the honest miners and pool accept this block as the next block of the longest chain; recall that the pool follows the protocol except for that it might delay the announcement of a block they found themselves. The pool gets no reward.</p></li>
+<li><p><em>Case 1a: An honest miner mines a new block <span class="math inline">F_{h,2}</span> extending <span class="math inline">F_{h,1}</span> before the pool finds a block</em>. This happens with probability <span class="math inline">(1-\alpha)</span> and so overall this subcase happens with probability <span class="math inline">(1-\alpha)^2</span>. Everyone accepts this block and again the pool gets no reward.</p></li>
+<li><p><em>Case 1b: The pool mines a block <span class="math inline">F_{p,2}</span> extending <span class="math inline">F_{h,1}</span>, before an honest miner does.</em> This happens with probability <span class="math inline">\alpha</span>, and so overall this subcase happens with probability <span class="math inline">(1-\alpha)\cdot \alpha</span>. Everyone accepts this block and the pool gets a unit reward for <span class="math inline">F_{p,2}</span>.</p></li>
+<li><p><strong>Case 2: The pool mines a block <span class="math inline">F_{p,1}</span> extending <span class="math inline">B</span> before an honest miner does.</strong> This happens with probability <span class="math inline">\alpha</span>. In this case the strategy of the pool is to not reveal this block right away, but instead <em>secretly</em> start mining on a new block to extend <span class="math inline">F_{p,1}</span> whereas the honest miners continue mining on block <span class="math inline">B</span>.</p></li>
+<li><p><em>Case 2a: The pool mines a block <span class="math inline">F_{p,2}</span> extending <span class="math inline">F_{p,1}</span> before an honest extends <span class="math inline">B</span>.</em> Observe that honest miners don’t have the option to try and extend <span class="math inline">F_{p,1}</span> because they are not yet aware of its existence. The probability that the pool finds <span class="math inline">F_{p,2}</span> before the honest miners extend <span class="math inline">B</span> is <span class="math inline">\alpha</span>. This statement follows from the assumption that the time it takes to find a new block is memoryless (see Assumption A1): Although the honest miners have been mining longer on extending <span class="math inline">B</span> than the pool has been mining on extending <span class="math inline">F_{p,1}</span>, this does not give an advantage to the honest miners. Therefore, overall, this case happens with probability <span class="math inline">\alpha^2</span>. The pool now announces the block <span class="math inline">F_{p,1}</span> followed quickly by the announcement of <span class="math inline">F_{p,2}</span>. Both blocks are accepted and the pool gets two units of reward, one for <span class="math inline">F_{p,1}</span> and one for <span class="math inline">F_{p,2}</span>.</p></li>
+<li><p><em>Case 2b: An honest miner mines a block <span class="math inline">F_{h,1}</span> extending <span class="math inline">B</span> before the pool mines a block <span class="math inline">F_{p,2}</span> extending the (secret) block <span class="math inline">F_{p,1}</span>.</em> This happens overall with probability <span class="math inline">\alpha(1-\alpha)</span>. The pool now quickly also announces their (until now secret) block <span class="math inline">F_{p,1}</span>. We assume that this is possible due to the fact that it might take some time before all honest nodes hear about the addition of <span class="math inline">F_{h,1}</span> (i.e., the communication of a new block is not instantaneous). In this case we have a forking in the longest chain. The strategy of the pool is now to keep mining to extend <span class="math inline">F_{p,1}</span>, whereas the honest miners can choose between extending <span class="math inline">F_{p,1}</span> and <span class="math inline">F_{h,1}</span>. Assume for now that all honest miners will start mining on <span class="math inline">F_{h,1}</span>. We will show in Exercise 9.1 that if some fraction of the honest miners also mines on <span class="math inline">F_{p,1}</span>, this can only increase the overall reward obtained by the pool.</p>
+<ul>
+<li><strong>Case 2b-I: An honest miner mines a block <span class="math inline">F_{h,2}</span> extending <span class="math inline">F_{h,1}</span> before the pool mines a block extending <span class="math inline">F_{p,1}</span>.</strong> This happens overall with probability <span class="math inline">(\alpha(1-\alpha)) \cdot (1-\alpha) = \alpha(1-\alpha^2)</span>. Everyone accepts <span class="math inline">F_{h,2}</span> and the pool gets no reward.</li>
+<li><strong>Case 2b-II: The pool mines a block <span class="math inline">F_{p,2}</span> extending <span class="math inline">F_{p,1}</span> before an honest miner extends <span class="math inline">F_{h,1}</span>.</strong> This happens overall with probability <span class="math inline">(\alpha(1-\alpha))\cdot \alpha = \alpha^2(1-\alpha)</span>. In this case, because the pool has been the only one mining on both <span class="math inline">F_{p,1}</span> and <span class="math inline">F_{p,2}</span> they receive a total reward of two for these blocks.</li>
+</ul></li>
+</ul>
+<div id="fig-blockchain-case2b" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-blockchain-case2b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-blockchain-forking-two-block-example.png" class="img-fluid figure-img" style="width:25.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-blockchain-case2b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.3: Overview of Case 2b
+</figcaption>
+</figure>
+</div>
+<p>Taken altogether, the pool receives one unit of reward in Case 1b with probability <span class="math inline">\alpha(1-\alpha)</span>, two units of reward in Case 2a with probability <span class="math inline">\alpha^2</span>, and two units of reward in Case 2b-II with probability <span class="math inline">\alpha^2(1-\alpha)</span>. That is, the total expected reward of this selfish mining attack is <span class="math display">
+1 \cdot \alpha(1-\alpha) + 2 \cdot \alpha^2 + 2 \cdot \alpha^2(1-\alpha) = -2\alpha^3 + 3\alpha^2 + \alpha
+</span> Note that if the pool does not withhold a block, but follows the protocol like the honest miners do, then the expected reward of the pool is <span class="math inline">2\alpha</span>, as they extend <span class="math inline">B</span> first with probability <span class="math inline">\alpha</span>, and add the second block first with probability <span class="math inline">\alpha</span> (these are independent events). Both these events yield a reward of one.</p>
+<p>Elementary calculus shows that <span class="math inline">-2\alpha^3 + 3\alpha^2 + \alpha &gt; 2\alpha</span> if and only if <span class="math inline">\alpha &gt; 0.5</span>. This means that the selfish mining attack is profitable for a group of colluding miners that form a majority in the system!</p>
+<p>Although collusion has been observed in practice, the assumption that there is a majority of miners that colludes from the start is unrealistic. In fact, the desirable guarantees that we have seen for the Proof-of-Work protocol rely on the fact that at least half of the nodes are honest, i.e, <span class="math inline">\alpha &lt; 0.5</span>. Otherwise, the network is subject to all other kinds of manipulation (that might be way worse than simply withholding newly mined blocks for some time).</p>
+<p>Very suprisingly though, it turns out that a more elaborate analysis of the selfish mining attack (not restricted to the addition of two new blocks) shows that even minority pools can profit from such an attack and obtain more reward than they would have gotten individually! In particular, we will show that also a pool of size <span class="math inline">1/3 &lt; \alpha &lt; 1/2</span> can carry out a selfish mining attack and obtain a reward that is relatively more than <span class="math inline">\alpha</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 9.1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let <span class="math inline">\gamma \in (0,1)</span> and suppose that when the pool announces its secret block <span class="math inline">F_{p,1}</span> in Case 2b, a fraction <span class="math inline">\gamma</span> of the honest miners starts mining to extend <span class="math inline">F_{p,1}</span> and a fraction <span class="math inline">(1-\gamma)</span> of the honest miners starts mining to extend <span class="math inline">F_{h,1}</span>. Show that …</p>
+</div>
+</div>
+</section>
+<section id="general-description" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="general-description"><span class="header-section-number">9.2.2</span> General description</h3>
+</section>
+</section>
+<section id="acknowledgements" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="acknowledgements"><span class="header-section-number">9.3</span> Acknowledgements</h2>
+<p>This section is based on the paper <a href="https://arxiv.org/pdf/1311.0243">Majority is not Enough: Bitcoin Mining is Vulnerable</a> by Eyal and Sirer (2013).</p>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Apart from ignoring other considerations such as risk aversion.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./08-tullock-contest.html" class="pagination-link" aria-label="Tullock contest">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tullock contest</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

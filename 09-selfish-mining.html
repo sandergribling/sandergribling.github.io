@@ -341,8 +341,8 @@ Figure&nbsp;9.2: A fork in the currently longest chain
 \mathbb{P}(X_i \geq x) = 1 - \mathrm{e}^{-\lambda_i x}.
 </span></p>
 </blockquote>
-<p><a href="#prp-memoryless" class="quarto-xref">Proposition&nbsp;<span>9.2</span></a> states that if two miners with hash rates <span class="math inline">\mu_1</span> and <span class="math inline">\mu_2</span> are trying to extend the same leaf block, then <span class="math inline">\mu_1</span> is the first to solve the cryptographic puzzle with probability <span class="math inline">\mu_1/(\mu_1 + \mu_2)</span>, and similarly, miner <span class="math inline">2</span> is the first solve it with probability <span class="math inline">\mu_2/(\mu_1 + \mu_2)</span>.</p>
-<div id="prp-memoryless" class="theorem proposition">
+<p><a href="#prp-minimum" class="quarto-xref">Proposition&nbsp;<span>9.1</span></a> states that if two miners with hash rates <span class="math inline">\mu_1</span> and <span class="math inline">\mu_2</span> are trying to extend the same leaf block, then <span class="math inline">\mu_1</span> is the first to solve the cryptographic puzzle with probability <span class="math inline">\mu_1/(\mu_1 + \mu_2)</span>, and similarly, miner <span class="math inline">2</span> is the first solve it with probability <span class="math inline">\mu_2/(\mu_1 + \mu_2)</span>.</p>
+<div id="prp-minimum" class="theorem proposition">
 <p><span class="theorem-title"><strong>Proposition 9.1 (Minimum of exponential random variables)</strong></span> If <span class="math inline">X_1</span> and <span class="math inline">X_2</span> are random variables following an exponential distribution with parameters <span class="math inline">\lambda_1 = \mu_1</span> and <span class="math inline">\lambda_2 = \mu_2</span>, respectively, then <span class="math display">
 \mathbb{P}(X_1 \leq X_2) = \mathbb{P}(X_1 = \min\{X_1,X_2\}) = \frac{\mu_1}{\mu_1 + \mu_2}.
 </span></p>
@@ -363,6 +363,9 @@ Figure&nbsp;9.2: A fork in the currently longest chain
 <h2 data-number="9.2" class="anchored" data-anchor-id="warm-up-example"><span class="header-section-number">9.2</span> Warm-up example</h2>
 <p>If risk-neutral miners, whose goal is only to maximize the expected reward that they receive on the blockchain, follow the longest chain protocol and always add new blocks to the chain right after they have mined them, there is no incentive for them to form a pool if within the pool the unit reward is split proportional to the mining power of the miners participating in the pool (see the example in <a href="07-proportional-rule.html#sec-risk-averse" class="quarto-xref"><span>Section 7.3</span></a>).</p>
 <p>However, it turns out that there is an incentive for a pool to not <em>directly</em> reveal their newly mined block to the network, but instead secretly continue mining on a new block that could be appended to the already mined block.</p>
+<!--
+At this point, we assume this *secret mining* is possible; under some mild assumptions (relating to the materials explained in Chapters @sec-Longest-chain and @sec-Proof-of-Work) we justify this assumption in @sec-secret-mining.
+-->
 <p>If it would happen that in the meantime an honest node announces another new block, the pool quickly makes its secret block public as well, resulting in a forking of the longest chain, see, e.g., <a href="#fig-blockchain-fork" class="quarto-xref">Figure&nbsp;<span>9.2</span></a>. The justification for making this possible is the fact that accidental bifurcation is a known phenomenon, as we mentioned earlier. To emphasize the importance of this assumption, we state it below.</p>
 <blockquote class="blockquote">
 <p><strong>(A2)</strong> If a pool has a secretly mined block <span class="math inline">F_p</span> (not yet known to miners outside of the pool) extending a leaf node <span class="math inline">B</span> of the currently longest chain, and a miner from outside the pool announces their own new block <span class="math inline">F_h</span> extending <span class="math inline">B</span>, then the pool can quickly announce its private block <span class="math inline">F_p</span>, resulting in a forking of the longest chain.</p>
@@ -373,20 +376,100 @@ Figure&nbsp;9.2: A fork in the currently longest chain
 <p>Suppose that both the pool and the honest miners are trying to mine a new block to append to the current longest chain with leaf (i.e., most recent) node <span class="math inline">B</span>. We will describe a strategy that makes it beneficial (if <span class="math inline">\alpha</span> is large enough) for the pool to withhold a newly mined block.</p>
 <p>To describe this strategy, which is called the <em>selfish mining attack</em>, we make a case distinction depending on whether the honest miner or the pool mines a new block first given the currently (unique) longest chain.</p>
 <ul>
-<li><p><strong>Case 1: An honest miner mines a block <span class="math inline">F_{h,1}</span> extending <span class="math inline">B</span> before the pool does</strong>. This happens with probability <span class="math inline">1 - \alpha</span>. In this case, both the honest miners and pool accept this block as the next block of the longest chain; recall that the pool follows the protocol except for that it might delay the announcement of a block they found themselves. The pool gets no reward.</p></li>
-<li><p><em>Case 1a: An honest miner mines a new block <span class="math inline">F_{h,2}</span> extending <span class="math inline">F_{h,1}</span> before the pool finds a block</em>. This happens with probability <span class="math inline">(1-\alpha)</span> and so overall this subcase happens with probability <span class="math inline">(1-\alpha)^2</span>. Everyone accepts this block and again the pool gets no reward.</p></li>
-<li><p><em>Case 1b: The pool mines a block <span class="math inline">F_{p,2}</span> extending <span class="math inline">F_{h,1}</span>, before an honest miner does.</em> This happens with probability <span class="math inline">\alpha</span>, and so overall this subcase happens with probability <span class="math inline">(1-\alpha)\cdot \alpha</span>. In this case the pool simply makes the block public and collects its unit reward.</p></li>
-<li><p><strong>Case 2: The pool mines a block <span class="math inline">F_{p,1}</span> extending <span class="math inline">B</span> before an honest miner does.</strong> This happens with probability <span class="math inline">\alpha</span>. In this case the strategy of the pool is to not reveal this block right away, but instead <em>secretly</em> start mining on a new block to extend <span class="math inline">F_{p,1}</span> whereas the honest miners continue mining on block <span class="math inline">B</span>.</p></li>
-<li><p><em>Case 2a: The pool mines a block <span class="math inline">F_{p,2}</span> extending <span class="math inline">F_{p,1}</span> before an honest extends <span class="math inline">B</span>.</em> Observe that honest miners don’t have the option to try and extend <span class="math inline">F_{p,1}</span> because they are not yet aware of its existence. The probability that the pool finds <span class="math inline">F_{p,2}</span> before the honest miners extend <span class="math inline">B</span> is <span class="math inline">\alpha</span>. This follows from <span class="quarto-unresolved-ref">?prp-memorlyess</span>: Although the honest miners have been mining longer on extending <span class="math inline">B</span> than the pool has been mining on extending <span class="math inline">F_{p,1}</span>, this does not give an advantage to the honest miners. Therefore, overall this case happens with probability <span class="math inline">\alpha^2</span>. The pool now announces the block <span class="math inline">F_{p,1}</span> followed quickly by the announcement of <span class="math inline">F_{p,2}</span>. Both blocks are accepted and the pool gets two units of reward, one for <span class="math inline">F_{p,1}</span> and one for <span class="math inline">F_{p,2}</span>.</p></li>
-<li><p><em>Case 2b: An honest miner mines a block <span class="math inline">F_{h,1}</span> extending <span class="math inline">B</span> before the pool mines a block <span class="math inline">F_{p,2}</span> extending the (secret) block <span class="math inline">F_{p,1}</span>.</em> This happens overall with probability <span class="math inline">\alpha(1-\alpha)</span>. The pool now quickly also announces their (until now secret) block <span class="math inline">F_{p,1}</span>. This is possible because of Assumption A2. In this case we have a forking in the longest chain. The strategy of the pool is now to keep mining to extend <span class="math inline">F_{p,1}</span>, whereas the honest miners can choose between extending <span class="math inline">F_{p,1}</span> and <span class="math inline">F_{h,1}</span>.</p></li>
+<li><strong>Case 1: An honest miner mines a block <span class="math inline">F_{h,1}</span> extending <span class="math inline">B</span> before the pool does</strong>. This happens with probability <span class="math inline">1 - \alpha</span>. In this case, both the honest miners and pool accept this block as the next block of the longest chain; recall that the pool follows the protocol except for that it might delay the announcement of a block they found themselves. The pool gets no reward.</li>
 </ul>
+<div id="fig-warm-up-case1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-warm-up-case1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-warm-up-example-case1.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-warm-up-case1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.3: Case 1
+</figcaption>
+</figure>
+</div>
+<ul>
+<li><em>Case 1a: An honest miner mines a new block <span class="math inline">F_{h,2}</span> extending <span class="math inline">F_{h,1}</span> before the pool finds a block</em>. This happens with probability <span class="math inline">(1-\alpha)</span> and so overall this subcase happens with probability <span class="math inline">(1-\alpha)^2</span>. Everyone accepts this block and again the pool gets no reward.</li>
+</ul>
+<div id="fig-warm-up-case1a" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-warm-up-case1a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-warm-up-example-case1a.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-warm-up-case1a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.4: Case 1a
+</figcaption>
+</figure>
+</div>
+<ul>
+<li><em>Case 1b: The pool mines a block <span class="math inline">F_{p,2}</span> extending <span class="math inline">F_{h,1}</span>, before an honest miner does.</em> This happens with probability <span class="math inline">\alpha</span>, and so overall this subcase happens with probability <span class="math inline">(1-\alpha)\cdot \alpha</span>. In this case the pool simply makes the block public and collects its unit reward.</li>
+</ul>
+<div id="fig-warm-up-case1b" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-warm-up-case1b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-warm-up-example-case1b.png" class="img-fluid figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-warm-up-case1b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.5: Case 1b
+</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>Case 2: The pool mines a block <span class="math inline">F_{p,1}</span> extending <span class="math inline">B</span> before an honest miner does.</strong> This happens with probability <span class="math inline">\alpha</span>. In this case the strategy of the pool is to not reveal this block right away, but instead <em>secretly</em> start mining on a new block to extend <span class="math inline">F_{p,1}</span> whereas the honest miners continue mining on block <span class="math inline">B</span>.</li>
+</ul>
+<div id="fig-warm-up-case2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-warm-up-case2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-warm-up-example-case2.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-warm-up-case2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.6: Case 2
+</figcaption>
+</figure>
+</div>
+<ul>
+<li><em>Case 2a: The pool mines a block <span class="math inline">F_{p,2}</span> extending <span class="math inline">F_{p,1}</span> before an honest extends <span class="math inline">B</span>.</em> Observe that honest miners don’t have the option to try and extend <span class="math inline">F_{p,1}</span> because they are not yet aware of its existence. The probability that the pool finds <span class="math inline">F_{p,2}</span> before the honest miners extend <span class="math inline">B</span> is <span class="math inline">\alpha</span>. This follows from <a href="#prp-memoryless" class="quarto-xref">Proposition&nbsp;<span>9.2</span></a>: Although the honest miners have been mining longer on extending <span class="math inline">B</span> than the pool has been mining on extending <span class="math inline">F_{p,1}</span>, this does not give an advantage to the honest miners. Therefore, overall this case happens with probability <span class="math inline">\alpha^2</span>. The pool now announces the block <span class="math inline">F_{p,1}</span> followed quickly by the announcement of <span class="math inline">F_{p,2}</span>. Both blocks are accepted and the pool gets two units of reward, one for <span class="math inline">F_{p,1}</span> and one for <span class="math inline">F_{p,2}</span>.</li>
+</ul>
+<div id="fig-warm-up-case2a" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-warm-up-case2a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-warm-up-example-case2a.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-warm-up-case2a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.7: Case 2a
+</figcaption>
+</figure>
+</div>
+<ul>
+<li><em>Case 2b: An honest miner mines a block <span class="math inline">F_{h,1}</span> extending <span class="math inline">B</span> before the pool mines a block <span class="math inline">F_{p,2}</span> extending the (secret) block <span class="math inline">F_{p,1}</span>.</em> This happens overall with probability <span class="math inline">\alpha(1-\alpha)</span>. The pool now quickly also announces their (until now secret) block <span class="math inline">F_{p,1}</span>. This is possible because of Assumption A2. In this case we have a forking in the longest chain. The strategy of the pool is now to keep mining to extend <span class="math inline">F_{p,1}</span>, whereas the honest miners can choose between extending <span class="math inline">F_{p,1}</span> and <span class="math inline">F_{h,1}</span>.</li>
+</ul>
+<div id="fig-warm-up-case2b" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-warm-up-case2b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-warm-up-example-case2b.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-warm-up-case2b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.8: Case 2b
+</figcaption>
+</figure>
+</div>
 <blockquote class="blockquote">
 <p>Assume in Case 2b that all honest miners will start mining on <span class="math inline">F_{h,1}</span>. We will show in Exercise 9.1 that if some fraction <span class="math inline">\gamma \in [0,1]</span> of the honest miners also mines on <span class="math inline">F_{p,1}</span>, this can only increase the total expected reward obtained by the pool.</p>
 </blockquote>
 <ul>
-<li><strong>Case 2b-I: An honest miner mines a block <span class="math inline">F_{h,2}</span> extending <span class="math inline">F_{h,1}</span> before the pool mines a block extending <span class="math inline">F_{p,1}</span>.</strong> This happens overall with probability <span class="math inline">(\alpha(1-\alpha)) \cdot (1-\alpha) = \alpha(1-\alpha^2)</span>. Everyone accepts <span class="math inline">F_{h,2}</span> and the pool gets no reward.</li>
-<li><strong>Case 2b-II: The pool mines a block <span class="math inline">F_{p,2}</span> extending <span class="math inline">F_{p,1}</span> before an honest miner extends <span class="math inline">F_{h,1}</span>.</strong> This happens overall with probability <span class="math inline">(\alpha(1-\alpha))\cdot \alpha = \alpha^2(1-\alpha)</span>. In this case, because the pool has been the only one mining on both <span class="math inline">F_{p,1}</span> and <span class="math inline">F_{p,2}</span> they receive a total reward of two for these blocks.</li>
+<li><p><strong>Case 2b-I: An honest miner mines a block <span class="math inline">F_{h,2}</span> extending <span class="math inline">F_{h,1}</span> before the pool mines a block extending <span class="math inline">F_{p,1}</span>.</strong> This happens overall with probability <span class="math inline">(\alpha(1-\alpha)) \cdot (1-\alpha) = \alpha(1-\alpha^2)</span>. Everyone accepts <span class="math inline">F_{h,2}</span> and the pool gets no reward. <img src="figs/Tikz-pictures/09-tikz-warm-up-example-case2b-I.png" id="fig-warm-up-case2b-I" class="img-fluid" style="width:90.0%" alt="Case 2b-I"></p></li>
+<li><p><strong>Case 2b-II: The pool mines a block <span class="math inline">F_{p,2}</span> extending <span class="math inline">F_{p,1}</span> before an honest miner extends <span class="math inline">F_{h,1}</span>.</strong> This happens overall with probability <span class="math inline">(\alpha(1-\alpha))\cdot \alpha = \alpha^2(1-\alpha)</span>. In this case, because the pool has been the only one mining on both <span class="math inline">F_{p,1}</span> and <span class="math inline">F_{p,2}</span> they receive a total reward of two for these blocks.</p></li>
 </ul>
+<div id="fig-warm-up-case2b-II" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-warm-up-case2b-II-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-warm-up-example-case2b-II.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-warm-up-case2b-II-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.9: Case 2b-II
+</figcaption>
+</figure>
+</div>
 <p>Taken altogether, the pool receives one unit of reward in Case 1b with probability <span class="math inline">\alpha(1-\alpha)</span>, two units of reward in Case 2a with probability <span class="math inline">\alpha^2</span>, and two units of reward in Case 2b-II with probability <span class="math inline">\alpha^2(1-\alpha)</span>. That is, the total expected reward of this selfish mining attack is <span class="math display">
 1 \cdot \alpha(1-\alpha) + 2 \cdot \alpha^2 + 2 \cdot \alpha^2(1-\alpha) = -2\alpha^3 + 3\alpha^2 + \alpha
 </span> Given that <span class="math inline">2</span> units of cryptocurrency were handed out, the expected relative reward of the pool is <span class="math inline">(-2\alpha^3 + 3\alpha^2 + \alpha)/2</span>. Elementary calculus shows that <span class="math display">
@@ -409,6 +492,10 @@ Exercise 9.1
 </span> by redoing the analysis of Cases 2b-I and 2b-II (only the latter case yields a nonzero pool reward, but analyse both cases for completeness). <em>Note that if an honest miner ends up extending <span class="math inline">F_{p,1}</span> with a block <span class="math inline">F_{h,2}</span>, then the pool gets no reward for this latter block, but it does get the reward for the block <span class="math inline">F_{p,1}</span>, as the branch containing <span class="math inline">F_{p,1}</span> and <span class="math inline">F_{h,2}</span> is now part of the new longest chain.</em></p>
 </div>
 </div>
+<!--
+
+### Secret mining details{#sec-secret-mining}
+-->
 </section>
 <section id="general-case" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="general-case"><span class="header-section-number">9.3</span> General case</h2>
@@ -503,14 +590,14 @@ S = \{0,0',1,2,3,\dots\}.
 </section>
 <section id="transition-probabilities" class="level3" data-number="9.3.3">
 <h3 data-number="9.3.3" class="anchored" data-anchor-id="transition-probabilities"><span class="header-section-number">9.3.3</span> Transition probabilities</h3>
-<p>The transision probabilities in the matrix <span class="math inline">P</span> are drawn in the figure below.</p>
+<p>The transition probabilities in the matrix <span class="math inline">P</span> are drawn in the figure below.</p>
 <div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figs/Tikz-pictures/09-tikz-markov-chain.png" class="img-fluid figure-img" style="width:90.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.3: Transition probabilities in state space <span class="math inline">S</span>
+Figure&nbsp;9.10: Transition probabilities in state space <span class="math inline">S</span>
 </figcaption>
 </figure>
 </div>
@@ -529,7 +616,7 @@ Figure&nbsp;9.3: Transition probabilities in state space <span class="math inlin
 <img src="figs/Tikz-pictures/09-tikz-markov-chain-state-0.png" class="img-fluid figure-img" style="width:90.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.4: Honest miner finds block first in state <span class="math inline">0</span>
+Figure&nbsp;9.11: Honest miner finds block first in state <span class="math inline">0</span>
 </figcaption>
 </figure>
 </div>
@@ -541,7 +628,7 @@ Figure&nbsp;9.4: Honest miner finds block first in state <span class="math inlin
 <img src="figs/Tikz-pictures/09-tikz-markov-chain-state-0-pool.png" class="img-fluid figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.5: Pool finds block first in state <span class="math inline">0</span>; <span class="math inline">F_p</span> stays secret for now (hence, dashed)
+Figure&nbsp;9.12: Pool finds block first in state <span class="math inline">0</span>; <span class="math inline">F_p</span> stays secret for now (hence, dashed)
 </figcaption>
 </figure>
 </div></li>
@@ -555,7 +642,7 @@ Figure&nbsp;9.5: Pool finds block first in state <span class="math inline">0</sp
 <img src="figs/Tikz-pictures/09-tikz-markov-chain-state-0prime.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.6: Honest miner finds block first in state <span class="math inline">0'</span>.
+Figure&nbsp;9.13: Honest miner finds block first in state <span class="math inline">0'</span>.
 </figcaption>
 </figure>
 </div></li>
@@ -566,7 +653,7 @@ Figure&nbsp;9.6: Honest miner finds block first in state <span class="math inlin
 <img src="figs/Tikz-pictures/09-tikz-markov-chain-state-0prime-pool.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.7: Pool finds block first in state <span class="math inline">0'</span>.
+Figure&nbsp;9.14: Pool finds block first in state <span class="math inline">0'</span>.
 </figcaption>
 </figure>
 </div></li>
@@ -583,7 +670,7 @@ Figure&nbsp;9.7: Pool finds block first in state <span class="math inline">0'</s
 <img src="figs/Tikz-pictures/09-tikz-markov-chain-state-2.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.8: Honest miners find block first in state <span class="math inline">2</span>. In this example the private branch started out with four blocks of which the first two were public and the last two secret (hence, dashed).
+Figure&nbsp;9.15: Honest miners find block first in state <span class="math inline">2</span>. In this example the private branch started out with four blocks of which the first two were public and the last two secret (hence, dashed).
 </figcaption>
 </figure>
 </div></li>
@@ -594,7 +681,7 @@ Figure&nbsp;9.8: Honest miners find block first in state <span class="math inlin
 <img src="figs/Tikz-pictures/09-tikz-markov-chain-state-2-pool.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.9: Pool finds block first in state <span class="math inline">2</span>, so we now move to state <span class="math inline">3</span>.
+Figure&nbsp;9.16: Pool finds block first in state <span class="math inline">2</span>, so we now move to state <span class="math inline">3</span>.
 </figcaption>
 </figure>
 </div></li>
@@ -635,7 +722,7 @@ Solution
 <img src="figs/Tikz-pictures/09-tikz-markov-chain-state-1.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.10: Honest miners find a block first in state <span class="math inline">1</span>.
+Figure&nbsp;9.17: Honest miners find a block first in state <span class="math inline">1</span>.
 </figcaption>
 </figure>
 </div></li>
@@ -643,10 +730,10 @@ Figure&nbsp;9.10: Honest miners find a block first in state <span class="math in
 <div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figs/Tikz-pictures/09-tikz-markov-chain-state-1-pool.png" class="img-fluid figure-img" style="width:100.0%">
+<img src="figs/Tikz-pictures/09-tikz-markov-chain-state-1-pool.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.11: Pool finds block first in state <span class="math inline">1</span>, so we now move to state <span class="math inline">2</span>.
+Figure&nbsp;9.18: Pool finds block first in state <span class="math inline">1</span>, so we now move to state <span class="math inline">2</span>.
 </figcaption>
 </figure>
 </div></li>
@@ -660,15 +747,23 @@ Figure&nbsp;9.11: Pool finds block first in state <span class="math inline">1</s
 <img src="figs/Tikz-pictures/09-tikz-markov-chain-state-3.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.12: Honest miners find a block first in state <span class="math inline">d = 3</span>. In this example the length of the private branch is <span class="math inline">4</span> and that of the public branch <span class="math inline">1</span> (so that the difference is three). It could also have been the case, e.g., that the public branch had length <span class="math inline">3</span> and the private branch length <span class="math inline">6</span> (again so that the difference would have been 3).
+Figure&nbsp;9.19: Honest miners find a block first in state <span class="math inline">d = 3</span>. In this example the length of the private branch is <span class="math inline">4</span> and that of the public branch <span class="math inline">1</span> (so that the difference is three). It could also have been the case, e.g., that the public branch had length <span class="math inline">3</span> and the private branch length <span class="math inline">6</span> (again so that the difference would have been 3).
 </figcaption>
 </figure>
 </div></li>
-<li><p>If the pool finds a block first, which happens with probability <span class="math inline">\alpha</span>, we add it to the private branch as a secret block and so the private branch now consists of <span class="math inline">d+1</span> secret blocks.</p>
-<p><img src="figs/Tikz-pictures/09-tikz-markov-chain-state-3-pool.png" id="fig-markov-chain" class="img-fluid" style="width:100.0%" alt="Pool finds block first in state d = 3, so we now move to state d+1 = 4."><br>
-</p></li>
+<li><p>If the pool finds a block first, which happens with probability <span class="math inline">\alpha</span>, we add it to the private branch as a secret block and so the private branch now consists of <span class="math inline">d+1</span> secret blocks.</p></li>
 </ul></li>
 </ul>
+<div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-markov-chain-state-3-pool.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.20: Pool finds block first in state <span class="math inline">d = 3</span>, so we now move to state <span class="math inline">d+1 = 4</span>.
+</figcaption>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -678,7 +773,7 @@ Figure&nbsp;9.12: Honest miners find a block first in state <span class="math in
 <p>Assume we start in state <span class="math inline">0</span>, with <span class="math inline">B</span> being the genesis block of the blockchain. We would like to compute the <em>stationary probabilities <span class="math inline">\pi_i</span></em> of every state <span class="math inline">i</span>. That is, given that we have performed enough probabilistic transitions, what it the probability that we are in state <span class="math inline">i</span> of the state space?</p>
 <p>The (row) vector <span class="math display">
 \pi = (\pi_{0'},\pi_0,\pi_1,\pi_2,\dots)
-</span> is called the <em>stationary distribution</em> of the Markov chain. It can be computed by solving the (infinite) system of equations <span class="math inline">\pi P  = \pi</span>, where <span class="math inline">P</span> is the transition matrix, whose entries <span class="math inline">P_{ij}</span> or transitioning form state <span class="math inline">i</span> to <span class="math inline">j</span> are given in <a href="#fig-markov-chain" class="quarto-xref">Figure&nbsp;<span>9.12</span></a>. For example, for state <span class="math inline">i \geq 3</span>, the <span class="math inline">i</span>-th row of the system <span class="math inline">\pi P  = \pi</span> reads <span class="math display">
+</span> is called the <em>stationary distribution</em> of the Markov chain. It can be computed by solving the (infinite) system of equations <span class="math inline">\pi P  = \pi</span>, where <span class="math inline">P</span> is the transition matrix, whose entries <span class="math inline">P_{ij}</span> or transitioning form state <span class="math inline">i</span> to <span class="math inline">j</span> are given in <a href="#fig-markov-chain" class="quarto-xref">Figure&nbsp;<span>9.20</span></a>. For example, for state <span class="math inline">i \geq 3</span>, the <span class="math inline">i</span>-th row of the system <span class="math inline">\pi P  = \pi</span> reads <span class="math display">
 \alpha p_{i-1} + (1-\alpha) p_{i+1} = p_i
 </span></p>
 <div class="callout callout-style-default callout-tip callout-titled">
