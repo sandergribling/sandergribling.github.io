@@ -258,7 +258,10 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#mining-time" id="toc-mining-time" class="nav-link" data-scroll-target="#mining-time"><span class="header-section-number">9.1.1</span> Mining time</a></li>
   </ul></li>
-  <li><a href="#warm-up-example" id="toc-warm-up-example" class="nav-link" data-scroll-target="#warm-up-example"><span class="header-section-number">9.2</span> Warm-up example</a></li>
+  <li><a href="#warm-up-example" id="toc-warm-up-example" class="nav-link" data-scroll-target="#warm-up-example"><span class="header-section-number">9.2</span> Warm-up example</a>
+  <ul class="collapse">
+  <li><a href="#sec-secret-mining" id="toc-sec-secret-mining" class="nav-link" data-scroll-target="#sec-secret-mining"><span class="header-section-number">9.2.1</span> Secret mining details</a></li>
+  </ul></li>
   <li><a href="#general-case" id="toc-general-case" class="nav-link" data-scroll-target="#general-case"><span class="header-section-number">9.3</span> General case</a>
   <ul class="collapse">
   <li><a href="#pseudo-code" id="toc-pseudo-code" class="nav-link" data-scroll-target="#pseudo-code"><span class="header-section-number">9.3.1</span> Pseudo-code</a></li>
@@ -362,10 +365,7 @@ Figure&nbsp;9.2: A fork in the currently longest chain
 <section id="warm-up-example" class="level2" data-number="9.2">
 <h2 data-number="9.2" class="anchored" data-anchor-id="warm-up-example"><span class="header-section-number">9.2</span> Warm-up example</h2>
 <p>If risk-neutral miners, whose goal is only to maximize the expected reward that they receive on the blockchain, follow the longest chain protocol and always add new blocks to the chain right after they have mined them, there is no incentive for them to form a pool if within the pool the unit reward is split proportional to the mining power of the miners participating in the pool (see the example in <a href="07-proportional-rule.html#sec-risk-averse" class="quarto-xref"><span>Section 7.3</span></a>).</p>
-<p>However, it turns out that there is an incentive for a pool to not <em>directly</em> reveal their newly mined block to the network, but instead secretly continue mining on a new block that could be appended to the already mined block.</p>
-<!--
-At this point, we assume this *secret mining* is possible; under some mild assumptions (relating to the materials explained in Chapters @sec-Longest-chain and @sec-Proof-of-Work) we justify this assumption in @sec-secret-mining.
--->
+<p>However, it turns out that there is an incentive for a pool to not <em>directly</em> reveal their newly mined block to the network, but instead secretly continue mining on a new block that could be appended to the already mined block. At this point, we assume this <em>secret mining</em> is possible. Under some mild assumptions we justify this assumption in <a href="#sec-secret-mining" class="quarto-xref"><span>Section 9.2.1</span></a>.</p>
 <p>If it would happen that in the meantime an honest node announces another new block, the pool quickly makes its secret block public as well, resulting in a forking of the longest chain, see, e.g., <a href="#fig-blockchain-fork" class="quarto-xref">Figure&nbsp;<span>9.2</span></a>. The justification for making this possible is the fact that accidental bifurcation is a known phenomenon, as we mentioned earlier. To emphasize the importance of this assumption, we state it below.</p>
 <blockquote class="blockquote">
 <p><strong>(A2)</strong> If a pool has a secretly mined block <span class="math inline">F_p</span> (not yet known to miners outside of the pool) extending a leaf node <span class="math inline">B</span> of the currently longest chain, and a miner from outside the pool announces their own new block <span class="math inline">F_h</span> extending <span class="math inline">B</span>, then the pool can quickly announce its private block <span class="math inline">F_p</span>, resulting in a forking of the longest chain.</p>
@@ -505,10 +505,12 @@ Exercise 9.1
 </span> Not all cases give a nonzero reward for the pool, but work out all (three) of them for completeness. <em>Note that if an honest miner ends up extending <span class="math inline">F_{p,1}</span> with a block <span class="math inline">F_{h,2}</span>, then the pool gets no reward for this latter block, but it does get the reward for the block <span class="math inline">F_{p,1}</span>, as the branch containing <span class="math inline">F_{p,1}</span> and <span class="math inline">F_{h,2}</span> is now part of the new longest chain.</em></p>
 </div>
 </div>
-<!--
-
-### Secret mining details{#sec-secret-mining}
--->
+<section id="sec-secret-mining" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="sec-secret-mining"><span class="header-section-number">9.2.1</span> Secret mining details</h3>
+<p>To understand how secretly trying to extend a secret block works from a technical perspective, let us recall the basics of mining. The idea is that we are given a function <span class="math inline">h</span>, that takes as input a “guess” <span class="math inline">z</span> and outputs <span class="math inline">h(z)</span>, and a <em>difficulty level</em> <span class="math inline">\tau</span>. If <span class="math inline">h(z) \leq \tau</span>, then <span class="math inline">z</span> is a solution to the crypto puzzle and a miner can use this solution to obtain the right to add a block to the blockchain.</p>
+<p>A solution <span class="math inline">z</span> is the concatenation of four parts (see <a href="06-ProofofWork.html#def-valid-sol" class="quarto-xref">Definition&nbsp;<span>6.2</span></a> for the full structure of <span class="math inline">z</span>), the most important for us being that <span class="math inline">z</span> specifies which predecessor block the solution <span class="math inline">z</span> is trying to extend. In secret mining this part of the solution is simply the last secretly mined block of the pool that has not been announced publicly.</p>
+<p>Recall that the function <span class="math inline">h</span> never changes in the Proof-of-Work protocol, i.e., it is fixed in the blockchain software, but the difficulty level <span class="math inline">\tau</span> is updated periodically, to keep the expected interval between mined blocks the same (this is done roughly every two weeks). In this chapter we assume that, while the pool is carrying out a selfish mining attack, the difficulty level <span class="math inline">\tau</span> does not change. Otherwise, it might be that already secretly mined blocks become invalid as a result of <span class="math inline">\tau</span> being changed.</p>
+</section>
 </section>
 <section id="general-case" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="general-case"><span class="header-section-number">9.3</span> General case</h2>
@@ -516,50 +518,50 @@ Exercise 9.1
 <p>In Case 2a, when the pool has mined both the secret blocks <span class="math inline">F_{p,1}</span> and <span class="math inline">F_{p,2}</span>, it releases them both and collects a reward for both of them. Instead of doing this, the pool could also have simply kept mining to get a longer <em>private branch</em> (a branch that contains blocks only known to the pool).</p>
 <p>Of course, we have to take into account that honest miners might also find a block in the meantime, which they could use to extend <span class="math inline">B</span>. An extension of <span class="math inline">B</span> using such a block of an honest miner is called an extension into the <em>public branch</em>.</p>
 <p>Roughly speaking, the core idea of the selfish mining attack is that the pool keeps trying to extend their private branch and in this way stay in the lead with respect to the public branch. As an example, suppose that (although probabilistically unlikely) the pool mines four blocks for the private branch, and keeps all these secret, before an honest miner mines a first block for the public branch. Next, suppose an honest miner finds a block to extend <span class="math inline">B</span> that they add to the public branch. To make sure the private branch becomes the longest branch in the long run, the pool right away must make public their first block mined in the secret private branch to create a fork in the publicly known network. This block we now refer to as the <em>publicly known part of the private branch</em>.</p>
-<p>If the pool waits with making public their secret block, the honest miners will agree on the first block of the public branch being added to the longest chain, after which the secret block of the pool becomes usueless.</p>
+<p>If the pool waits with making public their secret block, the honest miners will agree on the first block of the public branch being added to the longest chain, after which the secret block(s) of the pool becomes useless.</p>
 <p>The <em>secret part of the private branch</em> are the remaining three secret blocks. The pool can keep mining on the last block of the secret part of the private branch with the hope of extending it. Whenever an honest miner mines a block to extend the public branch, the pool right away also releases a next block to extend the public part of the private branch. In this way, the public part of the private branch (known to both the pool and all honest miners) always stays as long as the public branch.</p>
 <p>If at some point the difference in length between the total private branch and the public branch becomes one block, the selfish mining strategy prescribes to also announce the last secret block of the private branch right away, at which point the publicly known part of the private branch (which is now the complete private branch) is one block longer than the public branch and therefore the unique longest chain. The pool now receives one unit of reward for <em>every</em> block that is on the private branch, which is now fully publicly known. Intuitively, if the difference becomes equal to one, the pool doesn’t want to risk losing its advantage over the public branch and therefore announces their last block to secure the rewards of all blocks on the private branch.</p>
-<p>At this point, the process starts again, i.e., the pool tries to get a secret lead of two or more blocks on the (new) public branch starting in the last node of the previously private branch. Whenever the difference drops down to one block, the pool releases its last secretly mined block of the new private branch. The process then again repeats, etc.</p>
+<p>At this point, the process starts again, i.e., the pool tries to get a secret lead of two or more blocks starting in the last node of the previously private branch. This node is now the new leaf node. Whenever the difference between the private and public branch drops down to one block, the pool releases its last secretly mined block of the new private branch. The process then again repeats, etc.</p>
 <section id="pseudo-code" class="level3" data-number="9.3.1">
 <h3 data-number="9.3.1" class="anchored" data-anchor-id="pseudo-code"><span class="header-section-number">9.3.1</span> Pseudo-code</h3>
-<p>We next provide the pseudo-code for the above description. To understand this code correctly it is important to realize that the only time that the public branch becomes longer than the private branch, is when both have length <span class="math inline">0</span> (or both length <span class="math inline">1</span>) and the honest miners are the first to find a block. We also emphasize once more that, assuming the public part of the private branch (its first, say, <span class="math inline">k</span> nodes) has length at least one, this part is never shorter than the public branch (apart from the negligible time interval where the honest miners have announced a new block and the pool responds to this by making one of its secret blocks public).</p>
-<p>Finally, we assume that if both the public branch and private branch have length <span class="math inline">1</span> then all honest miners are mining on the public branch. Just as in the warm-up example, if some honest miners would also branch on the publicly known private branch, this can only increase the overall expected reward that the pool obtains in the end.</p>
+<p>We next provide the pseudo-code for the above description. To understand this code correctly it is important to realize that the only time that the public branch becomes longer than the private branch, is when both have length <span class="math inline">0</span> (or both length <span class="math inline">1</span>) and the honest miners are the first to find a block.</p>
+<p>We also emphasize once more that, assuming the public part of the private branch (its first, say, <span class="math inline">k</span> nodes) has length at least one, this part is never shorter than the public branch (apart from the negligible time interval where the honest miners have announced a new block and the pool responds to this by making one of its secret blocks public).</p>
+<p>Finally, we assume that if both the public branch and the public part of the private branch have equal length, then all honest miners are mining on the public branch. Just as in the warm-up example, if some honest miners would also branch on the publicly known private branch, this can only increase the overall expected reward that the pool obtains in the end.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Initialization:</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>     - Leaf node B of unique longest chain</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>     - Emptpy (full) private branch</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>     - Empty public branch</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>If pool finds a new block F_p:</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    If length(public) = 1 and length(private) = 1: </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    # Forking in which both blocks are public (Case 2b-II)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        - Append F_p to private branch as public block</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        - F_p becomes the new leaf node B (= pools wins)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        - Publich and private branch are set to be empty</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    Else:</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        - Append F_p to private chain as a secret block</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>If honest miner finds a new block F_h on public branch:</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    Append F_h to public branch</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    If length(private) = 0: # Case 1</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        - F_h becomes the new leaf node B (= honest miner wins)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        - Public branch is set to be empty</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    Else if length(private) = 1 and length(public) = 1: </span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    # Case 2b; private branch's block was secret until now </span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        - Private branch directly makes secret block public</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        # Public part of private and public branch now have length 1</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    Else if length(private) = 1 and length(public) = 2:</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    # Case 2b-II; private branch's block was already public</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        - F_h becomes the new leaf node B (= honest miner wins)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        - Public and private branch set to be empty</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    Else if length(private branch) - length(public branch) = 1</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    # All but two last blocks of private branch are then public</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        - Pool announces last two secret blocks (= pool wins)</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        - Last secret block becomes the new leaf node B</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        - Public and private branch set to be empty</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    Else if length(private branch) - length(public branch) = d &gt; 1</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    # Last d + 1 blocks of private branch are then secret</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        - Pool makes oldest secret block public in private branch</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>        # Pool is guaranteed to eventually win this block</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>     - Emptpy (full) private branch; Empty public branch</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>If pool finds a new block F_p:</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    If length(public) = 1 and length(private) = 1: </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    # Forking in which both blocks are public (Case 2b-II)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        - Append F_p to private branch as public block</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        - F_p becomes the new leaf node B (= pools wins)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        - Public and private branch are set to be empty</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    Else:</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        - Append F_p to private chain as a secret block</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>If honest miner finds a new block F_h on public branch:</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    Append F_h to public branch</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    If length(private) = 0: # Case 1</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        - F_h becomes the new leaf node B (= honest miner wins)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        - Public branch is set to be empty</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    Else if length(private) = 1 and length(public) = 1: </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    # Case 2b; private branch's block was secret until now </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        - Private branch directly makes secret block public</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        # Public part of private and public branch now have length 1</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    Else if length(private) = 1 and length(public) = 2:</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    # Case 2b-II; private branch's block was already public</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        - F_h becomes the new leaf node B (= honest miner wins)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        - Public and private branch set to be empty</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    Else if length(private branch) - length(public branch) = 1</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    # All but two last blocks of private branch are then public</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        - Pool announces last two secret blocks (= pool wins)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        - Last secret block becomes the new leaf node B</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        - Public and private branch set to be empty</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    Else if length(private branch) - length(public branch) = d &gt; 1</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    # Last d + 1 blocks of private branch are then secret</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        - Pool makes oldest secret block public in private branch</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        # Pool is guaranteed to eventually win this block</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -626,7 +628,7 @@ Figure&nbsp;9.11: Transition probabilities in state space <span class="math inli
 <div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figs/Tikz-pictures/09-tikz-markov-chain-state-0.png" class="img-fluid figure-img" style="width:90.0%">
+<img src="figs/Tikz-pictures/09-tikz-markov-chain-state-0.png" class="img-fluid figure-img" style="width:75.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9.12: Honest miner finds block first in state <span class="math inline">0</span>
@@ -638,7 +640,7 @@ Figure&nbsp;9.12: Honest miner finds block first in state <span class="math inli
 <div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figs/Tikz-pictures/09-tikz-markov-chain-state-0-pool.png" class="img-fluid figure-img" style="width:70.0%">
+<img src="figs/Tikz-pictures/09-tikz-markov-chain-state-0-pool.png" class="img-fluid figure-img" style="width:50.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9.13: Pool finds block first in state <span class="math inline">0</span>; <span class="math inline">F_p</span> stays secret for now (hence, dashed)
@@ -783,7 +785,7 @@ Figure&nbsp;9.21: Pool finds block first in state <span class="math inline">d = 
 </section>
 <section id="stationary-distribution" class="level3" data-number="9.3.4">
 <h3 data-number="9.3.4" class="anchored" data-anchor-id="stationary-distribution"><span class="header-section-number">9.3.4</span> Stationary distribution</h3>
-<p>Assume we start in state <span class="math inline">0</span>, with <span class="math inline">B</span> being the genesis block of the blockchain. We would like to compute the <em>stationary probabilities <span class="math inline">\pi_i</span></em> of every state <span class="math inline">i</span>. That is, given that we have performed enough probabilistic transitions, what it the probability that we are in state <span class="math inline">i</span> of the state space?</p>
+<p>Assume we start in state <span class="math inline">0</span>, with <span class="math inline">B</span> being the genesis block of the blockchain. We would like to compute the <em>stationary probabilities <span class="math inline">\pi_i</span></em> of every state <span class="math inline">i</span>. That is, given that we have performed enough probabilistic transitions, what is the probability that we are in state <span class="math inline">i</span> of the state space?</p>
 <p>The (row) vector <span class="math display">
 \pi = (\pi_{0'},\pi_0,\pi_1,\pi_2,\dots)
 </span> is called the <em>stationary distribution</em> of the Markov chain. It can be computed by solving the (infinite) system of equations <span class="math inline">\pi P  = \pi</span>, where <span class="math inline">P</span> is the transition matrix, whose entries <span class="math inline">P_{ij}</span> or transitioning form state <span class="math inline">i</span> to <span class="math inline">j</span> are given in <a href="#fig-markov-chain" class="quarto-xref">Figure&nbsp;<span>9.21</span></a>. For example, for state <span class="math inline">i \geq 3</span>, the <span class="math inline">i</span>-th row of the system <span class="math inline">\pi P  = \pi</span> reads <span class="math display">
@@ -834,7 +836,7 @@ Exercise 9.6
 </section>
 <section id="reward-analysis" class="level3" data-number="9.3.5">
 <h3 data-number="9.3.5" class="anchored" data-anchor-id="reward-analysis"><span class="header-section-number">9.3.5</span> Reward analysis</h3>
-<p>To determinte the reward of the pool when using the selfish mining attack, we extend the Markov chain description with the notion of rewards. Given that we move from a state <span class="math inline">i \in \{0',0,1,2,\dots\}</span> to some other state, we can compute the expected rewards associated with moving away from <span class="math inline">i</span>.</p>
+<p>To determine the reward of the pool when using the selfish mining attack, we extend the Markov chain description with the notion of rewards. Given that we move from a state <span class="math inline">i \in \{0',0,1,2,\dots\}</span> to some other state, we can compute the expected rewards associated with moving away from <span class="math inline">i</span>.</p>
 <p>If we multiply these rewards with the stationary probabilities of every state, we obtain the expected overall reward from the selfish mining strategy. In mathematical terms, we turn our Markov chain into a Markov Decision Process (MDP) by introducing a reward associated to every transition.</p>
 <p>We will delve into the reward analysis in the next lecture to investigate how much more reward the selfish mining attack can yield. This analysis will show, in particular, that even mining pools of size <span class="math inline">1/3 &lt; \alpha &lt; 1/2</span> can obtain relatively more reward than by mining on their own.</p>
 </section>
