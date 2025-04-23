@@ -512,7 +512,7 @@ Exercise 9.1
 <h3 data-number="9.2.1" class="anchored" data-anchor-id="sec-secret-mining"><span class="header-section-number">9.2.1</span> Secret mining details</h3>
 <p>To understand how secretly trying to extend a secret block works from a technical perspective, let us recall the basics of mining. The idea is that we are given a function <span class="math inline">h</span>, that takes as input a “guess” <span class="math inline">z</span> and outputs <span class="math inline">h(z)</span>, and a <em>difficulty level</em> <span class="math inline">\tau</span>. If <span class="math inline">h(z) \leq \tau</span>, then <span class="math inline">z</span> is a solution to the crypto puzzle and a miner can use this solution to obtain the right to add a block to the blockchain.</p>
 <p>A solution <span class="math inline">z</span> is the concatenation of four parts (see <a href="06-ProofofWork.html#def-valid-sol" class="quarto-xref">Definition&nbsp;<span>6.2</span></a> for the full structure of <span class="math inline">z</span>), the most important for us being that <span class="math inline">z</span> specifies which predecessor block the solution <span class="math inline">z</span> is trying to extend. In secret mining this part of the solution is simply the last secretly mined block of the pool that has not been announced publicly.</p>
-<p>Recall that the function <span class="math inline">h</span> never changes in the Proof-of-Work protocol, i.e., it is fixed in the blockchain software, but the difficulty level <span class="math inline">\tau</span> is updated periodically, to keep the expected interval between mined blocks the same (this is done roughly every two weeks). In this chapter we assume that, while the pool is carrying out a selfish mining attack, the difficulty level <span class="math inline">\tau</span> does not change. Otherwise, it might be that already secretly mined blocks become invalid as a result of <span class="math inline">\tau</span> being changed.</p>
+<p>Recall that the function <span class="math inline">h</span> never changes in the Proof-of-Work protocol, i.e., it is fixed in the blockchain software, but the difficulty level <span class="math inline">\tau</span> is updated periodically, to keep the expected interval between mined blocks the same (this is done roughly every two weeks). In this chapter we assume that, while the pool is carrying out a selfish mining attack, the difficulty level <span class="math inline">\tau</span> does not change. Otherwise, it might be that already secretly mined blocks become invalid as a result of <span class="math inline">\tau</span> being lowered (if <span class="math inline">\tau</span> would be increased, this is not problematic with respect to secret mining).</p>
 </section>
 </section>
 <section id="general-case" class="level2" data-number="9.3">
@@ -557,7 +557,7 @@ Figure&nbsp;9.11: Schematic overview of branches
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    Else:</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        - Append F_p to pool branch as a secret block</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>If honest miner finds a new block F_h on public branch:</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>If honest miner finds a new block F_h for public branch:</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    Append F_h to public branch</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    If length(pool) = 0: # Case 1</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        - F_h becomes the new leaf node B (= honest miner wins)</span>
@@ -592,7 +592,7 @@ Figure&nbsp;9.11: Schematic overview of branches
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    Else:</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        - Append F_p to pool branch as a secret block</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>If honest miner finds a new block F_h on public branch:</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>If honest miner finds a new block F_h for public branch:</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    Append F_h to public branch</span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    If length(pool) = 0: </span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        - F_h becomes the new leaf node B (= honest miner wins)</span>
