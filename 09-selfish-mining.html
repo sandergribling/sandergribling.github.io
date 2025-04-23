@@ -984,7 +984,7 @@ Exercise 9.8
 </div>
 <div class="callout-body-container callout-body">
 <p>Show that <span class="math display">
-R_{\text{pool}} = R_{\text{pool}}(\alpha) = \frac{4\alpha^2(1-\alpha)^2 - \alpha^3}{1-\alpha(1 + (2-\alpha)\alpha)}
+R_{\text{pool}} = R_{\text{pool}}(\alpha) = \frac{4\alpha^2  - 9\alpha^3 + 4\alpha^4}{1 - \alpha - 2\alpha^2 + \alpha^3}
 </span></p>
 </div>
 </div>
@@ -1002,7 +1002,7 @@ Figure&nbsp;9.25: Relative reward of pool when using selfish mining.
 <p>This leads us to the main theorem, showing that indeed also minority pools of size at least <span class="math inline">1/3</span> can benefit from selfish mining.</p>
 <div id="thm-selfish-mining" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 9.2 (Selfish mining)</strong></span> For any mining pool of size <span class="math inline">0 &lt; \alpha &lt; \frac{1}{2}</span>, the expected relative reward of the selfish mining strategy is <span class="math display">
-\frac{4\alpha^2(1-\alpha)^2 - \alpha^3}{1-\alpha(1 + (2-\alpha)\alpha)}.
+\frac{4\alpha^2  - 9\alpha^3 + 4\alpha^4}{1 - \alpha - 2\alpha^2 + \alpha^3}.
 </span> The above quantity is greater than <span class="math inline">\alpha</span>, the expected relative reward when the pool also mines honestly, if and only if <span class="math inline">\frac{1}{3} &lt; \alpha &lt; \frac{1}{2}</span>.</p>
 </div>
 </section>
