@@ -519,7 +519,7 @@ Exercise 9.1
 <h2 data-number="9.3" class="anchored" data-anchor-id="general-case"><span class="header-section-number">9.3</span> General case</h2>
 <p>We continue with the general description of the selfish mining attack. It essentially follows the example with the difference being Case 2a (explained below). If the pool is the first to mine a block extending leaf node <span class="math inline">B</span>, they keep it secret. If the honest miners mine a block, and the pool has a secret block, they announce it right away to create a forking. If then the pool is the first to mine a second block, they announce this as well so that their chain of two blocks is the new longest chain and their last block becomes the new leaf node <span class="math inline">B</span>.</p>
 <blockquote class="blockquote">
-<p><strong>(A3)</strong> We assume an honest miner never tries to extend a block mined by the pool in case of a forking consisting of two branches of equal length. Similar as in Exercise 9.1, in the final reward analysis that we do in <a href="#sec-reward-analysis" class="quarto-xref"><span>Section 9.3.5</span></a>, if honest miners would also try to extend block mined by the pool, this can only increase the expected reward of the pool.</p>
+<p><strong>(A3)</strong> We assume an honest miner never tries to extend a block mined by the pool in case of a forking consisting of two branches of equal length. Similar as in Exercise 9.1, in the final reward analysis that we do in <a href="#sec-reward-analysis" class="quarto-xref"><span>Section 9.3.5</span></a>, if honest miners would also try to extend a block mined by the pool, this can only increase the expected reward of the pool.</p>
 </blockquote>
 <p>In Case 2a, when the pool has mined both the secret blocks <span class="math inline">F_{p,1}</span> and <span class="math inline">F_{p,2}</span>, it releases them both and collects a reward for both of them. Instead of doing this, the pool could also have simply kept mining to get a longer <em>private/pool branch</em> (a branch that contains some blocks only known to the pool).</p>
 <p>Of course, we have to take into account that honest miners might also find a block in the meantime, which they could use to extend <span class="math inline">B</span>. An extension of <span class="math inline">B</span> using such a block of an honest miner is called an extension into the <em>public branch</em>.</p>
@@ -537,19 +537,19 @@ Figure&nbsp;9.11: Schematic overview of branches
 </figure>
 </div>
 <p>If at some point the difference in length between the total pool branch and the public branch becomes one block, the selfish mining strategy prescribes to also announce the last secret block of the pool branch right away, at which point the publicly known part of the pool branch (which is now the complete pool branch) is one block longer than the public branch and therefore the unique longest chain. In <a href="#fig-branches" class="quarto-xref">Figure&nbsp;<span>9.11</span></a> this would happen if the honest miners mine two additional blocks for the public branch, before the pool manages to extend the pool branch. The pool now receives one unit of reward for <em>every</em> block that is on the pool branch, which is now fully publicly known; in <a href="#fig-branches" class="quarto-xref">Figure&nbsp;<span>9.11</span></a> the pool would receive <span class="math inline">5</span> units of reward. Intuitively, if the difference becomes equal to one, the pool doesn’t want to risk losing its advantage over the public branch and therefore announces their last block to secure the rewards of all blocks on the pool branch.</p>
-<p>At this point, the process starts again, i.e., the pool tries to get a secret lead of two or more blocks starting in the last node of the previously pool branch. This node is now the new leaf node; in <a href="#fig-branches" class="quarto-xref">Figure&nbsp;<span>9.11</span></a> this is the right-most block of the pool branch. Whenever the difference between the private and public branch drops down to one block, the pool releases its last secretly mined block of the new pool branch. The process then again repeats, etc.</p>
+<p>At this point, the process starts again, i.e., the pool tries to get a secret lead of two or more blocks starting in the last node of the previously pool branch. This node is now the new leaf node; in <a href="#fig-branches" class="quarto-xref">Figure&nbsp;<span>9.11</span></a> this is the right-most block of the pool branch. Whenever the difference between the pool and public branch drops down to one block, the pool releases its last secretly mined block of the new pool branch. The process then again repeats, etc.</p>
 <section id="pseudo-code" class="level3" data-number="9.3.1">
 <h3 data-number="9.3.1" class="anchored" data-anchor-id="pseudo-code"><span class="header-section-number">9.3.1</span> Pseudo-code</h3>
 <p>We next provide the pseudo-code for the above description. To understand this code correctly it is important to realize that the only time that the public branch becomes longer than the pool branch, is when both have length <span class="math inline">0</span> (or both length <span class="math inline">1</span>) and the honest miners are the first to find a block.</p>
 <p>We also emphasize once more that, assuming the public part of the pool branch (its first, say, <span class="math inline">k</span> nodes) has length at least one, this part is never shorter than the public branch (apart from the negligible time interval where the honest miners have announced a new block and the pool responds to this by making one of its secret blocks public).</p>
 <p>Finally, recall that if both the public branch and the public part of the pool branch have equal length, then all honest miners are mining on the public branch, as stated in Assumption A3. Just as in the warm-up example, if some honest miners would also branch on the publicly known pool branch, this can only increase the overall expected reward that the pool obtains in the end.</p>
-<p>In the pseudocode below, we write <code>length(public)</code> for the number of blocks in the public branch at a given point in time, and <code>length(private)</code> for the total number of blocks (both private and public) in the pool branch.</p>
+<p>In the pseudocode below, we write <code>length(public)</code> for the number of blocks in the public branch at a given point in time, and <code>length(pool)</code> for the total number of blocks (both private and public) in the pool branch.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Initialization:</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>     - Leaf node B of unique longest chain</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>     - Emptpy (full) pool branch; Empty public branch</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>If pool finds a new block F_p:</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    If length(public) = 1 and length(private) = 1: </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    If length(public) = 1 and length(pool) = 1: </span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    # Forking in which both blocks are public (Case 2b-II)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        - Append F_p to pool branch as public block</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        - F_p becomes the new leaf node B (= pools wins)</span>
@@ -559,26 +559,55 @@ Figure&nbsp;9.11: Schematic overview of branches
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        </span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>If honest miner finds a new block F_h on public branch:</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    Append F_h to public branch</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    If length(private) = 0: # Case 1</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    If length(pool) = 0: # Case 1</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        - F_h becomes the new leaf node B (= honest miner wins)</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        - Public branch is set to be empty</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    Else if length(private) = 1 and length(public) = 1: </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    Else if length(pool) = 1 and length(public) = 1: </span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    # Case 2b; pool branch's block was secret until now </span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        - pool branch directly makes secret block public</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        - Pool branch directly makes secret block public</span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        # Public part of private and public branch now have length 1</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    Else if length(private) = 1 and length(public) = 2:</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    Else if length(pool) = 1 and length(public) = 2:</span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    # Case 2b-II; pool branch's block was already public</span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        - F_h becomes the new leaf node B (= honest miner wins)</span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        - Public and pool branch set to be empty</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    Else if length(pool branch) - length(public branch) = 1</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    Else if length(pool) - length(public) = 1</span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    # All but two last blocks of pool branch are then public</span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        - Pool announces last two secret blocks (= pool wins)</span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        - Last secret block becomes the new leaf node B</span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        - Public and pool branch set to be empty</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    Else if length(pool branch) - length(public branch) = d &gt; 1</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    Else if length(pool) - length(public) = d &gt; 1</span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    # Last d + 1 blocks of pool branch are then secret</span>
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        - Pool makes oldest secret block public in pool branch</span>
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        # Pool is guaranteed to eventually win this block</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Below is also the pseudo-code without comments.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Initialization:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>     - Leaf node B of unique longest chain</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>     - Emptpy (full) pool branch; Empty public branch</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>If pool finds a new block F_p:</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    If length(public) = 1 and length(pool) = 1: </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        - Append F_p to pool branch as public block</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        - F_p becomes the new leaf node B (= pools wins)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        - Public and pool branch are set to be empty</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    Else:</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        - Append F_p to pool branch as a secret block</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>If honest miner finds a new block F_h on public branch:</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    Append F_h to public branch</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    If length(pool) = 0: </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        - F_h becomes the new leaf node B (= honest miner wins)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        - Public branch is set to be empty</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    Else if length(pool) = 1 and length(public) = 1: </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        - Pool branch directly makes secret block public</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    Else if length(pool) = 1 and length(public) = 2:</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        - F_h becomes the new leaf node B (= honest miner wins)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        - Public and pool branch set to be empty</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    Else if length(pool branch) - length(public branch) = 1</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        - Pool announces last two secret blocks (= pool wins)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        - Last secret block becomes the new leaf node B</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        - Public and pool branch set to be empty</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    Else if length(pool branch) - length(public branch) = d &gt; 1</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        - Pool makes oldest secret block public in pool branch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -658,8 +687,8 @@ Exercise 9.5
 <div class="callout-body-container callout-body">
 <p>Explain that after the honest miners have announced a newly found block <span class="math inline">F_h</span> to their public branch, but right before the pool has responded to this:</p>
 <ul>
-<li>if <code>length(pool branch) - length(public branch) = 1</code>, then it must be that precisely the last two blocks of the private chain are still secret.</li>
-<li>if <code>length(pool branch) - length(public branch) = d &gt; 1</code>, then it must be that the last <span class="math inline">d+1</span> bloks of the pool branch are still secret.</li>
+<li>if <code>length(pool) - length(public) = 1</code>, then it must be that precisely the last two blocks of the private chain are still secret.</li>
+<li>if <code>length(pool) - length(public) = d &gt; 1</code>, then it must be that the last <span class="math inline">d+1</span> bloks of the pool branch are still secret.</li>
 </ul>
 </div>
 </div>
@@ -909,7 +938,7 @@ Exercise 9.7
 <section id="sec-reward-analysis" class="level3" data-number="9.3.5">
 <h3 data-number="9.3.5" class="anchored" data-anchor-id="sec-reward-analysis"><span class="header-section-number">9.3.5</span> Reward analysis</h3>
 <p>To determine the reward of the pool when using the selfish mining attack, we extend the Markov chain description with the notion of rewards. Given that we move from a state <span class="math inline">i \in \{0',0,1,2,\dots\}</span> to some other state, we can compute the expected rewards associated with moving away from <span class="math inline">i</span>.</p>
-<p>If we multiply these rewards with the stationary probabilities of every state, we obtain the expected overall reward from the selfish mining strategy. In mathematical terms, we turn our Markov chain into a <em>Markov Decision Process (MDP)</em> by introducing a reward associated to every transition.</p>
+<p>If we multiply these rewards with the stationary probabilities of every state, we obtain the expected overall reward per block from the selfish mining strategy in the long run. In mathematical terms, we turn our Markov chain into a <em>Markov Decision Process (MDP)</em> by introducing a reward associated to every transition.</p>
 <p>We will next consider all the states and their associated awards.</p>
 <ul>
 <li><p><strong>State <span class="math inline">0'</span></strong>. Recall that in this state there is a forking in which both the pool and public branch have length <span class="math inline">1</span>. If the honest miners manage to mine a block first extending the public branch they receive a reward of <span class="math inline">2</span>. This happens with probability <span class="math inline">1-\alpha</span> and so their expected reward is <span class="math inline">2(1-\alpha)</span>. If the pool manages to mine a block first extending the pool branch, they obtain a reward of <span class="math inline">2</span>. This happens with probability <span class="math inline">\alpha</span>, and so the expected reward when transition away from state <span class="math inline">0'</span> is <span class="math inline">2\alpha</span>.</p></li>
@@ -932,14 +961,15 @@ Figure&nbsp;9.24: Overview reward analysis per state.
 </figcaption>
 </figure>
 </div>
-<p>This means that in stationarity, the overall expected reward of the pool is equal to <span class="math display">
+<p>This means that in stationarity, the overall expected reward of the poolper block is equal to <span class="math display">
 \begin{array}{ll}
 r_{\text{pool}} &amp; = \displaystyle \pi_{0'} \cdot  r_{\text{pool}}^{0'}+ \sum_{i=1}^\infty \pi_i \cdot r_{\text{pool}}^i \\
 &amp; =   \displaystyle \pi_{0'} \cdot 2\alpha + \pi_2 \cdot 2(1-\alpha) + \left( \sum_{i=3}^\infty \pi_i \right) \cdot (1-\alpha)
 \end{array}
-</span> and <span class="math display">
+</span> and that of the honest miners is <span class="math display">
 r_{\text{honest}} = \pi_{0'} \cdot  r_{\text{honest}}^{0'}+ \sum_{i=1}^\infty \pi_i \cdot r_{\text{honest}}^i = \pi_{0'} \cdot 2(1-\alpha) + \pi_0 \cdot (1-\alpha).
 </span></p>
+<p>It can be shown that <span class="math inline">r_{\text{pool}} + r_{\text{honest}}  &lt; 1</span>, which intuitively follows from the fact that because of possible forkings, the protocol will not hand out a unit reward for every mined block.</p>
 <p>To compute the share of the rewards that the pool gets, we want to compute the <em>expected relative reward</em> of the pool, which is <span class="math display">
 R_{\text{pool}} = \frac{r_{\text{pool}}}{r_{\text{pool}} + r_{\text{honest}}}.
 </span></p>
