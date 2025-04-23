@@ -368,7 +368,7 @@ Figure&nbsp;9.2: A fork in the currently longest chain
 <p>However, it turns out that there is an incentive for a pool to not <em>directly</em> reveal their newly mined block to the network, but instead secretly continue mining on a new block that could be appended to the already mined block. At this point, we assume this <em>secret mining</em> is possible. Under some mild assumptions we justify this assumption in <a href="#sec-secret-mining" class="quarto-xref"><span>Section 9.2.1</span></a>.</p>
 <p>If it would happen that in the meantime an honest node announces another new block, the pool quickly makes its secret block public as well, resulting in a forking of the longest chain, see, e.g., <a href="#fig-blockchain-fork" class="quarto-xref">Figure&nbsp;<span>9.2</span></a>. The justification for making this possible is the fact that accidental bifurcation is a known phenomenon, as we mentioned earlier. To emphasize the importance of this assumption, we state it below.</p>
 <blockquote class="blockquote">
-<p><strong>(A2)</strong> If a pool has a secretly mined block <span class="math inline">F_p</span> (not yet known to miners outside of the pool) extending a leaf node <span class="math inline">B</span> of the currently longest chain, and a miner from outside the pool announces their own new block <span class="math inline">F_h</span> extending <span class="math inline">B</span>, then the pool can quickly announce its private block <span class="math inline">F_p</span>, resulting in a forking of the longest chain.</p>
+<p><strong>(A2)</strong> If a pool has a secretly mined block <span class="math inline">F_p</span> (not yet known to miners outside of the pool) extending a leaf node <span class="math inline">B</span> of the currently longest chain, and a miner from outside the pool announces their own new block <span class="math inline">F_h</span> extending <span class="math inline">B</span>, then the pool can quickly announce its secret block <span class="math inline">F_p</span>, resulting in a forking of the longest chain.</p>
 </blockquote>
 <p>To keep the exposition clean, we will always assume that the ensemble of miners can be divided into two groups for a given <span class="math inline">\alpha \in (0,1)</span>: A pool of colluding miners with a total hash rate of <span class="math inline">\alpha</span>, and a group of individual (honest) miners with a total hash rate of <span class="math inline">1 - \alpha</span>. We sometimes say that the <em>pool has size <span class="math inline">\alpha</span></em>.</p>
 <p>To develop some intuition about why it could be useful to withhold a block, let us consider an example (or thought experiment) in which we analyze the reward of a mining pool of size <span class="math inline">\alpha</span> for the next two blocks that are added to the longest chain.</p>
@@ -543,7 +543,7 @@ Figure&nbsp;9.11: Schematic overview of branches
 <p>We next provide the pseudo-code for the above description. To understand this code correctly it is important to realize that the only time that the public branch becomes longer than the pool branch, is when both have length <span class="math inline">0</span> (or both length <span class="math inline">1</span>) and the honest miners are the first to find a block.</p>
 <p>We also emphasize once more that, assuming the public part of the pool branch (its first, say, <span class="math inline">k</span> nodes) has length at least one, this part is never shorter than the public branch (apart from the negligible time interval where the honest miners have announced a new block and the pool responds to this by making one of its secret blocks public).</p>
 <p>Finally, recall that if both the public branch and the public part of the pool branch have equal length, then all honest miners are mining on the public branch, as stated in Assumption A3. Just as in the warm-up example, if some honest miners would also branch on the publicly known pool branch, this can only increase the overall expected reward that the pool obtains in the end.</p>
-<p>In the pseudocode below, we write <code>length(public)</code> for the number of blocks in the public branch at a given point in time, and <code>length(pool)</code> for the total number of blocks (both private and public) in the pool branch.</p>
+<p>In the pseudocode below, we write <code>length(public)</code> for the number of blocks in the public branch at a given point in time, and <code>length(pool)</code> for the total number of blocks (both secret and public) in the pool branch.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Initialization:</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>     - Leaf node B of unique longest chain</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>     - Emptpy (full) pool branch; Empty public branch</span>
@@ -565,7 +565,7 @@ Figure&nbsp;9.11: Schematic overview of branches
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    Else if length(pool) = 1 and length(public) = 1: </span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    # Case 2b; pool branch's block was secret until now </span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        - Pool branch directly makes secret block public</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        # Public part of private and public branch now have length 1</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        # Public part of pool and public branch now have length 1</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    Else if length(pool) = 1 and length(public) = 2:</span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    # Case 2b-II; pool branch's block was already public</span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        - F_h becomes the new leaf node B (= honest miner wins)</span>
@@ -687,7 +687,7 @@ Exercise 9.5
 <div class="callout-body-container callout-body">
 <p>Explain that after the honest miners have announced a newly found block <span class="math inline">F_h</span> to their public branch, but right before the pool has responded to this:</p>
 <ul>
-<li>if <code>length(pool) - length(public) = 1</code>, then it must be that precisely the last two blocks of the private chain are still secret.</li>
+<li>if <code>length(pool) - length(public) = 1</code>, then it must be that precisely the last two blocks of the pool branch are still secret.</li>
 <li>if <code>length(pool) - length(public) = d &gt; 1</code>, then it must be that the last <span class="math inline">d+1</span> bloks of the pool branch are still secret.</li>
 </ul>
 </div>
@@ -720,7 +720,7 @@ Figure&nbsp;9.13: Transition probabilities in state space <span class="math inli
 <p>Similar as before, in all the figures below, the top branch is always the pool branch, and the bottom branch is the public branch. Furthermore, publicly known blocks (on the public branch or the public part of the pool branch) are denoted with solid squares, whereas secret blocks on the pool branch are denoted with dashed squares.</p>
 </blockquote>
 <ul>
-<li><strong>State <span class="math inline">0</span></strong>: Both the private and the public branch have length <span class="math inline">0</span>.
+<li><strong>State <span class="math inline">0</span></strong>: Both the pool and the public branch have length <span class="math inline">0</span>.
 <ul>
 <li>If honest miners find a block <span class="math inline">F_h</span> first, which happens with probability <span class="math inline">1 - \alpha,</span> it is added to the public branch. The public branch becomes part of the longest chain and the process then restarts with <span class="math inline">F_h</span> being the new leaf node <span class="math inline">B</span>. We therfore start again with a public and pool branch of length <span class="math inline">0</span> and so do not move in the state space.</li>
 </ul>
@@ -747,7 +747,7 @@ Figure&nbsp;9.15: Pool finds block first in state <span class="math inline">0</s
 </figure>
 </div></li>
 </ul></li>
-<li><strong>State <span class="math inline">0'</span></strong>: Both private and publich branch have length <span class="math inline">1</span>.
+<li><strong>State <span class="math inline">0'</span></strong>: Both pool and publich branch have length <span class="math inline">1</span>.
 <ul>
 <li><p>If honest miners find a block first, which happens with probability <span class="math inline">1 - \alpha</span>, the public branch becomes part of the longest chain, and the process restarts.</p>
 <div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -773,7 +773,7 @@ Figure&nbsp;9.17: Pool finds block first in state <span class="math inline">0'</
 </div></li>
 </ul></li>
 </ul>
-<p>Since the process restarts in both cases here, with an empty private and public branch, we move to state <span class="math inline">0</span> with probability <span class="math inline">\alpha + 1 - \alpha = 1</span>.</p>
+<p>Since the process restarts in both cases here, with an empty pool and public branch, we move to state <span class="math inline">0</span> with probability <span class="math inline">\alpha + 1 - \alpha = 1</span>.</p>
 <ul>
 <li><strong>State <span class="math inline">2</span></strong>: The pool branch is two (secret) blocks longer than the public branch.
 <ul>
@@ -829,7 +829,7 @@ Solution
 <ul>
 <li><strong>State <span class="math inline">1</span></strong>: The pool branch consists of one secret block.
 <ul>
-<li><p>If honest miners find a block first, which happens with probability <span class="math inline">1 - \alpha</span>, the pool right away make there secret public private, to create a fork in the publicly known network. In this case we move to state <span class="math inline">0'</span>.</p>
+<li><p>If honest miners find a block first, which happens with probability <span class="math inline">1 - \alpha</span>, the pool right away makes there secret block public to create a fork in the publicly known network. In this case we move to state <span class="math inline">0'</span>.</p>
 <div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -854,7 +854,7 @@ Figure&nbsp;9.21: Pool finds block first in state <span class="math inline">1</s
 </ul></li>
 <li><strong>State <span class="math inline">d \geq 3</span></strong>: The pool branch is <span class="math inline">d</span> (secret) blocks longer than the public branch.
 <ul>
-<li><p>If honest miners find a block first, which happens with probability <span class="math inline">1 - \alpha</span>, the pool right away makes the left most secret block of the private chain public, so that its public part is as long as the publich branch. Since we now have one secret block less, we move to state <span class="math inline">d-1</span>.</p>
+<li><p>If honest miners find a block first, which happens with probability <span class="math inline">1 - \alpha</span>, the pool right away makes the left most secret block of the pool branch public, so that its public part is as long as the publich branch. Since we now have one secret block less, we move to state <span class="math inline">d-1</span>.</p>
 <div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
