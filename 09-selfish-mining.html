@@ -888,7 +888,7 @@ Figure&nbsp;9.23: Pool finds block first in state <span class="math inline">d = 
 <p>The (row) vector <span class="math display">
 \pi = (\pi_{0'},\pi_0,\pi_1,\pi_2,\dots)
 </span> is called the <em>stationary distribution</em> of the Markov chain. It can be computed by solving the (infinite) system of equations <span class="math inline">\pi P  = \pi</span>, where <span class="math inline">P</span> is the transition matrix, whose entries <span class="math inline">P_{ij}</span> or transitioning from state <span class="math inline">i</span> to <span class="math inline">j</span> are given in <a href="#fig-markov-chain" class="quarto-xref">Figure&nbsp;<span>9.23</span></a>. For example, for state <span class="math inline">i \geq 3</span>, the <span class="math inline">i</span>-th row of the system <span class="math inline">\pi P  = \pi</span> reads <span class="math display">
-\alpha p_{i-1} + (1-\alpha) p_{i+1} = p_i
+\alpha \pi_{i-1} + (1-\alpha) \pi_{i+1} = \pi_i
 </span></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -896,7 +896,7 @@ Figure&nbsp;9.23: Pool finds block first in state <span class="math inline">d = 
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 9.6
+Exercise 9.7
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -917,7 +917,7 @@ for every $i,j \in \{0',0,1,2,\dots\}$. This is a convenient fact from which the
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 9.7
+Exercise 9.8
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -929,7 +929,7 @@ Exercise 9.7
 \pi_{i} = \displaystyle \left(\frac{\alpha}{1-\alpha}\right)^{i-1} \frac{\alpha - 2\alpha^2}{1 - 4\alpha^2 + 2\alpha^3} &amp; \forall i \geq 1
 \end{array}
 \right.
-</span> is the stationary distribution solving <span class="math inline">\pi P = \pi</span> by verifying that <span class="math inline">\pi</span> satisfies the equations from Exercise 9.6, and the equations <span class="math inline">\alpha p_{i-1} + (1-\alpha) p_{i+1} = p_i</span> for <span class="math inline">i \geq 3</span>.</p>
+</span> is the stationary distribution solving <span class="math inline">\pi P = \pi</span> by verifying that <span class="math inline">\pi</span> satisfies the equations from Exercise 9.7, and the equations <span class="math inline">\alpha p_{i-1} + (1-\alpha) p_{i+1} = p_i</span> for <span class="math inline">i \geq 3</span>.</p>
 <p>Also show that <span class="math inline">\pi</span> is indeed a probability distribution, by showing that <span class="math inline">\pi_{0'} + \sum_{i=0}^\infty \pi_i = 1</span> and <span class="math inline">\pi_i \geq 0</span> for all <span class="math inline">i</span>.</p>
 <p><em>Alternatively, you can also try the more challenging problem of solving from scratch the system <span class="math inline">\pi P = \pi, \pi_{0'} + \sum_{i=0}^\infty \pi_i = 1</span>.</em></p>
 </div>
@@ -979,7 +979,7 @@ R_{\text{pool}} = \frac{r_{\text{pool}}}{r_{\text{pool}} + r_{\text{honest}}}.
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 9.8
+Exercise 9.9
 </div>
 </div>
 <div class="callout-body-container callout-body">
