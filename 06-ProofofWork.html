@@ -328,14 +328,14 @@ window.Quarto = {
 <h2 data-number="6.3" class="anchored" data-anchor-id="sha-256"><span class="header-section-number">6.3</span> SHA-256</h2>
 <p>Here we give a brief illustration of how hashing works. We will use as example the SHA-256 hash function. SHA stands for Secure Hash Algorithm. The number 256 refers to the number of bits of the output.</p>
 <p>We will use the python <code>hashlib</code> module, which we first need to import.</p>
-<div id="c35674c0" class="cell" data-execution_count="1">
+<div id="32770a73" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hashlib</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Here is an example of how to use SHA256 to hash a short message. The input message will be ``Decentralized finance is cool!’’ and the output is a bitstring of length 256.</p>
-<div id="90f36df4" class="cell" data-execution_count="2">
+<div id="0e7a7f4d" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The message to hash</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>message <span class="op">=</span> <span class="st">"Decentralized finance is cool!"</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -355,7 +355,7 @@ Length of the bitstring: 256</code></pre>
 </div>
 </div>
 <p>Let us now investigate the key property of hash functions: they look like a random function. In particular, this implies that it is hard to predict the output of the function. To illustrate this, let us hash a second message that is very similar to the first: ``Decentralized finance is cool!!!’’</p>
-<div id="6ea1309c" class="cell" data-execution_count="3">
+<div id="06ac62d5" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">### Second message </span></span>
@@ -378,7 +378,7 @@ Length of the bitstring: 256</code></pre>
 </div>
 </div>
 <p>If you compare the two strings, you will notice some differences right away. How different are the two strings? If the hash function assigns a random output to every input, then you would expect the two bitstrings to differ in roughly half their entries. Let us use python to count the number of different entries in the two strings.</p>
-<div id="6ff8349c" class="cell" data-execution_count="4">
+<div id="f365cb15" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_differences(bitstring1, bitstring2):</span>

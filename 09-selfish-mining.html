@@ -341,7 +341,7 @@ Figure&nbsp;9.2: A fork in the currently longest chain
 <p>Given that we are now considering the mining of multiple blocks over time, we also need a notion of time to model how long it takes for a miner to mine a block (consistent with the fact that the probability of being the first miner to solve the puzzle is proportional to the hash rate of that miner).</p>
 <blockquote class="blockquote">
 <p><strong>(A1)</strong> We assume that the time that it takes for miner <span class="math inline">i</span> with hash rate <span class="math inline">\mu_i</span> to solve the cryptographic puzzle is a random variable <span class="math inline">X_i</span> that follows an exponential distribution with parameter <span class="math inline">\lambda_i = \mu_i</span>, i.e., for <span class="math inline">x \geq 0</span>, <span class="math display">
-\mathbb{P}(X_i \geq x) = 1 - \mathrm{e}^{-\lambda_i x}.
+\mathbb{P}(X_i \leq x) = 1 - \mathrm{e}^{-\lambda_i x}.
 </span></p>
 </blockquote>
 <p><a href="#prp-minimum" class="quarto-xref">Proposition&nbsp;<span>9.1</span></a> states that if two miners with hash rates <span class="math inline">\mu_1</span> and <span class="math inline">\mu_2</span> are trying to extend the same leaf block, then <span class="math inline">\mu_1</span> is the first to solve the cryptographic puzzle with probability <span class="math inline">\mu_1/(\mu_1 + \mu_2)</span>, and similarly, miner <span class="math inline">2</span> is the first solve it with probability <span class="math inline">\mu_2/(\mu_1 + \mu_2)</span>.</p>
