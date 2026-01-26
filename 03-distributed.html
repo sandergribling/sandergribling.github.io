@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.52">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -67,10 +67,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-86daaaaad7353f9cc0c554efc1dd6d94.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-62e20c3a9a596b9ec96172d55444f71c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -303,7 +303,7 @@ window.Quarto = {
 <p>We then give a formal definition of the underlying problem: the State Machine Replication (SMR) problem. The second half of this chapter is devoted to formalizing and discussing various assumptions about distributed computing networks. The next chapters are dedicated to solutions of the SMR problem under increasingly more realistic assumptions.</p>
 <section id="example-maintaining-copies-of-a-file" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="example-maintaining-copies-of-a-file"><span class="header-section-number">3.1</span> Example: maintaining copies of a file</h2>
-<p>To set the stage, consider the following situation. On my computer, I have an excel file with the grades of all students who take this course. Naturally, I would like to make sure that I don’t lose this file. To do so, I can create multiple copies of this file and store them on different computers. That way, if one of the computers breaks, I still have a copy of the file on another computer. Making such a backup once, is easy enough. The problem that we will consider arises when I want to be able to update the file (for example, after the resit) in such a way that the various backups to agree with each other.</p>
+<p>To set the stage, consider the following situation. On my computer, I have an excel file with the grades of all students who take this course. Naturally, I would like to make sure that I don’t lose this file. To do so, I can create multiple copies of this file and store them on different computers. That way, if one of the computers breaks, I still have a copy of the file on another computer. Making such a backup once, is easy enough. The problem that we will consider arises when I want to be able to update the file (for example, after the resit) in such a way that the various backups agree with each other.</p>
 <p>We start to see an outline of a distributed computing problem: we can view the different computers as nodes in a graph. If there are <span class="math inline">n</span> computers, there would be <span class="math inline">n</span> nodes in the graph. Our task would be to ensure that the <span class="math inline">n</span> computers each have an up to date copy of the file.</p>
 <p>The above example is written from a <em>centralized</em> perspective. There is one agent, the “I” persona, that can simply perform the update to each copy of the file. In a <em>decentralized</em> setting, we would like the computers to run some sort of protocol that ensures that if I change the file on one of the computers, then the same change is made on all other devices. One quickly realizes that this protocol will require the devices to communicate. This brings us to the second part of the graph: the communication links between the computers determine the edge set of the graph.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p><strong>Connection to blockchains</strong>: If we want to construct a cryptocurrency based on blockchains, then we are essentially interested in solving a similar type of problem. Indeed, we can draw the following analogy. Each participant in the cryptocurrency would correspond to a node in the network. The file that we want each participant to maintain consists of two parts: a list of the current balance of each account, and a full history of all transactions that have ever taken place between participants. In this variant of the problem, there is no natural “I” persona. The decentralized setting is built in: we want each of the nodes to be able to change the file. We do of course want all the nodes to agree on the same file! A change made by one of the nodes should be replicated by all other nodes.</p>
@@ -311,7 +311,7 @@ window.Quarto = {
 </section>
 <section id="state-machine-replication-problem" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="state-machine-replication-problem"><span class="header-section-number">3.2</span> State Machine Replication problem</h2>
-<p>Let us now give a formal definition of a problem that encompasses both examples from the previous section. In the distributed computing literature this problem is known as the State Machine Replication (SMR) problem. To explain the terminology: the state of the machine corresponds to the file that we wanted to maintain in the previous examples.</p>
+<p>Let us now give a formal definition of a problem that encompasses both examples from the previous section. In the distributed computing literature this problem is known as the State Machine Replication (SMR) problem. To explain the terminology: the state of the machine corresponds to the file that we wanted to maintain (replicate) in the previous examples.</p>
 <p>In the SMR problem we consider the following:</p>
 <ol type="1">
 <li>There is a set of <em>nodes</em> responsible for running a consensus protocol, and a set of <em>clients</em> who may submit “transactions” to one or more of the nodes.</li>
@@ -322,13 +322,14 @@ window.Quarto = {
 <p>Informally, the SMR problem asks to keep all the nodes in sync. Meaning that the local histories of all nodes are the same.</p>
 <p>More formally, the SMR problem is to design a protocol that is to be executed by each of the nodes. (Think of a piece of code.) The protocol is allowed to do the following operations:</p>
 <ul>
-<li>maintain or change the local state of the node,</li>
+<li>maintain or change the local history state of the node,</li>
+<li>maintain or change the local workspace of the node,</li>
 <li>receive messages from other nodes and from clients,</li>
 <li>send messages to other nodes.</li>
 </ul>
 <p>We will see examples of protocol shortly. First, we need to define the properties that we want the protocol to have. In other words, how do we formalize “maintaining a file”? Here we can distinguish two key properties. The first is a <em>safety</em> guarantee: we want all nodes to agree on the same file. The second is a <em>liveness</em> guarantee: we want to be able to modify the file.</p>
-<p><strong>Goal 1: Consistency.</strong> We say that a protocol satisfies consistency if all the nodes running it always agree on the history. That means that the local history of all the nodes is equal.</p>
-<p>In particular, in the case where the local history is supposed to be a list of transactions, all nodes would agree on the order of the transactions.</p>
+<p><strong>Goal 1: Consistency.</strong> We say that a protocol satisfies consistency if all the nodes running it always agree on the history. That means that the local history state of all the nodes is equal.</p>
+<p>In particular, in the case where the local history is supposed to be a list of transactions, all nodes would agree on the order of the transactions. Note that the local workspaces of nodes may differ.</p>
 <p><strong>Goal 2: Liveness.</strong> Every “transaction” submitted by a client to at least one node is eventually added to every node’s local history.</p>
 <p>For the moment, we view “transactions” as simply adding an entry in the file. That is, we ignore the very important financial question of whether the transaction is “valid” – agreeing with the current balance in each of the accounts.</p>
 <p>The two goals together are non-trivial to satisfy. It is however not so hard design protocols that reach exactly one of the two goals.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
@@ -375,7 +376,7 @@ Exercise
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        Append message m to H.</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>4.  At midnight do:</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        Send local history H to all other nodes.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>A couple of remarks are in order. First, the protocol now actually “does something”! In particular, a node will act upon a message that it receives from either a client or another node. Second, we see that nodes are no longer passive: they occasionally send messages to other nodes as well. Third, the protocol now – implicitly – assumes that a node is aware of the concept of time: it needs to perform a specified action every day at midnight. This is in stark contrast to the protocol <code>Alg_Consistency</code> which was purely <em>event-driven</em>: a node only had to take action when a message arrived. (“Took action” is maybe a slight exaggeration: the protocol doesn’t do anything when a message arrives.) For the purpose of this example, we will assume that all nodes agree on the current time. When an event happens once per day, this is a relatively mild assumption. It also means that messages from clients only get shared once per day, which might not be sufficiently quick depending on the application. At the other extreme, we could imagine the nodes want to share incoming messages every millisecond. In that case however, you might run into all kinds of issues: nodes might be too far apart for a message to pass from node <span class="math inline">A</span> to node <span class="math inline">B</span> within that time frame, or nodes might disagree on the current time (we are now measuring milliseconds after all). In that case, agreeing on the time is a much stronger assumption. We will revisit these – and other – assumptions in more detail later on. For now, let us prove that <code>Alg_Liveness</code> guarantees the liveness property.</p>
+<p>A couple of remarks are in order. First, the protocol now actually “does something”! In particular, a node will act upon a message that it receives from either a client or another node. Second, we see that nodes are no longer passive: they occasionally send messages to other nodes as well. Third, the protocol now – implicitly – assumes that a node is aware of the concept of time: it needs to perform a specified action every day at midnight. This is in stark contrast to the protocol <code>Alg_Consistency</code> which was purely <em>event-driven</em>: a node only had to take action when a message arrived. (“Take action” is maybe a slight exaggeration: the <code>Alg_Consistency</code>-protocol doesn’t do anything when a message arrives.) For the purpose of this example, we will assume that all nodes agree on the current time. When an event happens once per day, this is a relatively mild assumption. It also means that messages from clients only get shared once per day, which might not be sufficiently quick depending on the application. At the other extreme, we could imagine the nodes want to share incoming messages every millisecond. In that case however, you might run into all kinds of issues: nodes might be too far apart for a message to pass from node <span class="math inline">A</span> to node <span class="math inline">B</span> within that time frame, or nodes might disagree on the current time (we are now measuring milliseconds after all). In that case, agreeing on the time is a much stronger assumption. We will revisit these – and other – assumptions in more detail later on. For now, let us prove that <code>Alg_Liveness</code> guarantees the liveness property.</p>
 <div id="lem-proto_liveness" class="theorem lemma">
 <p><span class="theorem-title"><strong>Lemma 3.2</strong></span> If all nodes in a distributed network run <code>Alg_Liveness</code>, then it satisfies liveness.</p>
 </div>
@@ -441,7 +442,7 @@ Exercise
 </section>
 <section id="sec-rotating" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="sec-rotating"><span class="header-section-number">3.4</span> Honest nodes</h2>
-<p>The final assumption is about whether we assume nodes to be <em>‘honest’</em> or <em>‘dishonest’</em>. We say that a node is <em>honest</em> if it executes the intended protocol. Any node that deviates from the intended protocol is called <em>dishonest</em> or <em>faulty</em>. Note that honesty in this context is a description of the nodes behavior, not its intentions. In the example of creating backups of a list of grades, it is for example perfectly reasonable to assume that all nodes have good intentions, but we would like a protocol to `work well’ even if one of the nodes breaks and is therefore unable to follow the protocol. We therefore prefer the term <em>faulty</em> for nodes that are not honest.</p>
+<p>The final assumption is about whether we assume nodes to be <em>‘honest’</em> or <em>‘dishonest’</em>. We say that a node is <em>honest</em> if it executes the intended protocol. Any node that deviates from the intended protocol is called <em>dishonest</em> or <em>faulty</em>. Note that honesty in this context is a description of the nodes behavior, not its intentions. In the example of creating backups of a list of grades, it is for example perfectly reasonable to assume that all nodes have good intentions, but we would like a protocol to ‘work well’ even if one of the nodes breaks and is therefore unable to follow the protocol. We therefore prefer the term <em>faulty</em> for nodes that are not honest.</p>
 <p>The assumption that we will make in this section (and only this section) is a very strong one:</p>
 <p><strong>Assumption 4</strong>: All nodes are honest.</p>
 <p>Naturally, we would like to relax this assumption as soon as possible. In the next chapter we will indeed replace it with a much milder assumption: there we assume a bound <span class="math inline">f</span> on the number of faulty nodes.</p>
@@ -451,11 +452,13 @@ Exercise
 <p>As a reminder, we want to design a protocol that guarantees consistency and liveness for the SMR problem. We have already seen two protocols that achieve either consistency or liveness. In particular, in <a href="#lem-proto_liveness" class="quarto-xref">Lemma&nbsp;<span>3.2</span></a> we have shown that <code>Alg_Liveness</code> guarantees the liveness property. In the subsequent discussion we have seen that this protocol does not guarantee consistency: it can happen that two nodes disagree on the order of transactions in their local history. The ‘issue’ here was that every node had the ‘right’ to append transactions to the local history of other nodes, which could lead to disagreements on the order that transactions are written down. The protocol that we describe here resolves this issue by selecting a leader in each round, who is the only one with the permission to write in that round.</p>
 <p><strong>Coordinating via rotating leaders</strong>: since we are in the permissioned setting, we know the number of nodes participating in the network, say <span class="math inline">n</span>. We can there do the following:</p>
 <ul>
-<li><p>in round <span class="math inline">1</span>, node <span class="math inline">1</span> is called the leader and all other nodes are called followers,</p></li>
-<li><p>in round <span class="math inline">2</span>, node <span class="math inline">2</span> is called the leader and all other nodes are called followers, …</p></li>
-<li><p>in round <span class="math inline">n</span>, node <span class="math inline">n</span> is called the leader and all other nodes are called followers After <span class="math inline">n</span> rounds, we reset the clock and start again as in round <span class="math inline">1</span>. In other words, we are rotating the leaders.</p></li>
+<li>in round <span class="math inline">1</span>, node <span class="math inline">1</span> is called the leader and all other nodes are called followers,</li>
+<li>in round <span class="math inline">2</span>, node <span class="math inline">2</span> is called the leader and all other nodes are called followers,</li>
+<li>…,</li>
+<li>in round <span class="math inline">n</span>, node <span class="math inline">n</span> is called the leader and all other nodes are called followers.</li>
 </ul>
-<p>We now describe the protocol for the leader and follower nodes separately. For ease of notation, we always assume that nodes initialize their local history to <span class="math inline">H = [\ ]</span> at the start of the protocol. We additionally allow the nodes to use some local workspace <span class="math inline">W</span>, which they can use to store information (temporarily); it is not part of the local history state.</p>
+<p>After <span class="math inline">n</span> rounds, we reset the clock and start again as in round <span class="math inline">1</span>. In other words, we are rotating the leaders.</p>
+<p>We now describe the protocol for the leader and follower nodes separately. Throughout, we assume that nodes initialize their local history to <span class="math inline">H = [\ ]</span> at the start of the protocol, and therefore we often omit this initialization step from the description of the protocol. We additionally allow the nodes to use some local workspace <span class="math inline">W</span>, which they can use to store information (temporarily); it is not part of the local history state.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Alg_Leader(t): </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>1.  Upon receiving a message m from a client do:</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        Append message m to the local workspace W. </span>
@@ -594,8 +597,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -706,7 +707,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

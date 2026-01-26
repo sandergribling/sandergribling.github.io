@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.52">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -33,10 +33,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-86daaaaad7353f9cc0c554efc1dd6d94.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-62e20c3a9a596b9ec96172d55444f71c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -266,7 +266,7 @@ window.Quarto = {
 </section>
 <section id="real-analysis" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="real-analysis"><span class="header-section-number">2.3</span> Real analysis</h2>
-<p>For a given <em>domain</em> <span class="math inline">A \subseteq \mathbb{R}^n</span>, a <em>function</em> <span class="math inline">f</span> maps every number <span class="math inline">x = (x_1,\dots,x_n) \in A</span> to a number <span class="math inline">f(x) \in \mathbb{R}^m</span>. We denote this mapping by <span class="math inline">f : A \rightarrow \mathbb{R}^m</span>. We assume familiarity with basic concepts from real analysis such as continuity and differentiability of functions, as well as limit calculations, in <span class="math inline">n</span>-dimensional (Euclidean) space.</p>
+<p>For a given <em>domain</em> <span class="math inline">A \subseteq \mathbb{R}^n</span>, a <em>function</em> <span class="math inline">f</span> maps every vector <span class="math inline">x = (x_1,\dots,x_n) \in A</span> to a vector <span class="math inline">f(x) \in \mathbb{R}^m</span>. We denote this mapping by <span class="math inline">f : A \rightarrow \mathbb{R}^m</span>. We assume familiarity with basic concepts from real analysis such as continuity and differentiability of functions, as well as limit calculations, in <span class="math inline">n</span>-dimensional (Euclidean) space.</p>
 <p>If <span class="math inline">m = 1</span> and <span class="math inline">f</span> is differentiable, we denote the <em>gradient</em> of <span class="math inline">f</span> by <span class="math display">
 \nabla f = \left(\frac{\partial f}{\partial x_1},\frac{\partial f}{\partial x_2},\dots,\frac{\partial f}{\partial x_n}\right)
 </span> which is the vector containing the partial derivatives of <span class="math inline">f</span>.</p>
@@ -291,13 +291,13 @@ f(x) = a_1x_1 + a_2x_2 + \dots a_nx_n - b.
 &amp; h_j(x) = 0 &amp; \text{ for } j = 1,\dots,r \\
 \end{array}
 </span> where the <span class="math inline">g_i</span> and <span class="math inline">h_j</span> are affine functions.</p>
-<p>We can use the well known Karush-Kuhn-Tucker (KKT) conditions to characterize a maximizer of <span class="math inline">f</span> over <span class="math inline">A</span>. To state these conditions, we introduce for every inequality constraint a (dual) multiplier <span class="math inline">\lambda_i \leq 0</span> for <span class="math inline">i = 1,\dots,q</span>, summarized in the vector <span class="math inline">\lambda = (\lambda_1,\dots,\lambda_q)</span>, and (dual) multiplier <span class="math inline">\nu_j \in \mathbb{R}</span> for <span class="math inline">j = 1,\dots,r</span>, summarized in the vector <span class="math inline">\nu = (\nu_1,\dots,\nu_r)</span>. The difference in domain of the multipliers, <span class="math inline">\lambda_i \leq 0</span> and <span class="math inline">\nu_j \in \mathbb{R}</span>, comes from the fact that they are identified with different type of constraints, inequalities and equalities, respectively.</p>
+<p>We can use the well known Karush-Kuhn-Tucker (KKT) conditions to characterize a maximizer of <span class="math inline">f</span> over <span class="math inline">A</span>. To state these conditions, we introduce for every inequality constraint a (dual) multiplier <span class="math inline">\lambda_i \leq 0</span> for <span class="math inline">i = 1,\dots,q</span>, summarized in the vector <span class="math inline">\lambda = (\lambda_1,\dots,\lambda_q)</span>, and for every equality constraint a (dual) multiplier <span class="math inline">\nu_j \in \mathbb{R}</span> for <span class="math inline">j = 1,\dots,r</span>, summarized in the vector <span class="math inline">\nu = (\nu_1,\dots,\nu_r)</span>. The difference in domain of the multipliers, <span class="math inline">\lambda_i \leq 0</span> and <span class="math inline">\nu_j \in \mathbb{R}</span>, comes from the fact that they are identified with different type of constraints, inequalities and equalities, respectively.</p>
 <p>We define the <em>Lagrangian</em> as <span class="math display">
 L(x,\lambda,\nu) = f(x) + \sum_{i=1}^q \lambda_i g_i(x) + \sum_{j=1}^r \nu_j h_j(x).
 </span></p>
 <p>Then <span class="math inline">x \in A</span> is a maximizer of <span class="math inline">f</span> if and only if there exists vectors <span class="math inline">\lambda \in \mathbb{R}^q</span> and <span class="math inline">\nu \in \mathbb{R}^r</span> such that the point <span class="math inline">(x,\lambda,\nu)</span> satisfies the following four KKT conditions:</p>
 <ol type="1">
-<li><strong>(Zero gradient).</strong> The partial derivatives of <span class="math inline">L</span> with respect to <span class="math inline">x</span> are zero, i.e., <span class="math display">
+<li><strong>(Stationarity).</strong> The partial derivatives of <span class="math inline">L</span> with respect to <span class="math inline">x</span> are zero, i.e., <span class="math display">
 \frac{\partial L(x,\lambda,\nu)}{\partial x_k} = \frac{\partial f(x)}{\partial x_k} + \sum_{i=1}^q \lambda_i \frac{\partial g_i(x)}{\partial x_k} + \sum_{j=1}^r \nu_j \frac{\partial h_j(x)}{\partial x_k} = 0
 </span> for <span class="math inline">k = 1,\dots,n</span>.</li>
 <li><strong>(Primal feasibility).</strong> <span class="math inline">g_i(x) \leq 0</span> for <span class="math inline">i = 1,\dots,q</span> and <span class="math inline">h_j(x) = 0</span> for <span class="math inline">j = 1,\dots,r</span>.</li>
@@ -392,8 +392,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -504,7 +502,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
