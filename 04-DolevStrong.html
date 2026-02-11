@@ -495,7 +495,7 @@ What do the honest nodes output in round $3$? Consider a node $i$ in $G_0$. It h
 <hr>
 <ol>
 <li id="fn1"><p>Suppose there is one faulty node. In some round, it will be elected as the leader. It can then simply choose to violate consistency by sending different messages to different nodes.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Either every honest node is convinced of exactly one value <span class="math inline">v</span>, in which case all honest nodes output <span class="math inline">v</span>. Alternatively, every honest node is convinced of at least two distinct values, in which case all honest nodes output “failure”.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Either every honest node is convinced of exactly one value <span class="math inline">v</span>, in which case all honest nodes output <span class="math inline">v</span>. Alternatively, every honest node is convinced of zero or at least two distinct values, in which case all honest nodes output “failure”.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>In fact, <span class="math inline">t'=f</span> is the only possibility (since node <span class="math inline">i</span> is only convinced in round <span class="math inline">f+1</span>).<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
