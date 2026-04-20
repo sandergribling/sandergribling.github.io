@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>9&nbsp; Selfish mining attack – Decentralized Finance and Blockchains</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -64,15 +67,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-fe80fb519f0892010506c40733b33e0a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-843f08c53b99c524b45113508bb491a8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -155,9 +157,7 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="./index.html" class="sidebar-logo-link">
-      </a>
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Decentralized Finance and Blockchains</a> 
         <div class="sidebar-tools-main">
@@ -515,9 +515,10 @@ Figure&nbsp;9.10: Case 2b-II
 </div>
 <section id="sec-secret-mining" class="level3" data-number="9.2.1">
 <h3 data-number="9.2.1" class="anchored" data-anchor-id="sec-secret-mining"><span class="header-section-number">9.2.1</span> Secret mining details</h3>
-<p>To understand how secretly trying to extend a secret block works from a technical perspective, let us recall the basics of mining. The idea is that we are given a function <span class="math inline">h</span>, that takes as input a “guess” <span class="math inline">z</span> and outputs <span class="math inline">h(z)</span>, and a <em>difficulty level</em> <span class="math inline">\tau</span>. If <span class="math inline">h(z) \leq \tau</span>, then <span class="math inline">z</span> is a solution to the crypto puzzle and a miner can use this solution to obtain the right to add a block to the blockchain.</p>
+<p>To understand how secretly trying to extend a secret block works from a technical perspective, let us recall the technical basics of mining. The idea is that we are given a function <span class="math inline">h</span>, that takes as input a “guess” <span class="math inline">z</span> and outputs <span class="math inline">h(z)</span>, and a <em>difficulty level</em> <span class="math inline">\tau</span>. If <span class="math inline">h(z) \leq \tau</span>, then <span class="math inline">z</span> is a solution to the crypto puzzle and a miner can use this solution to obtain the right to add a block to the blockchain.</p>
 <p>A solution <span class="math inline">z</span> is the concatenation of four parts (see <a href="06-ProofofWork.html#def-valid-sol" class="quarto-xref">Definition&nbsp;<span>6.2</span></a> for the full structure of <span class="math inline">z</span>), the most important for us being that <span class="math inline">z</span> specifies which predecessor block the solution <span class="math inline">z</span> is trying to extend. In secret mining this part of the solution is simply the last secretly mined block of the pool that has not been announced publicly.</p>
 <p>Recall that the function <span class="math inline">h</span> never changes in the Proof-of-Work protocol, i.e., it is fixed in the blockchain software, but the difficulty level <span class="math inline">\tau</span> is updated periodically, to keep the expected interval between mined blocks the same (this is done roughly every two weeks). In this chapter we assume that, while the pool is carrying out a selfish mining attack, the difficulty level <span class="math inline">\tau</span> does not change. Otherwise, it might be that already secretly mined blocks become invalid as a result of <span class="math inline">\tau</span> being lowered (if <span class="math inline">\tau</span> would be increased, this is not problematic with respect to secret mining).</p>
+<p>Furthermore, because (by definition of the selfish mining attack) the pool continues mining on the longest chain in a forking once it is publicly known (also if this is the forking branch of the honest miners), we know that all these blocks will eventually be finalized (see <a href="05-LongestChain.html#sec-finalizing" class="quarto-xref"><span>Section 5.4</span></a>) into the longest chain. Intuitively, if the pool would not continue mining on the branch of the honest miners if that one is the longest, and, for example, much later announce a block extending their shorter branch later, then this is a “detectable” serious deviation from the blockchain protocol, which makes the pool untrustworthy.</p>
 </section>
 </section>
 <section id="general-case" class="level2" data-number="9.3">
@@ -607,11 +608,11 @@ Figure&nbsp;9.11: Schematic overview of branches
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    Else if length(pool) = 1 and length(public) = 2:</span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        - F_h becomes the new leaf node B (= honest miner wins)</span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        - Public and pool branch set to be empty</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    Else if length(pool branch) - length(public branch) = 1</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    Else if length(pool) - length(public) = 1</span>
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        - Pool announces last two secret blocks (= pool wins)</span>
 <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        - Last secret block becomes the new leaf node B</span>
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        - Public and pool branch set to be empty</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    Else if length(pool branch) - length(public branch) = d &gt; 1</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    Else if length(pool) - length(public) = d &gt; 1</span>
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        - Pool makes oldest secret block public in pool branch</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
