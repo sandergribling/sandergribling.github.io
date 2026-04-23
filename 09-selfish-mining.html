@@ -508,7 +508,7 @@ Figure&nbsp;9.10: Case 2b-II
 </div>
 <div class="callout-body-container callout-body">
 <p>Let <span class="math inline">\gamma \in (0,1)</span> and suppose that after the pool announces its secret block <span class="math inline">F_{p,1}</span> in Case 2b, a fraction <span class="math inline">\gamma</span> of the honest miners starts mining to extend <span class="math inline">F_{p,1}</span> and a fraction <span class="math inline">(1-\gamma)</span> of the honest miners starts mining to extend <span class="math inline">F_{h,1}</span>.</p>
-<p>By redoing the case analysis starting from the final situation in Case 2b, show that the expected contribution of the subsequent cases to the total expected reward for the pool is <span class="math display">
+<p>By redoing the case analysis starting from the final situation in Case 2b, show that the expected contribution of the subsequent cases to the <em>total</em> expected reward (recall the probability of ending up in Case 2b equals <span class="math inline">\alpha(1-\alpha)</span>) for the pool is <span class="math display">
 2\alpha^2(1-\alpha) + \alpha(1-\alpha)^2 \cdot \gamma.
 </span> Not all cases give a nonzero reward for the pool, but work out all (three) of them for completeness. <em>Note that if an honest miner ends up extending <span class="math inline">F_{p,1}</span> with a block <span class="math inline">F_{h,2}</span>, then the pool gets no reward for this latter block, but it does get the reward for the block <span class="math inline">F_{p,1}</span>, as the branch containing <span class="math inline">F_{p,1}</span> and <span class="math inline">F_{h,2}</span> is now part of the new longest chain.</em></p>
 </div>
@@ -694,7 +694,7 @@ Figure&nbsp;9.12: Solution to Exercise 9.2
 <p>Explain that after the honest miners have announced a newly found block <span class="math inline">F_h</span> to their public branch, but right before the pool has responded to this:</p>
 <ul>
 <li>if <code>length(pool) - length(public) = 1</code>, then it must be that precisely the last two blocks of the pool branch are still secret.</li>
-<li>if <code>length(pool) - length(public) = d &gt; 1</code>, then it must be that the last <span class="math inline">d+1</span> bloks of the pool branch are still secret.</li>
+<li>if <code>length(pool) - length(public) = d &gt; 1</code>, then it must be that the last <span class="math inline">d+1</span> blocks of the pool branch are still secret.</li>
 </ul>
 </div>
 </div>
@@ -714,13 +714,14 @@ S = \{0,0',1,2,3,\dots\}.
 <div id="fig-markov-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figs/Tikz-pictures/09-tikz-markov-chain.png" class="img-fluid figure-img" style="width:90.0%">
+<img src="figs/Tikz-pictures/09-tikz-markov-chain-v2.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-markov-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9.13: Transition probabilities in state space <span class="math inline">S</span>
 </figcaption>
 </figure>
 </div>
+<p>We purposely draw two outgoing edges from state <span class="math inline">0'</span> to <span class="math inline">0</span>, as there are two different events in the selfish mining attack that can cause this transition. Because the reward the pool receives in both these events (as we will see later) is different, we emphasize this distinction here.</p>
 <p>Note that for every node, the sum of its outgoing edges equals <span class="math inline">1</span>. We will next explain the transition probabilities.</p>
 <blockquote class="blockquote">
 <p>Similar as before, in all the figures below, the top branch is always the pool branch, and the bottom branch is the public branch. Furthermore, publicly known blocks (on the public branch or the public part of the pool branch) are denoted with solid squares, whereas secret blocks on the pool branch are denoted with dashed squares.</p>
@@ -956,14 +957,25 @@ for every $i,j \in \{0',0,1,2,\dots\}$. This is a convenient fact from which the
 <li><p><strong>State <span class="math inline">i \geq 3</span>.</strong> If the pool is the first to mine a new block, then we transition to state <span class="math inline">i+1</span>, with one more secret block, and no reward is handed out. If the honest miners are the first to mine a new block, the pool makes its oldest secret block public. Because the pool has a lead of more than two blocks on the honest miners (i.e., the pool branch is at least two blocks longer than the public branch), we know that eventually, once the difference in length of the branches drops down to one, the pool will get the reward for this block. Therefore, we count the reward for the secret block that was made public in this transition.</p></li>
 <li><p><strong>State <span class="math inline">2</span>.</strong> If the pool is the first to mine a new block, we transition to state <span class="math inline">3</span>, with one more secret block, and no reward is handed out. If the honest miners mine a block first, the pool makes its last two secret blocks public, and collects the rewards of <em>all</em> the blocks in the pool branch (recall that being in state 2 means that the difference in length between the pool and public branch is two secret blocks; the state does not specify how long the public parts of these branches are). Recall that we already counted the rewards of all the earlier (secret) blocks that were made public in states <span class="math inline">i \geq 3</span> (previous case), and so here we only count the rewards for the last two secret blocks that were made public in this transition. Since the honest miners are the first to mine a block with probability <span class="math inline">1-\alpha</span>, the expected reward of the pool here is <span class="math inline">2(1-\alpha)</span>.</p></li>
 </ul>
-<p>To summarize the last two cases, we count the reward of a block in the pool branch at the moment it is made public. This means every block made public (after the pool has obtained a lead of two secret blocks) is counted precisely oncet. Below we have given a summary of the rewards obtained by the pool and the honest miners per state.</p>
+<p>To summarize the last two cases, we count the reward of a block in the pool branch at the moment it is made public. This means every block made public (after the pool has obtained a lead of two secret blocks) is counted precisely once. In the figure below we have schematically summarized this procedure.</p>
+<div id="fig-reward-chain" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reward-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/Tikz-pictures/09-tikz-reward-chain.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reward-chain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.24: Rewards when moving out of a state (no number on an arc means a reward of <span class="math inline">0</span>).
+</figcaption>
+</figure>
+</div>
+<p>Below we have given a summary of the rewards obtained by the pool and the honest miners per state. The rewards of the honest miners can be understood using similar arguments as above.</p>
 <div id="fig-reward-analysis" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reward-analysis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figs/Tikz-pictures/09-tex-reward-analysis.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reward-analysis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.24: Overview reward analysis per state.
+Figure&nbsp;9.25: Overview reward analysis per state.
 </figcaption>
 </figure>
 </div>
@@ -994,14 +1006,14 @@ R_{\text{pool}} = R_{\text{pool}}(\alpha) = \frac{4\alpha^2  - 9\alpha^3 + 4\alp
 </span></p>
 </div>
 </div>
-<p>On the domain <span class="math inline">(0,\frac{1}{2})</span>, the expression in Exercise 9.8 is greater then <span class="math inline">\alpha</span> if and only if <span class="math inline">\frac{1}{3} &lt; \alpha &lt; \frac{1}{2}</span>, as <a href="#fig-relative-reward-plot" class="quarto-xref">Figure&nbsp;<span>9.25</span></a> shows.</p>
+<p>On the domain <span class="math inline">(0,\frac{1}{2})</span>, the expression in Exercise 9.8 is greater then <span class="math inline">\alpha</span> if and only if <span class="math inline">\frac{1}{3} &lt; \alpha &lt; \frac{1}{2}</span>, as <a href="#fig-relative-reward-plot" class="quarto-xref">Figure&nbsp;<span>9.26</span></a> shows.</p>
 <div id="fig-relative-reward-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-relative-reward-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figs/Tikz-pictures/09-tex-relative-reward-plot.png" class="img-fluid figure-img" style="width:90.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-relative-reward-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.25: Relative reward of pool when using selfish mining.
+Figure&nbsp;9.26: Relative reward of pool when using selfish mining.
 </figcaption>
 </figure>
 </div>
